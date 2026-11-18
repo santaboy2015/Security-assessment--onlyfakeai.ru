@@ -29,6 +29,15 @@ Every number is defensible from the repository evidence.
 
 ## Red-team / offensive operations roles
 
+- Achieved **total backend compromise** of a live criminal document-forgery platform: complete read control
+  of its data plane (24,169 user files / 20.18 GiB), the full product factory (580 templates / 731 MB), the
+  complete application source and a runnable local replica of the service.
+- Unmasked the operator's **origin infrastructure**: reverse DNS tied `2.59.219.71` to the target, SSH:22
+  exposed, Cloudflare Tunnel ingress mapped, live worker tier leak discovered — proving the "hosted
+  locally" deployment model provided zero protection.
+- Mapped the full estate — 2 operator domains (including a brand-twin `.com` on the **same Cloudflare
+  account**), 9 subdomains, 3 live web apps, exposed Postgres endpoints — and confirmed the service's
+  **Critical** threat-intel rating (PhishDestroy, score 88).
 - Delivered a full red-team-style operational record against a hardened live target: reconnaissance,
   surface mapping, exploit research, credential operations, reporting — with read-only discipline and
   zero destructive writes across ~1.3k requests.
