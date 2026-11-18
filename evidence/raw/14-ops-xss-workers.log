@@ -1,0 +1,133 @@
+########## 1. innerHTML / DOM-sink usage in dashboard JS ##########
+28
+--- lines mentioning innerHTML (context trimmed) ---
+
+########## 2. Profile/job rendering functions (email, remarks, fields) ##########
+
+########## 3. escape helpers present? ##########
+function escapeHtml(value)
+     38 escapeHtml
+     36 textContent =
+
+########## 4. Worker/process endpoints method matrix ##########
+  OPTIONS /process -> HTTP 204 : 
+  POST /process -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /process</pre><script>(
+  PUT /process -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /process</pre><script>(f
+  OPTIONS /status/1778112266686 -> HTTP 204 : 
+  POST /status/1778112266686 -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /status/1778112266686</p
+  PUT /status/1778112266686 -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /status/1778112266686</pr
+  OPTIONS /status -> HTTP 204 : 
+  POST /status -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /status</pre><script>(f
+  PUT /status -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /status</pre><script>(fu
+  OPTIONS /api/process -> HTTP 204 : 
+  POST /api/process -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /api/process</pre><scri
+  PUT /api/process -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /api/process</pre><scrip
+  OPTIONS /api/status/1778112266686 -> HTTP 204 : 
+  POST /api/status/1778112266686 -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /api/status/177811226668
+  PUT /api/status/1778112266686 -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /api/status/1778112266686
+  OPTIONS /job -> HTTP 204 : 
+  POST /job -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /job</pre><script>(func
+  PUT /job -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /job</pre><script>(funct
+  OPTIONS /jobs/1778112266686 -> HTTP 204 : 
+  POST /jobs/1778112266686 -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot POST /jobs/1778112266686</pre
+  PUT /jobs/1778112266686 -> HTTP 404 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot PUT /jobs/1778112266686</pre>
+  OPTIONS /api/jobs/1778112266686 -> HTTP 204 : 
+  POST /api/jobs/1778112266686 -> HTTP 401 : {"error":"Access token required"}
+  PUT /api/jobs/1778112266686 -> HTTP 401 : {"error":"Access token required"}
+
+########## 5. More unauth endpoint candidates ##########
+  GET /api/auth/refresh -> HTTP 404 (1269b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/auth/logout -> HTTP 404 (1268b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/auth/me -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/auth/status -> HTTP 404 (1268b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/version -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/info -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/telegram/webhook -> HTTP 404 (1273b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/telegram -> HTTP 404 (1265b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/webhook -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /webhook -> HTTP 404 (1260b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /webh
+  GET /api/payments/webhook -> HTTP 404 (1273b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/stripe/webhook -> HTTP 404 (1271b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/cron -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/tasks -> HTTP 404 (1262b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/queue -> HTTP 404 (1262b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/worker/health -> HTTP 404 (1270b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/server -> HTTP 404 (1263b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/servers/health -> HTTP 404 (1271b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/apis -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/apikeys -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/api-keys -> HTTP 404 (1265b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/plan -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/plans -> HTTP 404 (1262b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/generations -> HTTP 404 (1268b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+  GET /api/credits -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/
+
+########## 6. HTML head of dashboard: CSP / inline script context ##########
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #fff;
+            --bg-tertiary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --border-color: #e0e0e0;
+            --border-light: #ddd;
+            --shadow: rgba(0,0,0,0.1);
+            --shadow-light: rgba(0,0,0,0.05);
+            --accent: #007bff;
+            --accent-hover: #0056b3;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --chart-grid: #f0f0f0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3a3a3a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #404040;
+            --border-light: #505050;
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-light: rgba(0,0,0,0.2);
+            --accent: #4a9eff;
+            --accent-hover: #357abd;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --chart-grid: #404040;
+        }
+
+        * {
+            
+########## 7. content-security-policy header on ops pages ##########
+--- /
+HTTP/2 200 
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+--- /login
+HTTP/2 200 
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+
+########## 8. Login response body shape for a validation error with JSON error styles ##########
+HTTP 429
+HTTP/2 429 
+content-type: application/json; charset=utf-8
+retry-after: 766
+{"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}

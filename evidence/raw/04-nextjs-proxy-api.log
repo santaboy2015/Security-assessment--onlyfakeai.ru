@@ -1,0 +1,418 @@
+########## 1. Next.js build manifest + chunk map ##########
+### GET https://onlyfakeai.ru/_next/static/S2HurGa5cGUpA5514zy3f/_buildManifest.js -> HTTP 200 (1676 bytes)
+HTTP/2 200 
+content-type: application/javascript; charset=UTF-8
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+vary: Accept-Encoding
+cf-ray: a585d1b1cf4d95f5-JNB
+--- body ---
+self.__BUILD_MANIFEST=function(s,e,r,t,a,i){return{__rewrites:{afterFiles:[{has:r,source:"/api/status/1/:path*",destination:"/status/:path*"},{has:r,source:"/api/process/1",destination:"/process"},{has:r,source:t,destination:t},{has:r,source:"/api/supabase/:path*",destination:r}],beforeFiles:[],fallback:[]},__routerFilterStatic:{numItems:24,errorRate:1e-4,numBits:461,numHashes:14,bitArray:[1,1,s,s,0,s,s,0,s,e,s,e,s,s,s,s,s,s,s,e,e,s,s,e,s,e,s,e,s,s,e,s,e,s,s,s,s,s,s,s,e,s,e,s,e,e,s,e,s,e,e,s,e,e,s,s,s,s,e,s,s,s,e,s,e,s,s,s,e,e,e,e,e,s,e,s,e,s,e,e,s,e,e,e,e,e,e,s,s,e,s,e,e,e,s,e,s,s,e,e,e,e,s,e,e,s,s,e,s,s,e,s,s,e,s,s,s,s,s,s,s,e,e,s,s,s,s,e,e,s,s,e,s,s,e,s,e,e,s,e,s,e,e,s,s,s,s,s,s,s,e,s,e,s
+----------------------------------------
+### GET https://onlyfakeai.ru/_next/static/S2HurGa5cGUpA5514zy3f/_ssgManifest.js -> HTTP 200 (165 bytes)
+HTTP/2 200 
+content-type: application/javascript; charset=UTF-8
+content-length: 165
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+vary: Accept-Encoding
+cf-ray: a585d1ba994196ab-LOS
+--- body ---
+self.__SSG_MANIFEST=new Set(["\u002F[locale]","\u002F[locale]\u002F[slug]","\u002F[locale]\u002Fproduct\u002F[id]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
+----------------------------------------
+### GET https://onlyfakeai.ru/_next/static/chunks/app/layout-1ae860a63767d4a9.js -> HTTP 200 (5652 bytes)
+HTTP/2 200 
+content-type: application/javascript; charset=UTF-8
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+vary: Accept-Encoding
+cf-ray: a585d1c16e7d95fb-JNB
+--- body ---
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7177],{347:()=>{},2374:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),!function(e,t){for(var n in t)Object.defineProperty(e,n,{enumerable:!0,get:t[n]})}(t,{cancelIdleCallback:function(){return r},requestIdleCallback:function(){return n}});let n="undefined"!=typeof self&&self.requestIdleCallback&&self.requestIdleCallback.bind(window)||function(e){let t=Date.now();return self.setTimeout(function(){e({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-t))}})},1)},r="undefined"!=typeof self&&self.cancelIdleCallback&&self.cancelIdleCallback.bind(window)||function(e){return clearTimeout(e)};("funct
+----------------------------------------
+########## 2. Rewrite-derived routes (per buildManifest) ##########
+### GET https://onlyfakeai.ru/api/status/1/example -> HTTP 404 (12139 bytes)
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+x-powered-by: Next.js
+vary: Accept-Encoding
+cf-ray: a585d1c98c4695f2-JNB
+--- body ---
+<!DOCTYPE html><html id="__next_error__"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-3219caacd565a7bb.js"/><script src="/_next/static/chunks/4bd1b696-1fc9c04a2f3113b7.js" async=""></script><script src="/_next/static/chunks/1684-ff3992de2ad3eae9.js" async=""></script><script src="/_next/static/chunks/main-app-ccdb2cd92e15df7d.js" async=""></script><meta name="robots" content="noindex"/><!--$--><!--/$--><title>OnlyFake - Passport ID Document Templates &amp; Generator</title><meta name="description" content="Generate professional documents, passports, and 
+----------------------------------------
+### POST https://onlyfakeai.ru/api/status/1/example -> HTTP 405 (18 bytes)
+HTTP/2 405 
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d1cd29f37a78-LOS
+--- body ---
+Method Not Allowed
+----------------------------------------
+### GET https://onlyfakeai.ru/status/example -> HTTP 404 (14896 bytes)
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+x-powered-by: Next.js
+vary: Accept-Encoding
+cf-ray: a585d1d1da0495fb-JNB
+--- body ---
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/70a1f91216f23e38.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-3219caacd565a7bb.js"/><script src="/_next/static/chunks/4bd1b696-1fc9c04a2f3113b7.js" async=""></script><script src="/_next/static/chunks/1684-ff3992de2ad3eae9.js" async=""></script><script src="/_next/static/chunks/main-app-ccdb2cd92e15df7d.js" async=""></script><script src="/_next/static/chunks/app/layout-1ae860a63767d4a9.js" async=""></script><link rel="preload" href="https://telegram.
+----------------------------------------
+### GET https://onlyfakeai.ru/api/process/1 -> HTTP 404 (11798 bytes)
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+x-powered-by: Next.js
+vary: Accept-Encoding
+cf-ray: a585d1d6fa6495ec-JNB
+--- body ---
+<!DOCTYPE html><html id="__next_error__"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-3219caacd565a7bb.js"/><script src="/_next/static/chunks/4bd1b696-1fc9c04a2f3113b7.js" async=""></script><script src="/_next/static/chunks/1684-ff3992de2ad3eae9.js" async=""></script><script src="/_next/static/chunks/main-app-ccdb2cd92e15df7d.js" async=""></script><meta name="robots" content="noindex"/><!--$--><!--/$--><title>OnlyFake - Passport ID Document Templates &amp; Generator</title><meta name="description" content="Generate professional documents, passports, and 
+----------------------------------------
+### POST https://onlyfakeai.ru/api/process/1 -> HTTP 405 (18 bytes)
+HTTP/2 405 
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d1db3fc3b14b-LOS
+--- body ---
+Method Not Allowed
+----------------------------------------
+### GET https://onlyfakeai.ru/process -> HTTP 404 (14734 bytes)
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+x-powered-by: Next.js
+vary: Accept-Encoding
+cf-ray: a585d1dfeb0e95f8-JNB
+--- body ---
+<!DOCTYPE html><html id="__next_error__"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-3219caacd565a7bb.js"/><script src="/_next/static/chunks/4bd1b696-1fc9c04a2f3113b7.js" async=""></script><script src="/_next/static/chunks/1684-ff3992de2ad3eae9.js" async=""></script><script src="/_next/static/chunks/main-app-ccdb2cd92e15df7d.js" async=""></script><meta name="robots" content="noindex"/><!--$--><!--/$--><title>OnlyFake - Passport ID Document Templates &amp; Generator</title><meta name="description" content="Generate professional documents, passports, and 
+----------------------------------------
+########## 3. /api/supabase proxy behaviour ##########
+### GET https://onlyfakeai.ru/api/supabase/rest/v1/profiles?select=user_id&limit=1 -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+server: cloudflare
+set-cookie: __cf_bm=eqS1fkdLsnhw3Xb2uh8jUnML5tK53758k.KiUYY6d3Y-1794321706.022969-1.0.1.1-EvpPugOF_qzolDeugy6OkkHOzy2s5PYLTWteIIpqJz8Slor9x5.dnkPdnQ8duNWi9ICS5D2ehq8ceAdsSnb9hKxlNZoaNP8L8Tys0XkO9BfRa9v1dejRJ3ImvkdeFHR3; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:46 GMT
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e8-6c2a-72cd-992a-e02f2c94c320
+cf-ray: a585d1e5bc6995ed-JNB
+--- body ---
+[]
+----------------------------------------
+### GET https://onlyfakeai.ru/api/supabase/rest/v1/profiles?select=user_id&limit=1 -> HTTP 200 (52 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+server: cloudflare
+set-cookie: __cf_bm=jOz5LSJ46lLQevVNrn3BkbrXjiiPHZ_bHSossHmenWI-1794321707.0923495-1.0.1.1-6gkV393aCuDVYBYmYHkASh9fXq8M6PcE_QF5Cpv2X0GdCRKVttl5EdW0UhApxDF9mycFDC3UToX0xaQ8ORuIHbWel3Bhr592F0iFsl_cJkFvKpVJ.yJh0ICMPtpxYP1b; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:47 GMT
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e8-7058-7ed0-893e-8002fcc9ebe1
+cf-ray: a585d1eca9b00c01-LOS
+--- body ---
+[{"user_id":"23c8fb62-49c5-42d9-b031-906b97cd1cb4"}]
+----------------------------------------
+### GET https://onlyfakeai.ru/api/supabase/storage/v1/bucket -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+server: cloudflare
+sb-request-id: 01a1c5e8-750a-7835-b3ce-e568e5793bf6
+set-cookie: __cf_bm=5myPFB62HL74Dvp9thQu5PChweln9l3CKcoT73sBJXc-1794321708.2954924-1.0.1.1-__DTZ4Z_3jyuwIUM0alFxQdTiki2ccHjOA3HTuMxzEg5RYCW9ITTAbDKrQZaoRIzW1LAVmvdZ2slY7J5MeE9ezWNvXZ4.4EDPCTK15H4AuNC3LguEFowxuHAjpmJdXF5; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:48 GMT
+access-control-allow-origin: *
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+vary: Accept-Encoding
+cf-ray: a585d1f3fc9195f2-JNB
+--- body ---
+[]
+----------------------------------------
+### GET https://onlyfakeai.ru/api/supabase/auth/v1/admin/users -> HTTP 401 (96 bytes)
+HTTP/2 401 
+content-type: application/json
+content-length: 96
+server: cloudflare
+set-cookie: __cf_bm=zHDZPPVj0Y4Ytbp0zbIa.jJQQaBGjKNZIjeLCb5tulE-1794321708.9871821-1.0.1.1-40RV57lZ.h18JkyjEOy89ZrqMBv_pSSVpYHQ5hNTw3JWL2RuPlhklLUTSCp1KUXW5xggNmVR._EY52qhYBtuvsigKID6tOR14Jqzole07yjwhwEx6bBfQt5GwR7ZWDkf; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:49 GMT
+vary: Origin, Accept-Encoding
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e8-77bd-7edf-bc08-eae64eca9634
+cf-ray: a585d1f89d38b1c6-LOS
+--- body ---
+{"code":401,"error_code":"no_authorization","msg":"This endpoint requires a valid Bearer token"}
+----------------------------------------
+### GET https://onlyfakeai.ru/api/supabase/auth/v1/admin/users -> HTTP 403 (62 bytes)
+HTTP/2 403 
+content-type: application/json
+server: cloudflare
+set-cookie: __cf_bm=Lc8vjifaQQhjlcl_8cfhlKZgIjVMd44UhIFfcrB8Nq4-1794321709.638163-1.0.1.1-wmKOkflCT88upLBAsrqmgGkO.7Xv2y4i75aNJ5FTuZfOZs4ZUoo_GcLdwjKTaWASD601cE2Usjfjmr9YdMrVADLSxBBOca_xtlNsKX.L6BvIdunxWn.SpkSEAPl4iWbV; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:49 GMT
+vary: Origin, accept-encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e8-7a4a-7ea4-89df-16da7cd50069
+cf-ray: a585d1fc9e406062-LOS
+--- body ---
+{"code":403,"error_code":"not_admin","msg":"User not allowed"}
+----------------------------------------
+### GET https://onlyfakeai.ru/api/supabase/rest/v1/rpc/get_users -> HTTP 404 (313 bytes)
+HTTP/2 404 
+content-type: application/json; charset=utf-8
+server: cloudflare
+set-cookie: __cf_bm=tzXR4t6ySTdsKVwyBC82b5.8mN8GgE5JFcqdtvQucwI-1794321710.312317-1.0.1.1-X2n9n8wGT037MaW9mDFZ7LcJbkATyMtzzgE68kJIfNyvK7PedFhFgMGbXG9VuU0tGFb2NhoBbqPYkxRBxxgR9MyUqLNQWo9N4jrRyRZQfnqH4YMwNL6xZ3R.081R8svW; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:50 GMT
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e8-7ceb-7af1-bb7d-077cd90ff0a6
+cf-ray: a585d200cc636062-LOS
+--- body ---
+{"code":"PGRST202","details":"Searched for the function public.get_users without parameters, but no matches were found in the schema cache.","hint":"Perhaps you meant to call the function public.get_jobs_time_series","message":"Could not find the function public.get_users without parameters in the schema cache"}
+----------------------------------------
+########## 4. PostgREST OpenAPI / root schema disclosure ##########
+### GET https://cdn.onlyfakeai.ru/rest/v1/ -> HTTP 401 (98 bytes)
+HTTP/2 401 
+content-type: application/json;charset=UTF-8
+content-length: 98
+sb-request-id: 01a1c5e8-7f0d-735f-bb5f-6c959031d386
+set-cookie: __cf_bm=2HpwOjrJCQ2gGAAlHRSu2n2mZSUE8QAO1c.m8foCalc-1794321710.8589525-1.0.1.1-YYkh6gvkvu5yWcKtw7efu6ciy99Ci9b_Z8WmIXenKDWPrw9fUvs5yisWfbZoWzr0nOJeWUzAG_JV4ETR418uPVpeIjca5U75eL3jvHw4ukatSZVOlFS9X70AfKocvfTN; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:50 GMT
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,TRACE,CONNECT
+access-control-max-age: 3600
+sb-error-code: UNAUTHORIZED_INVALID_API_KEY_TYPE
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+server: cloudflare
+cf-ray: a585d204df364920-LOS
+--- body ---
+{"message":"Secret API key required","hint":"Only secret API keys can be used for this endpoint."}
+----------------------------------------
+openapi anon bytes=98 code=401
+openapi auth bytes=98 code=401
+{"message":"Secret API key required","hint":"Only secret API keys can be used for this endpoint."}
+########## 5. Auth settings (GoTrue) ##########
+### GET https://cdn.onlyfakeai.ru/auth/v1/settings -> HTTP 200 (610 bytes)
+HTTP/2 200 
+content-type: application/json
+set-cookie: __cf_bm=yJadED9pgBxa2.wK6u6dJDumpIo1NOtgCbdxcQNWwxQ-1794321712.4987032-1.0.1.1-Ue_IYt0LPiv_jvLYIu6w5u8Qcyl1YlgSVFNCumQw_SgNaOvZ68RulEJFkEMvwrC47aayLa1fNCSHYZMT7Ql6il0f1RgTb04SMO5tNTfsJctD3j0NF1DleTpgo4W6Na88; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:52 GMT
+server: cloudflare
+vary: Origin, Accept-Encoding
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e8-8576-7ea8-a304-7437f02e02cb
+cf-ray: a585d20f1e6c96ab-LOS
+--- body ---
+{"external":{"anonymous_users":false,"apple":false,"azure":false,"bitbucket":false,"discord":false,"facebook":false,"snapchat":false,"figma":false,"fly":false,"github":false,"gitlab":false,"google":false,"keycloak":false,"kakao":false,"linkedin":false,"linkedin_oidc":false,"notion":false,"spotify":false,"slack":false,"slack_oidc":false,"workos":false,"twitch":false,"twitter":false,"email":true,"phone":false,"zoom":false},"disable_signup":false,"mailer_autoconfirm":true,"phone_autoconfirm":false,"sms_provider":"twilio","saml_enabled":false,"saml_private_key_next_configured":true,"passkeys_enabled":false}
+----------------------------------------
+### GET https://cdn.onlyfakeai.ru/auth/v1/health -> HTTP 401 (101 bytes)
+HTTP/2 401 
+content-type: application/json;charset=UTF-8
+content-length: 101
+sb-request-id: 01a1c5e8-8772-7b68-a519-cfbb507c3e8e
+set-cookie: __cf_bm=JlPGpKXyUJl1BAqq0dN1PLDJzL36tTf9tNM4ls_MR9g-1794321713.0071712-1.0.1.1-IoqUwU.o.bUC7ngozkeEXF76eGWPRxIv9STdin.EWlb4jaDRmLA.E3XNYSwunfOxXZq7TlPSm79Glpjvr.21AZoN7e9h8N8zi1pOEu7oK9fGM7j8E3nyeETF0WSrpZt.; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:11:53 GMT
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,TRACE,CONNECT
+access-control-max-age: 3600
+sb-error-code: UNAUTHORIZED_MISSING_API_KEY
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+server: cloudflare
+cf-ray: a585d212397996ab-LOS
+--- body ---
+{"message":"No API key found in request","hint":"No `apikey` request header or url param was found."}
+----------------------------------------
+########## 6. Unauthenticated generation endpoints ##########
+### POST https://onlyfakeai.ru/api/generate-qr -> HTTP 401 (35 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d2166b800c01-LOS
+--- body ---
+{"error":"Authentication required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/generate-code128 -> HTTP 401 (35 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d21b6ba595ed-JNB
+--- body ---
+{"error":"Authentication required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/generate-code39 -> HTTP 401 (35 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d2211bfa95f3-JNB
+--- body ---
+{"error":"Authentication required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/generate-datamatrix -> HTTP 401 (35 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d226b95c0c01-LOS
+--- body ---
+{"error":"Authentication required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/generate-itf -> HTTP 401 (35 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d2305c3a95fb-JNB
+--- body ---
+{"error":"Authentication required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/generate-pdf417 -> HTTP 401 (35 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d23e5a424920-LOS
+--- body ---
+{"error":"Authentication required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/generate-signature -> HTTP 200 (61010 bytes)
+HTTP/2 200 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d244ced44920-LOS
+--- body ---
+{"bias":0.606,"color":"#0c1a30","image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABNYAAAGwCAYAAABl4OhfAACrwUlEQVR4nOz9e3xdZ3Un/n/Weo5k62bHcRJbsjFN4tRBiSw5iiEBgkIJJEyh0EkUKJRyaZPwgzK/ZIbvTC/TOqZTyvymHTJDy+RCgf5aKOTAtFzaJjRARAokJI4tO5iY3CDYku3EcWxJli3tZ63vH88+kuz4JlvSOUf6vF8vv5yc50ja1j5nn73XXheAiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
+----------------------------------------
+### GET https://onlyfakeai.ru/api/generate-qr?text=audit&data=audit -> HTTP 405 (0 bytes)
+HTTP/2 405 
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d273feb2b14b-LOS
+--- body ---
+
+----------------------------------------
+########## 7. remove-background without auth (multipart) ##########
+### POST https://onlyfakeai.ru/api/remove-background -> HTTP 500 (105 bytes)
+HTTP/2 500 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d288aeae95ed-JNB
+--- body ---
+{"error":"Failed to remove background","details":"Background removal service responded with status: 500"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/remove-background -> HTTP 500 (145 bytes)
+HTTP/2 500 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585d291ab5895ec-JNB
+--- body ---
+{"error":"Failed to remove background","details":"Content-Type was not one of \"multipart/form-data\" or \"application/x-www-form-urlencoded\"."}
+----------------------------------------
+########## 8. OIDC callback handling ##########
+GET /api/auth/telegram-oidc/callback -> 307
+location: https://onlyfakeai.ru/en/login?error=telegram_oidc_invalid_state
+
+GET /api/auth/telegram-oidc/callback?code=x&state=y -> 307
+location: https://onlyfakeai.ru/en/login?error=telegram_oidc_invalid_state
+
+GET /api/auth/telegram-oidc/callback?error=access_denied&state=../../evil -> 307
+location: https://onlyfakeai.ru/en/login?error=telegram_oidc_denied
+
+GET /api/auth/telegram-oidc/start?locale=de&redirect=/evil.example -> 307
+location: https://oauth.telegram.org/auth?client_id=<telegram-client-id>&redirect_uri=https%3A%2F%2Fonlyfakeai.ru%2Fapi%2Fauth%2Ftelegram-oidc%2Fcallback&response_type=code&scope=openid+profile+phone&state=LuElylZaT1tXJSr7MhAieA&code_challenge=cAQEItPwFbz5jWPMz9KI904SXAe0kMN8EriQ-nVNqK4&code_challenge_method=S256
+set-cookie: tg_oidc_flow=%7B%22codeVerifier%22%3A%22gtE0GdkroNpwwq2DcHjxH4wV_slHTp_ekFYF7e5_Ry4%22%2C%22csrfState%22%3A%22LuElylZaT1tXJSr7MhAieA%22%2C%22locale%22%3A%22de%22%7D; Path=/api/auth/telegram-oidc; Expires=Tue, 10 Nov 2026 14:47:20 GMT; Max-Age=300; Secure; HttpOnly; SameSite=lax
+
+########## 9. Next.js version fingerprint from chunks ##########
+chunk webpack-3219caacd565a7bb -> 200 bytes=3517
+chunk main-app-ccdb2cd92e15df7d -> 200 bytes=519
+chunk 4bd1b696-1fc9c04a2f3113b7 -> 200 bytes=168414
+########## 10. source map exposure ##########
+GET /_next/static/chunks/app/page-bf5f8970043f7336.js.map -> 404 bytes=14946 head=<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/>
+GET /_next/static/chunks/app/layout-1ae860a63767d4a9.js.map -> 404 bytes=14948 head=<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/>
+GET /_next/static/chunks/webpack-3219caacd565a7bb.js.map -> 404 bytes=14941 head=<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/>
+GET /_next/static/S2HurGa5cGUpA5514zy3f/_buildManifest.js.map -> 404 bytes=14946 head=<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/>
+########## 11. RPC get_jobs_time_series signature attempts ##########
+get_jobs_time_series {} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series without parameters in t
+get_jobs_time_series {"days":7} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter days or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(days) in the schema ca
+get_jobs_time_series {"p_days":7} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter p_days or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(p_days) in the schem
+get_jobs_time_series {"period":"7 days"} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter period or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(period) in the schem
+get_jobs_time_series {"interval":"7 days"} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter interval or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(interval) in the s
+get_jobs_time_series {"p_interval":"7 days"} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter p_interval or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(p_interval) in t
+get_jobs_time_series {"p_period":"7 days"} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter p_period or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(p_period) in the s
+get_jobs_time_series {"time_series":true} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter time_series or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(time_series) in
+get_jobs_time_series {"limit":7} -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs_time_series with parameter limit or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.get_jobs_time_series(limit) in the schema 

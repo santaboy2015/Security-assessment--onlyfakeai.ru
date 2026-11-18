@@ -1,0 +1,520 @@
+script.js lines=2266 bytes=98471
+
+===== lines containing innerHTML =====
+444: content.innerHTML = `
+503: pagination.innerHTML = `
+511: content.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">No profiles found</div>';
+533: content.innerHTML = `
+581: pagination.innerHTML = `
+589: content.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">No jobs found</div>';
+857: document.getElementById('modal-body').innerHTML = `
+961: document.getElementById('modal-body').innerHTML = `
+1086: content.innerHTML = `
+1116: content.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">No admins found</div>';
+1208: body.innerHTML = 'Loading...';
+1215: body.innerHTML = '<div style="color: #666;">No API keys yet</div>';
+1219: body.innerHTML = `
+1239: body.innerHTML = '<div style="color: #666;">Failed to load API keys</div>';
+1337: summary.innerHTML = data.leaderboard.map(row => `
+1352: summary.innerHTML = '<div class="empty">No assignments yet</div>';
+1359: filterSelect.innerHTML = '<option value="">All Admins</option>' +
+1368: content.innerHTML = `
+1395: content.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">No activity recorded yet</div>';
+1649: select.innerHTML = [
+1666: container.innerHTML = '<div class="loading">No admin credit logs</div>';
+1670: container.innerHTML = `
+1910: document.getElementById('analytics-top-by-date').innerHTML = topRows
+2048: document.getElementById('analytics-heatmap').innerHTML = cells.join('');
+2051: document.getElementById('analytics-heatmap-legend').innerHTML = max > 0
+2152: document.getElementById('analytics-failure-hotspots').innerHTML = hotspots.length
+2210: container.innerHTML = '<div class="loading">No jobs in this range</div>';
+2214: container.innerHTML = `
+
+===== escapeHtml definition =====
+function escapeHtml(value) {
+    if (value === null || value === undefined) return '';
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+===== renderProfiles / renderJobs functions (first 6000 chars) =====
+
+----- renderJobs @char 76959 -----
+function renderJobsByDate(data, rows) {
+    const { buckets, bucketOf } = getAnalyticsBuckets(data.startDate, data.days);
+    const comboOf = row => `${row.country} · ${formatDocumentType(row.document_type)}`;
+
+    const topCombos = [...sumBy(rows, comboOf).entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, ANALYTICS_TOP_COMBOS)
+        .map(([combo]) => combo);
+    const topComboSet = new Set(topCombos);
+
+    // counts[bucket][combo], plus per-bucket totals for every combo (not just the top ones)
+    const counts = new Map(buckets.map(bucket => [bucket.key, new Map()]));
+    rows.forEach(row => {
+        const bucket = counts.get(bucketOf(row.date));
+        if (!bucket) return;
+        const combo = comboOf(row);
+        bucket.set(combo, (bucket.get(combo) || 0) + row.count);
+    });
+
+    const { gridColor, textColor, tint } = getAnalyticsThemeColors();
+    const datasets = topCombos.map((combo, i) => ({
+        label: combo,
+        data: buckets.map(bucket => counts.get(bucket.key).get(combo) || 0),
+        backgroundColor: tint(ANALYTICS_COMBO_COLORS[i % ANALYTICS_COMBO_COLORS.length])
+    }));
+    const otherData = buckets.map(bucket => {
+        let other = 0;
+        counts.get(bucket.key).forEach((count, combo) => {
+            if (!topComboSet.has(combo)) other += count;
+        });
+        return other;
+    });
+    if (otherData.some(value => value > 0)) {
+        datasets.push({ label: 'Other', data: otherData, backgroundColor: ANALYTICS_OTHER_COLOR });
+    }
+
+    const canvasId = 'analytics-by-date';
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
+
+    charts[canvasId] = new Chart(document.getElementById(canvasId).getContext('2d'), {
+        type: 'bar',
+        data: { labels: buckets.map(bucket => bucket.label), datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { display: true, position: 'bottom', labels: { font: { size: 10 }, color: textColor, boxWidth: 12 } },
+                tooltip: {
+                    filter: item => item.raw > 0,
+                    itemSort: (a, b) => b.raw - a.raw,
+                    callbacks: {
+                        footer: items => `Total: ${items.reduce((sum, item) => sum + item.raw, 0)}`
+                    }
+                }
+            },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { maxTicksLimit: 15, font: { size: 10 }, color: textColor } },
+                y: { stacked: true, beginAtZero: true, grid: { color: gridColor }, ticks: { precision: 0, font: { size: 10 }, color: textColor } }
+            }
+        }
+    });
+
+    // Most processed country + document type per date, newest first
+    const topRows = buckets.slice().reverse().map(bucket => {
+        const bucketCounts = [...counts.get(bucket.key).entries()];
+        if (bucketCounts.length === 0) return '';
+        const total = bucketCounts.reduce((sum, [, count]) => sum + count, 0);
+        const [topCombo, topCount] = bucketCounts.sort((a, b) => b[1] - a[1])[0];
+        return `
+            <tr>
+                <td>${escapeHtml(bucket.label)}</td>
+                <td>${escapeHtml(topCombo)}</td>
+                <td>${topCount.toLocaleString()}</td>
+                <td>${total.toLocaleString()}</td>
+                <td>${((topCount / total) * 100).toFixed(0)}%</td>
+            </tr>`;
+    }).join('');
+
+    document.getElementById('analytics-top-by-date').innerHTML = topRows
+        ? `<table>
+                <thead><tr><th>Date</th><th>Most Processed</th><th>Jobs</th><th>Total That ${data.days > 90 ? 'Month' : 'Day'}</th><th>Share</th></tr></thead>
+                <tbody>${topRows}</tbody>
+           </table>`
+        : '<div class="loading">No jobs in this range</div>';
+}
+
+// Stacked bars of active users per date. Daily distinct users can't be summed into a month
+// (one user active on 5 days would count 5 times), so month buckets show the daily average.
+function renderUserSplit(data) {
+    const { buckets, bucketOf } = getAnalyticsBuckets(data.startDate, data.days);
+    const byMonth = data.days > 90;
+    const totals = new Map(buckets.map(bucket => [bucket.key, { newUsers: 0, returningUsers: 0 }]));
+    (data.dailyUsers || []).forEach(day => {
+        const bucket = totals.get(bucketOf(day.date));
+        if (!bucket) return;
+        bucket.newUsers += day.newUsers;
+        bucket.returningUsers += day.returningUsers;
+    });
+
+    const daysInBucket = new Map();
+    for (let i = 0; i < data.days; i++) {
+        const iso = new Date(new Date(`${data.startDate}T00:00:00Z`).getTime() + i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        daysInBucket.set(bucketOf(iso), (daysInBucket.get(bucketOf(iso)) || 0) + 1);
+    }
+    const perBucket = (bucket, field) => {
+        const value = totals.get(bucket.key)[field];
+        return byMonth ? Number((value / daysInBucket.get(bucket.key)).toFixed(1)) : value;
+    };
+
+    const newTotal = (data.dailyUsers || []).reduce((sum, day) => sum + day.newUsers, 0);
+    document.getElementById('analytics-users-split-subtitle').textContent =
+        `${byMonth ? 'Average active users per day, by month' : 'Active users per day'}. New = account created in this range and this is their first job day. ` +
+        `${newTotal.toLocaleString()} new users in this range.`;
+
+    const { gridColor, textColor, tint } = getAnalyticsThemeColors();
+    const canvasId = 'analytics-users-split';
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
+
+    charts[canvasId] = new Chart(document.getElementById(canvasId).getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: buckets.map(bucket => bucket.label),
+            datasets: [
+                { label: 'New', data: buckets.map(bucket => perBucket(bucket, 'newUsers')), backgroundColor: tint('#28a745') },
+                { la
+
+----- loadProfiles @char 12874 -----
+function loadProfiles(page = 1, emailSearch = '', sortBy = currentSortBy, sortOrder = currentSortOrder) {
+    try {
+
+        
+        let url = `/api/profiles?page=${page}&limit=20&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+        if (emailSearch) {
+            url += `&email=${encodeURIComponent(emailSearch)}`;
+        }
+        
+        const response = await makeAuthenticatedRequest(url);
+
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+
+        
+        const content = document.getElementById('profiles-content');
+        const pagination = document.getElementById('profiles-pagination');
+        
+        if (data.data && data.data.length > 0) {
+            content.innerHTML = `
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Actions</th>
+                                <th>Status</th>
+                                <th class="sortable" onclick="sortProfiles('email')" style="cursor: pointer; user-select: none;">
+                                    Email<span class="sort-icon">${getSortIcon('email', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortProfiles('activePlan')" style="cursor: pointer; user-select: none;">
+                                    Active Plan<span class="sort-icon">${getSortIcon('activePlan', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortProfiles('generations_left')" style="cursor: pointer; user-select: none;">
+                                    Generations Left<span class="sort-icon">${getSortIcon('generations_left', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortProfiles('created_at')" style="cursor: pointer; user-select: none;">
+                                    Created<span class="sort-icon">${getSortIcon('created_at', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortProfiles('last_sign_in_at')" style="cursor: pointer; user-select: none;">
+                                    Last Sign In<span class="sort-icon">${getSortIcon('last_sign_in_at', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortProfiles('auto_delete_enabled')" style="cursor: pointer; user-select: none;">
+                                    Auto Delete<span class="sort-icon">${getSortIcon('auto_delete_enabled', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortProfiles('user_id')" style="cursor: pointer; user-select: none;">
+                                    User ID<span class="sort-icon">${getSortIcon('user_id', sortBy, sortOrder)}</span>
+                                </th>
+                                <th>Secret Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.data.map(profile => `
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-small" onclick="editProfile('${profile.user_id}')">Edit</button>
+                                        <button class="btn btn-small" style="background: ${profile.banned ? '#28a745' : '#dc3545'};" onclick="toggleBanProfile('${profile.user_id}', ${profile.banned ? 'true' : 'false'})">${profile.banned ? 'Unban' : 'Ban'}</button>
+                                        ${isSuperAdmin() ? `<button class="btn btn-small btn-danger" onclick="deleteProfile('${profile.user_id}')">Delete</button>` : ''}
+                                    </td>
+                                    <td>${profile.banned ? '<span style="color: #dc3545; font-weight: 600;" title="' + escapeHtml(profile.ban_reason || '') + '">Banned</span>' : '<span style="color: #28a745;">Active</span>'}</td>
+                                    <td>${escapeHtml(profile.email) || 'No email'}</td>
+                                    <td>${getPlanBadge(profile.activePlan)}</td>
+                                    <td>${profile.generations_left || 0}</td>
+                                    <td>${profile.created_at ? new Date(profile.created_at).toLocaleDateString() : 'N/A'}</td>
+                                    <td>${profile.last_sign_in_at ? new Date(profile.last_sign_in_at).toLocaleDateString() : 'Never'}</td>
+                                    <td>${profile.auto_delete_enabled ? 'Yes (' + profile.auto_delete_days + 'd)' : 'No'}</td>
+                                    <td>${profile.user_id ? profile.user_id.substring(0, 8) + '...' : 'N/A'}</td>
+                                    <td>${profile.secret_key ? escapeHtml(profile.secret_key.substring(0, 12)) + '...' : '—'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // Show pagination
+            pagination.classList.remove('hidden');
+            // Search text is typed by the admin: escape it for display, and pass it to
+            // the paging buttons via currentEmailSearch rather than splicing it into onclick
+            pagination.innerHTML = `
+                <div>Page ${data.pagination.page} of ${data.pagination.totalPages} (${data.pagination.total} total)${emailSearch ? ` - Search: "${escapeHtml(emailSearch)}"` : ''}</div>
+                <div>
+                    ${data.pagination.page > 1 ? `<button class="btn" onclick="loadProfiles(${data.pagination.page - 1}, currentEmailSea
+
+----- loadJobs @char 19542 -----
+function loadJobs(page = 1, status = '', sortBy = jobsSortBy, sortOrder = jobsSortOrder) {
+    try {
+        let url = `/api/jobs?page=${page}&limit=20&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+        if (status) url += `&status=${status}`;
+        
+        const response = await makeAuthenticatedRequest(url);
+        const data = await response.json();
+        
+        const content = document.getElementById('jobs-content');
+        const pagination = document.getElementById('jobs-pagination');
+        
+        if (data.data && data.data.length > 0) {
+            content.innerHTML = `
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Actions</th>
+                                <th class="sortable" onclick="sortJobs('id')" style="cursor: pointer; user-select: none;">
+                                    ID<span class="sort-icon">${getSortIcon('id', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortJobs('status')" style="cursor: pointer; user-select: none;">
+                                    Status<span class="sort-icon">${getSortIcon('status', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortJobs('document_type')" style="cursor: pointer; user-select: none;">
+                                    Document Type<span class="sort-icon">${getSortIcon('document_type', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortJobs('country')" style="cursor: pointer; user-select: none;">
+                                    Country<span class="sort-icon">${getSortIcon('country', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortJobs('created_at')" style="cursor: pointer; user-select: none;">
+                                    Created<span class="sort-icon">${getSortIcon('created_at', sortBy, sortOrder)}</span>
+                                </th>
+                                <th class="sortable" onclick="sortJobs('user_id')" style="cursor: pointer; user-select: none;">
+                                    User ID<span class="sort-icon">${getSortIcon('user_id', sortBy, sortOrder)}</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.data.map(job => `
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-small" onclick="editJob('${job.id}')">Edit</button>
+                                        <button class="btn btn-small btn-danger" onclick="deleteJob('${job.id}')">Delete</button>
+                                    </td>
+                                    <td>${job.id.substring(0, 8)}...</td>
+                                    <td><span class="status-${escapeHtml(job.status)}">${escapeHtml(job.status)}</span></td>
+                                    <td>${escapeHtml(job.document_type) || 'N/A'}</td>
+                                    <td>${escapeHtml(job.country) || 'N/A'}</td>
+                                    <td>${new Date(job.created_at).toLocaleDateString()}</td>
+                                    <td>${job.user_id ? job.user_id.substring(0, 8) + '...' : 'N/A'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // Show pagination
+            pagination.classList.remove('hidden');
+            pagination.innerHTML = `
+                <div>Page ${data.pagination.page} of ${data.pagination.totalPages} (${data.pagination.total} total)</div>
+                <div>
+                    ${data.pagination.page > 1 ? `<button class="btn" onclick="loadJobs(${data.pagination.page - 1}, '${status}', '${sortBy}', '${sortOrder}')">Previous</button>` : ''}
+                    ${data.pagination.page < data.pagination.totalPages ? `<button class="btn" onclick="loadJobs(${data.pagination.page + 1}, '${status}', '${sortBy}', '${sortOrder}')">Next</button>` : ''}
+                </div>
+            `;
+        } else {
+            content.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">No jobs found</div>';
+            pagination.classList.add('hidden');
+        }
+    } catch (error) {
+        console.error('Error loading jobs:', error);
+        showError('Failed to load jobs');
+    }
+}
+
+// Filter and refresh functions
+function filterJobs() {
+    const status = document.getElementById('job-status-filter').value;
+    loadJobs(1, status, jobsSortBy, jobsSortOrder);
+}
+
+function refreshProfiles() {
+    loadProfiles(currentPage, currentEmailSearch, currentSortBy, currentSortOrder);
+}
+
+// Email search functions
+function searchProfiles() {
+    const emailInput = document.getElementById('email-search');
+    const emailSearch = emailInput.value.trim();
+    currentEmailSearch = emailSearch;
+    currentPage = 1; // Reset to first page when searching
+    loadProfiles(1, emailSearch, currentSortBy, currentSortOrder);
+}
+
+function clearSearch() {
+    const emailInput = document.getElementById('email-search');
+    emailInput.value = '';
+    currentEmailSearch = '';
+    currentPage = 1;
+    loadProfiles(1, '', currentSortBy, currentSortOrder);
+}
+
+// Sorting functions
+function sortProfiles(column) {
+    if (currentSortBy === column) {
+        // Toggle sort order if same column
+        currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+        // New column, default to ascending
+        currentSortBy = column;
+        currentSortOrder = 'asc';
+    }
+    currentPage = 1; // 
+
+----- renderAnalytics @char 71009 -----
+function renderAnalytics(data) {
+    const rows = data.rows || [];
+
+    // Regular admins get only their own users: no admin picker or cross-admin comparison
+    document.querySelectorAll('.analytics-super-only').forEach(el => {
+        el.style.display = data.restricted ? 'none' : '';
+    });
+    const scopeLabel = document.getElementById('analytics-scope-label');
+    scopeLabel.style.display = data.restricted ? '' : 'none';
+    scopeLabel.textContent = data.restricted ? `Showing users you gave credits to (${data.admin})` : '';
+    populateAnalyticsAdminFilter(data.admins || [], data.admin);
+    renderAdminBreakdown(data.adminBreakdown || [], data.admin);
+    const statusTotals = sumBy(rows, row => row.status);
+    const completed = statusTotals.get('completed') || 0;
+    const failed = statusTotals.get('failed') || 0;
+
+    document.getElementById('analytics-total').textContent = (data.totalJobs || 0).toLocaleString();
+    document.getElementById('analytics-completed').textContent = completed.toLocaleString();
+    document.getElementById('analytics-failed').textContent = failed.toLocaleString();
+    document.getElementById('analytics-success-rate').textContent =
+        completed + failed > 0 ? `${((completed / (completed + failed)) * 100).toFixed(1)}%` : '-';
+    document.getElementById('analytics-countries').textContent = new Set(rows.map(row => row.country)).size.toLocaleString();
+
+    // Quadrant: all document types first, then the 3 busiest document types in this range
+    const topDocumentTypes = [...sumBy(rows, row => row.document_type).entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([documentType]) => documentType);
+
+    createCountryStatusChart('analytics-quad-0', rows);
+    for (let i = 0; i < 3; i++) {
+        const documentType = topDocumentTypes[i];
+        const card = document.getElementById(`analytics-quad-${i + 1}`).closest('.stat-card');
+        card.style.display = documentType ? '' : 'none';
+        if (!documentType) continue;
+        document.getElementById(`analytics-quad-title-${i + 1}`).textContent = formatDocumentType(documentType);
+        createCountryStatusChart(`analytics-quad-${i + 1}`, rows.filter(row => row.document_type === documentType));
+    }
+
+    renderJobsByDate(data, rows);
+    renderUserSplit(data);
+    renderPeakHours(data.hourly || []);
+    renderFailureRate(data, rows);
+
+    analyticsUsers = data.users || [];
+    analyticsTotalUsers = data.totalUsers || 0;
+    analyticsTotalUnwatermarked = data.totalUnwatermarked || 0;
+    analyticsTotalJobs = data.totalJobs || 0;
+    renderTopUsers();
+}
+
+function getAnalyticsThemeColors() {
+    const isDark = currentTheme === 'dark';
+    return {
+        gridColor: isDark ? '#404040' : '#f0f0f0',
+        textColor: isDark ? '#e0e0e0' : '#333',
+        tint: color => (isDark ? getThemeColor(color) : color)
+    };
+}
+
+// Horizontal stacked bars: completed + failed per country, busiest countries on top
+function createCountryStatusChart(canvasId, rows) {
+    const countries = new Map();
+    rows.forEach(row => {
+        if (row.status !== 'completed' && row.status !== 'failed') return;
+        const entry = countries.get(row.country) || { completed: 0, failed: 0 };
+        entry[row.status] += row.count;
+        countries.set(row.country, entry);
+    });
+
+    const top = [...countries.entries()]
+        .sort((a, b) => (b[1].completed + b[1].failed) - (a[1].completed + a[1].failed))
+        .slice(0, ANALYTICS_TOP_COUNTRIES);
+
+    const { gridColor, textColor, tint } = getAnalyticsThemeColors();
+
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
+
+    charts[canvasId] = new Chart(document.getElementById(canvasId).getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: top.map(([country]) => country),
+            datasets: [
+                { label: 'Completed', data: top.map(([, c]) => c.completed), backgroundColor: tint('#28a745') },
+                { label: 'Failed', data: top.map(([, c]) => c.failed), backgroundColor: tint('#dc3545') }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true, position: 'bottom', labels: { font: { size: 10 }, color: textColor } },
+                tooltip: {
+                    callbacks: {
+                        footer: items => {
+                            const c = top[items[0].dataIndex][1];
+                            const total = c.completed + c.failed;
+                            return `Success rate: ${total ? ((c.completed / total) * 100).toFixed(1) : 0}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { stacked: true, beginAtZero: true, grid: { color: gridColor }, ticks: { precision: 0, font: { size: 10 }, color: textColor } },
+                y: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 }, color: textColor } }
+            }
+        }
+    });
+}
+
+// Builds the date buckets for the range: one per day, or one per month for ranges over 90 days
+function getAnalyticsBuckets(startDate, days) {
+    const byMonth = days > 90;
+    const buckets = [];
+    const seen = new Set();
+    const start = new Date(`${startDate}T00:00:00Z`);
+    for (let i = 0; i < days; i++) {
+        const date = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+        const iso = date.toISOString().split('T')[0];
+        const key = byMonth ? iso.slice(0, 7) : iso;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        buckets.push({
+            key,
+            label: date.toLocaleDateString('en-US', byMonth ? { month: 'short', year: 'numeric', timeZone: 'UTC' } : { month: 'short', day: 'numeric', timeZone: 'UTC' })
+        });
+    }
+    return { buckets, bucketOf: date => (byMonth ? date.slice(0, 7) : date) };
+}
+
+function renderJobsByDate(data, rows) {
+    const 
+
+===== user-controlled columns appearing near innerHTML lines =====

@@ -1,0 +1,37 @@
+########## 1. Anon listing scale of public bucket 'photos' (metadata only) ##########
+anon list photos limit=100 -> HTTP 200 bytes=53384
+<stdin>:15: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+total entries returned: 100
+user files (non-placeholder): 99
+image/png files: 99
+total bytes of listed images: 88255130
+timestamp-prefix range: 2026-05-07T00:04:26.686000 -> 2026-05-07T14:35:26.770000
+sample filename patterns (redacted middle):
+   177811..._preview.png
+   177811..._preview.png
+   177811..._preview.png
+   177811..._preview.png
+   177811..._preview.png
+
+########## 2. Anon object read (HEAD only, no content download) for 3 listed user files ##########
+HEAD 1778112266... -> HTTP/2 200 | content-type: image/png | content-length: 557165 | cache-control: private, no-cache
+HEAD 1778112756... -> HTTP/2 200 | content-type: image/png | content-length: 794019 | cache-control: public, max-age=3600
+HEAD 1778113765... -> HTTP/2 200 | content-type: image/png | content-length: 708221 | cache-control: public, max-age=3600
+
+########## 3. secret_key uniqueness oracle check (own profile only) ##########
+PATCH secret_key='audit-secret-unique-10718' -> HTTP 204 : 
+PATCH secret_key='x' -> HTTP 204 : 
+
+########## 4. Control: regular user token role string seen by ops admin API ##########
+GET ops /api/auth/verify -> HTTP 403
+{"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+
+########## 5. GoTrue settings (auth exposure to anonymous) ##########
+GET /auth/v1/settings -> HTTP 200
+{"external":{"anonymous_users":false,"apple":false,"azure":false,"bitbucket":false,"discord":false,"facebook":false,"snapchat":false,"figma":false,"fly":false,"github":false,"gitlab":false,"google":false,"keycloak":false,"kakao":false,"linkedin":false,"linkedin_oidc":false,"notion":false,"spotify":false,"slack":false,"slack_oidc":false,"workos":false,"twitch":false,"twitter":false,"email":true,"phone":false,"zoom":false},"disable_signup":false,"mailer_autoconfirm":true,"phone_autoconfirm":false,"sms_provider":"twilio","saml_enabled":false,"saml_private_key_next_configured":true,"passkeys_enabled":false}
+
+########## 6. Regular user cannot reach ops admin data (summary) ##########
+  /api/profiles -> HTTP 403 : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administr
+  /api/jobs -> HTTP 403 : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administr
+  /api/admin-users -> HTTP 403 : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administr
+  /api/admin-api-keys -> HTTP 403 : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administr

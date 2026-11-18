@@ -1,0 +1,77 @@
+########## 1. 20 rapid POST /api/verify-recaptcha (junk tokens) ##########
+  #1 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #2 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #3 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #4 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #5 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #6 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #7 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #8 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #9 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #10 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #11 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #12 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #13 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #14 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #15 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #16 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #17 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #18 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #19 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+  #20 HTTP 400  {"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid
+elapsed_ms=17906
+
+########## 2. 20 rapid POST /api/auth/telegram-webapp (junk) ##########
+  #1 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #2 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #3 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #4 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #5 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #6 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #7 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #8 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #9 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #10 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #11 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #12 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #13 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #14 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #15 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #16 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #17 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #18 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #19 HTTP 401  {"error":"Invalid Telegram Web App data"}
+  #20 HTTP 401  {"error":"Invalid Telegram Web App data"}
+elapsed_ms=18140
+
+########## 3. 8 rapid signups (unique fake emails, no captcha) ##########
+  signup #1 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #2 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #3 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #4 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #5 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #6 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #7 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+  signup #8 HTTP 200 token=yes {"access_token":"eyJ<redacted-jwt>.eyJpc3
+
+########## 4. 10 rapid wrong-password logins on our test account ##########
+target account: <probe>@dropmail.me
+  login#1 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#2 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#3 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#4 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#5 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#6 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#7 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#8 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#9 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+  login#10 HTTP 400 {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+
+########## 5. Password policy checks ##########
+  password '123' -> HTTP 422 {"code":422,"error_code":"weak_password","msg":"Password should be at least 6 characters.","weak_password":{"reasons":["length"]}}
+  password '123456' -> HTTP 200 {"access_token":"eyJ<redacted-jwt>.eyJ<redacted-jwt>
+  password 'abcdef' -> HTTP 200 {"access_token":"eyJ<redacted-jwt>.eyJ<redacted-jwt>
+
+########## 6. Password-recovery endpoint enumeration test ##########
+  recover 'test2@x.com' -> HTTP 200 {}
+  recover '<probe>@dropmail.me' -> HTTP 200 {}

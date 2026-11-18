@@ -1,0 +1,146 @@
+########## 1. Create second test account ##########
+signup <probe>@dropmail.me -> HTTP 200
+user2 id: 19a0c133-519c-4eca-8d09-2f51f672d9e0
+email: <probe>@dropmail.me
+token2 len=947 user2=19a0c133-519c-4eca-8d09-2f51f672d9e0
+########## 2. Was a profiles row auto-created for user2? ##########
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=*&user_id=eq.19a0c133-519c-4eca-8d09-2f51f672d9e0 -> HTTP 200 (439 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=8LXVSUCVk4RWxGCtX7CjoLkjvuN6wRmuSj.KmQG.90k-1794321798.998019-1.0.1.1-VK_4WmkmXzQz22fOL3JpVUdu7FEw682QejD9WxU.e_v5GDDLTZbZu8Ukg3EW4QhbBzRy1ePL_R2qVWDJTLpp0amPZRj963G0NDCpdQcaHcnjxJ_YcYQNNUH2jL4m2KZj; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:19 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 19a0c133-519c-4eca-8d09-2f51f672d9e0
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-d75b-724c-93c0-e55f8e55df32
+cf-ray: a585d42baa3295f8-JNB
+--- body ---
+[{"user_id":"19a0c133-519c-4eca-8d09-2f51f672d9e0","activePlan":"-","generations_left":0,"last_payment_date":null,"payment_status":null,"auto_delete_enabled":false,"auto_delete_days":30,"email":"<probe>@dropmail.me","created_at":"2026-11-10T14:43:17.973394+00:00","last_sign_in_at":"2026-11-10T14:43:18.061841+00:00","role":"user","secret_key":null,"remarks":null,"banned":false,"banned_at":null,"banned_by":null,"ban_reason":null}]
+----------------------------------------
+########## 3. INSERT privileged profile for user2 (fresh account born admin) ##########
+### POST https://cdn.onlyfakeai.ru/rest/v1/profiles -> HTTP 409 (120 bytes)
+HTTP/2 409 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=LisL.NsoUqqp.bwioxDgVy9dJnGmqa9WwNquzAXkk9w-1794321799.5523167-1.0.1.1-TOoU5nglGArdaUTBIqdzmHQOJP3TScwmQSOvd4s.I17sA_RMZCOSzQKN0ZA_GD.O3gOgj1HkMeIp4D5C.CpvkvyWg1uiq6qT9BKulvkKmpunHOf7mssrn04CRuPWfbe1; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:19 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 19a0c133-519c-4eca-8d09-2f51f672d9e0
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-d983-74d6-866d-fb8c46c7b061
+cf-ray: a585d42f18294920-LOS
+--- body ---
+{"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"profiles_pkey\""}
+----------------------------------------
+########## 4. INSERT privileged profile with a random (unowned) user_id ##########
+### POST https://cdn.onlyfakeai.ru/rest/v1/profiles -> HTTP 403 (121 bytes)
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=6stX3WvC43sp2qeoATqqpK4Pk9TXJdNhvs4_pbBc3sc-1794321800.1735704-1.0.1.1-35Rc4kbL.4H94LoLsETm3N6xDU5jqHEyXFE_IBggGPvYWckt4coCSnxizGu3BBbWp7LKCQPyQrYwRUrCl.qnIrbnQGsMYWAI6Pgdrt7d3v3VXJ9svWjA6tQio6YjFRv4; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:20 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 19a0c133-519c-4eca-8d09-2f51f672d9e0
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-dbf1-7698-b55c-23b69437fe99
+cf-ray: a585d4330d9f7a78-LOS
+--- body ---
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy for table \"profiles\""}
+----------------------------------------
+########## 5. UPSERT on own (first) profile with admin role - merge-duplicates ##########
+### POST https://cdn.onlyfakeai.ru/rest/v1/profiles?on_conflict=user_id -> HTTP 400 (106 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=rbsnLpeuUBOOTXfm7QovbQgb8RIRrOww5sEWh55vP5k-1794321800.7570682-1.0.1.1-Bs5t9mmfijGSYma4Q4l7n2IQlOa.YEAClbtqlNiyiCIXdil78S39594ERbHcIIB1qaZVOzGFwBIcKQf6B1nD_sYc8jljK4kPaJMEDZLsr9lZyMGVmx4cRHiC15Kiz6T4; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:20 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-de3a-7190-825a-a652c19d35ce
+cf-ray: a585d436afdc6062-LOS
+--- body ---
+{"code":"P0001","details":null,"hint":null,"message":"Not authorized to change privileged profile fields"}
+----------------------------------------
+########## 6. UPSERT on own profile with only privileged cols (no insert-time trigger gap?) ##########
+### POST https://cdn.onlyfakeai.ru/rest/v1/profiles?on_conflict=user_id -> HTTP 201 (2 bytes)
+HTTP/2 201 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=LuH2mMDbPHeQeCV0KvFwUsPesKogkD.pj6sYDUPAA_w-1794321801.4136112-1.0.1.1-KIhDOHulKJvlBzsqanRXEgP_2aH_rYAgbtLtJN3o8DHNl_fDcpxabnlmzcNLzX39Q0TbUZWdq5y9gnG1BpaU3Z5PFvJkMSuoavGbY7bpi_CKXMlV5lawMIVsmfvBGEgp; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:21 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-e0c9-7b88-ab27-2c35adbe935d
+cf-ray: a585d43acd0696ab-LOS
+--- body ---
+[]
+----------------------------------------
+########## 7. Re-read own profile to verify current privileges ##########
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role,activePlan,generations_left,payment_status&user_id=eq.23c8fb62-49c5-42d9-b031-906b97cd1cb4 -> HTTP 200 (126 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=dXAZiVXFqAVMMoHZx6KmNFmZ1MVv7_kYshVE_bxwviw-1794321802.5411978-1.0.1.1-dM6Z4X0HzkuiWZjWnveqTo7N48oIT96br0cMTfiO3t3_IblnAHceQsvbTNekwe9x5moaJXxKKuGNJn6uaMGmaZstWrV8oCwb6f8RHJIL3FJwrvsSfAXjY.7.emJenY8H; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:22 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-e533-7d72-abca-ce9b5fe2887a
+cf-ray: a585d441de6495ff-JNB
+--- body ---
+[{"user_id":"23c8fb62-49c5-42d9-b031-906b97cd1cb4","role":"user","activePlan":"-","generations_left":0,"payment_status":null}]
+----------------------------------------
+########## 8. PATCH attempt on user2 profile as user2 (role=admin) ##########
+### PATCH https://cdn.onlyfakeai.ru/rest/v1/profiles?user_id=eq.19a0c133-519c-4eca-8d09-2f51f672d9e0 -> HTTP 400 (106 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=TRyK0Xq.LPIXLDQVjbG3HRMhwnlTHiJnVw6zmeOsdgI-1794321803.0889978-1.0.1.1-dqNggCspTfB2ByEHJTbmLgujXYyrcCfPus9HpTZJ4cDrEOYhFor6dnesvnGtwLSa5RZTYESjK6lO4LZoFSkopNrDJemOCtUVPoF.f8k0ek_g17WpKHLUhUUwv.zC6C5K; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:23 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 19a0c133-519c-4eca-8d09-2f51f672d9e0
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-e754-73a8-b9d9-886720c7cb67
+cf-ray: a585d4454b76b14b-LOS
+--- body ---
+{"code":"P0001","details":null,"hint":null,"message":"Not authorized to change privileged profile fields"}
+----------------------------------------
+########## 9. Try UPDATE on another user's row (user2 tries to modify user1) ##########
+### PATCH https://cdn.onlyfakeai.ru/rest/v1/profiles?user_id=eq.23c8fb62-49c5-42d9-b031-906b97cd1cb4 -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=bNOKu5NqUEffsPMzjyVupo4frl7xvhAfYmyIY5AuMD4-1794321803.7937016-1.0.1.1-aij_WWnXkVWAyqcxBREnyyHb7a8hstpnDfMroUK7ctFQSuio3XITPvlpSX0IuM9bs2nGz5D_3rIybk5QurTUuX.eJt1AbIGvv8XZL_Q.qQjFshgQTLT3aMkM_2gVwf2j; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:13:24 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 19a0c133-519c-4eca-8d09-2f51f672d9e0
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e9-ea19-7503-bbb6-6b88d76da364
+cf-ray: a585d449afad95ff-JNB
+--- body ---
+[]
+----------------------------------------
+########## 10. user2 duplicate-signup email enumeration check ##########
+signup same email -> HTTP 422 : {"code":422,"error_code":"user_already_exists","msg":"User already registered"}
+########## 11. user2 password/login checks ##########
+bad login -> HTTP 400 : {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"}
+good login -> HTTP 200 (token present: 1)

@@ -1,0 +1,159 @@
+########## 1. Save ops pages ##########
+index HTTP 200 bytes=51555
+login HTTP 200 bytes=10607
+health HTTP 200
+robots HTTP 200 bytes=2676
+
+########## 2. Scripts / links / forms in login page ##########
+/api/auth/login
+
+########## 3. Scripts / API calls in dashboard page ##########
+<script src="https://cdn.jsdelivr.net/npm/chart.js"
+<script src="script.js"
+--- auth/token hints in dashboard ---
+
+########## 4. Dashboard content markers ##########
+<h1>Admin Dashboard</h1>
+<h3>Total Profiles</h3>
+<h3>Total Jobs</h3>
+<h3>Job Status Distribution</h3>
+<h3>User Activity</h3>
+<h2>Profiles</h2>
+<h2>Jobs</h2>
+<h2>Admins</h2>
+<h2>Credit &amp; Plan Assignment Activity</h2>
+<h3>By Admin</h3>
+<h3>Total Jobs</h3>
+<h3>Completed</h3>
+<h3>Failed</h3>
+<h3>Success Rate</h3>
+<h3>Countries</h3>
+<h3 id="analytics-quad-title-0">All Document Types</h3>
+<h3 id="analytics-quad-title-1">-</h3>
+<h3 id="analytics-quad-title-2">-</h3>
+<h3 id="analytics-quad-title-3">-</h3>
+<h3>Jobs by Date</h3>
+<h3>New vs Returning Users</h3>
+<h3 style="margin-bottom: 0;">Peak Hours</h3>
+<h3>Failure Rate</h3>
+<h3>Top Users &amp; Attempt Abuse</h3>
+<h3>Active Users</h3>
+<h3>No-Watermark Jobs</h3>
+<h3>Attempts per No-Watermark</h3>
+<h3>Flagged Users</h3>
+<h3>Add Admin</h3>
+<h3 id="modal-title">Edit Item</h3>
+id="activity-admin-filter"
+id="activity-chart"
+id="activity-content"
+id="activity-count-label"
+id="activity-end-date"
+id="activity-start-date"
+id="activity-tab"
+id="add-admin-body"
+id="add-admin-modal"
+id="admin-credits-summary"
+id="admins-content"
+id="admins-tab"
+id="analytics-admin-breakdown"
+id="analytics-admin-filter"
+id="analytics-by-date"
+id="analytics-completed"
+id="analytics-countries"
+id="analytics-failed"
+id="analytics-failure-hotspots"
+id="analytics-failure-rate"
+id="analytics-heatmap"
+id="analytics-heatmap-legend"
+id="analytics-heatmap-numbers"
+id="analytics-heatmap-subtitle"
+id="analytics-loading"
+id="analytics-quad-0"
+id="analytics-quad-1"
+id="analytics-quad-2"
+id="analytics-quad-3"
+id="analytics-quad-title-0"
+id="analytics-quad-title-1"
+id="analytics-quad-title-2"
+id="analytics-quad-title-3"
+id="analytics-scope-label"
+id="analytics-success-rate"
+id="analytics-tab"
+id="analytics-top-by-date"
+id="analytics-top-users"
+id="analytics-total"
+id="analytics-users-active"
+id="analytics-users-flagged"
+id="analytics-users-ratio"
+id="analytics-users-sort"
+id="analytics-users-split"
+id="analytics-users-split-subtitle"
+id="analytics-users-subtitle"
+id="analytics-users-unwatermarked"
+id="api-key-admin-email"
+id="api-key-list-body"
+id="api-key-modal"
+id="api-key-new-key-box"
+id="api-key-new-key-value"
+id="dashboard-loading"
+id="dashboard-tab"
+id="edit-modal"
+id="email-search"
+id="jobs-chart"
+id="jobs-content"
+id="jobs-pagination"
+id="jobs-tab"
+
+########## 5. GET probes of likely admin/worker endpoints ##########
+GET /status/test1 -> HTTP 404 (1265b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /status/test1</pre><script>(function(){funct
+GET /status/1 -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /status/1</pre><script>(function(){function 
+GET /process -> HTTP 404 (1260b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /process</pre><script>(function(){function c
+GET /jobs -> HTTP 404 (1257b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /jobs</pre><script>(function(){function c(){
+GET /users -> HTTP 404 (1258b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /users</pre><script>(function(){function c()
+GET /api/users -> HTTP 404 (1262b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/users</pre><script>(function(){function
+GET /api/jobs -> HTTP 401 (33b) : {"error":"Access token required"}
+GET /api/stats -> HTTP 404 (1262b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/stats</pre><script>(function(){function
+GET /api/login -> HTTP 404 (1262b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/login</pre><script>(function(){function
+GET /api/auth/login -> HTTP 404 (1267b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/auth/login</pre><script>(function(){fun
+GET /api/auth -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/auth</pre><script>(function(){function 
+GET /api/broadcast -> HTTP 404 (1266b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/broadcast</pre><script>(function(){func
+GET /api/config -> HTTP 404 (1263b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/config</pre><script>(function(){functio
+GET /api/settings -> HTTP 404 (1265b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/settings</pre><script>(function(){funct
+GET /api/servers -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/servers</pre><script>(function(){functi
+GET /api/workers -> HTTP 404 (1264b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/workers</pre><script>(function(){functi
+GET /api/telegram -> HTTP 404 (1265b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/telegram</pre><script>(function(){funct
+GET /api/logs -> HTTP 404 (1261b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/logs</pre><script>(function(){function 
+GET /api/payments -> HTTP 404 (1265b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/payments</pre><script>(function(){funct
+GET /api/promocodes -> HTTP 404 (1267b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/promocodes</pre><script>(function(){fun
+GET /api/credentials -> HTTP 404 (1268b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/credentials</pre><script>(function(){fu
+GET /api/export -> HTTP 404 (1263b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/export</pre><script>(function(){functio
+GET /api/dashboard -> HTTP 404 (1266b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/dashboard</pre><script>(function(){func
+GET /api/me -> HTTP 404 (1259b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/me</pre><script>(function(){function c(
+GET /dashboard-data -> HTTP 404 (1267b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /dashboard-data</pre><script>(function(){fun
+GET /stats -> HTTP 404 (1258b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /stats</pre><script>(function(){function c()
+
+########## 6. OPTIONS / allowed methods on root & login ##########
+--- OPTIONS /
+HTTP/2 204 
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE
+--- OPTIONS /login
+HTTP/2 204 
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE
+--- OPTIONS /status/test1
+HTTP/2 204 
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE
+--- OPTIONS /process
+HTTP/2 204 
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE
+
+########## 7. Headers of login POST page (same as GET) ##########
+HTTP/2 200 
+content-type: text/html; charset=UTF-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585da2a3895392a-LOS

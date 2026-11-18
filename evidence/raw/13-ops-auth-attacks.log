@@ -1,0 +1,148 @@
+########## 1. Authorization matrix on ops admin API ##########
+  none  GET /api/auth/verify -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/auth/verify -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/auth/verify -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/jobs?page=1 -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/jobs?page=1 -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/jobs?page=1 -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/jobs/stats -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/jobs/stats -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/jobs/stats -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/profiles?page=1 -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/profiles?page=1 -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/profiles?page=1 -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/analytics?timeframe=day -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/analytics?timeframe=day -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/analytics?timeframe=day -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/analytics/admin-activity -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/analytics/admin-activity -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/analytics/admin-activity -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/admin-users -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/admin-users -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/admin-users -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+  none  GET /api/admin-api-keys -> HTTP 401 (33b) : {"error":"Access token required"}
+  own  GET /api/admin-api-keys -> HTTP 403 (148b) : {"error":"Admin privileges required","details":"Your role is 'user', but 'admin' is required.","help":"Contact administrator to upgrade your role."}
+  junk  GET /api/admin-api-keys -> HTTP 403 (157b) : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method none is invalid"}
+
+########## 2. /api/auth/login validation & injection probes (bounded) ##########
+  [empty] HTTP 400 : {"error":"Invalid input","details":[{"type":"field","msg":"Valid email is required","path":"email","location":"body"},{"type":"field","msg":"Password is required","path":"password","location":"body"}]}
+  [email only] HTTP 400 : {"error":"Invalid input","details":[{"type":"field","msg":"Password is required","path":"password","location":"body"}]}
+  [empty password] HTTP 400 : {"error":"Invalid input","details":[{"type":"field","value":"","msg":"Password is required","path":"password","location":"body"}]}
+  [invalid json] HTTP 400 : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Bad Request</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script'
+  [array email (type confusion)] HTTP 400 : {"error":"Invalid input","details":[{"type":"field","value":"a@b.c","msg":"Valid email is required","path":"email","location":"body"}]}
+  [nosql-style object] HTTP 400 : {"error":"Invalid input","details":[{"type":"field","value":{"$ne":null},"msg":"Valid email is required","path":"email","location":"body"}]}
+  [sqli email 1] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [sqli email 2] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [sqli email 3] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [sqli password] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+
+########## 3. Limited default-credential checks on /api/auth/login (5 attempts) ##########
+  [admin@onlyfakeai.ru:admin] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [admin@onlyfakeai.ru:password] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [admin@onlyfakeai.ru:Admin123!] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [admin:admin] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+  [support@onlyfakeai.ru:support] HTTP 429 : {"error":"Too many login attempts. Please try again later.","retryAfter":"15 minutes"}
+
+########## 4. Static / source / env / backup file exposure ##########
+  GET /.env -> 404 (1257b)
+  GET /.env.local -> 404 (1263b)
+  GET /.env.production -> 404 (1268b)
+  GET /.git/HEAD -> 404 (1262b)
+  GET /.git/config -> 404 (1264b)
+  GET /package.json -> 404 (1265b)
+  GET /package-lock.json -> 404 (1270b)
+  GET /server.js -> 404 (148b)
+  GET /app.js -> 404 (145b)
+  GET /index.js -> 404 (147b)
+  GET /main.js -> 404 (146b)
+  GET /server/index.js -> 404 (154b)
+  GET /routes.js -> 404 (148b)
+  GET /config.js -> 404 (148b)
+  GET /config.json -> 404 (1264b)
+  GET /database.js -> 404 (150b)
+  GET /db.js -> 404 (144b)
+  GET /supabase.js -> 404 (150b)
+  GET /admin.js -> 404 (147b)
+  GET /auth.js -> 404 (146b)
+  GET /backup.zip -> 404 (1263b)
+  GET /backup.sql -> 404 (1263b)
+  GET /dump.sql -> 404 (1261b)
+  GET /database.sql -> 404 (1265b)
+  GET /export.json -> 404 (1264b)
+  GET /users.json -> 404 (1263b)
+  GET /profiles.json -> 404 (1266b)
+  GET /logs.txt -> 404 (147b)
+  GET /error.log -> 404 (1262b)
+  GET /app.log -> 404 (1260b)
+  GET /api-docs -> 404 (1261b)
+  GET /swagger.json -> 404 (1265b)
+  GET /openapi.json -> 404 (1265b)
+  GET /debug -> 404 (1258b)
+  GET /Dockerfile -> 404 (1263b)
+  GET /docker-compose.yml -> 404 (1271b)
+  GET /styles.css -> 404 (149b)
+
+########## 5. Static path traversal probes ##########
+  GET /..%2f.env -> HTTP 400 (155b) : <html><head><title>400 Bad Request</title></head><body><center><h1>400 Bad Request</h1></center><hr><center>cloudflare</center></body></html>
+  GET /%2e%2e%2f.env -> HTTP 400 (155b) : <html><head><title>400 Bad Request</title></head><body><center><h1>400 Bad Request</h1></center><hr><center>cloudflare</center></body></html>
+  GET /static/..%2f..%2f.env -> HTTP 400 (155b) : <html><head><title>400 Bad Request</title></head><body><center><h1>400 Bad Request</h1></center><hr><center>cloudflare</center></body></html>
+  GET /..%2f..%2fetc%2fpasswd -> HTTP 400 (155b) : <html><head><title>400 Bad Request</title></head><body><center><h1>400 Bad Request</h1></center><hr><center>cloudflare</center></body></html>
+  GET /%2e%2e/%2e%2e/etc/passwd -> HTTP 400 (155b) : <html><head><title>400 Bad Request</title></head><body><center><h1>400 Bad Request</h1></center><hr><center>cloudflare</center></body></html>
+  GET /script.js/../.env -> HTTP 404 (1270b) : <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /script.js/../.env</pre><script>(function(){
+
+########## 6. Forged-JWT matrix against ops admin API ##########
+variant alg_none len 307
+variant alg_none_admin len 176
+variant hs256_secret len 351
+variant hs256_supabase len 351
+variant hs256_sb_publishab len 351
+variant hs256_jwt_secret len 351
+variant hs256_your-secret- len 351
+variant hs256_onlyfakeai len 351
+variant hs256_admin len 351
+variant hs256_changeme len 351
+  opsjwt_alg_none_admin /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_alg_none_admin /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_alg_none_admin /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_alg_none /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_alg_none /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_alg_none /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_admin /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_admin /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_admin /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_changeme /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_changeme /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_changeme /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_jwt_secret /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_jwt_secret /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_jwt_secret /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_onlyfakeai /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_onlyfakeai /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_onlyfakeai /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_sb_publishab /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_sb_publishab /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_sb_publishab /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_secret /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_secret /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_secret /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_supabase /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_supabase /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_supabase /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_your-secret- /api/auth/verify -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_your-secret- /api/jobs?page=1 -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+  opsjwt_hs256_your-secret- /api/admin-users -> HTTP 403 : {"error":"Invalid or expired token","details":"invalid JWT: unable to parse or verify signature, token signature is invalid: signing method 
+
+########## 7. CORS behaviour of ops admin API ##########
+HTTP/2 204 
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE
+access-control-allow-headers: authorization,content-type
+HTTP/2 200 
+access-control-allow-origin: *
+
+########## 8. Ops server info leak ##########
+HTTP/2 200 
+server: cloudflare
+access-control-allow-origin: *
+HTTP/2 404 
+server: cloudflare

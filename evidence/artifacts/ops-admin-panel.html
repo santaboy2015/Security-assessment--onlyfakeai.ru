@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #fff;
+            --bg-tertiary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --border-color: #e0e0e0;
+            --border-light: #ddd;
+            --shadow: rgba(0,0,0,0.1);
+            --shadow-light: rgba(0,0,0,0.05);
+            --accent: #007bff;
+            --accent-hover: #0056b3;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --chart-grid: #f0f0f0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3a3a3a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #404040;
+            --border-light: #505050;
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-light: rgba(0,0,0,0.2);
+            --accent: #4a9eff;
+            --accent-hover: #357abd;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --chart-grid: #404040;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .theme-icon {
+            font-size: 1rem;
+        }
+
+        .nav {
+            background: var(--bg-secondary);
+            padding: 0 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .nav-tab:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow);
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeframe-controls {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .timeframe-controls label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .timeframe-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .timeframe-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-light);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .timeframe-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .timeframe-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .chart-small {
+            height: 150px;
+        }
+
+        .stats-grid-enhanced {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-light);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .content {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        .table-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .table-container::after {
+                opacity: 1;
+            }
+
+            .table-container::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .table-container::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+
+            .table-container::-webkit-scrollbar-thumb {
+                background: #c1c1c1;
+                border-radius: 4px;
+            }
+
+            .table-container::-webkit-scrollbar-thumb:hover {
+                background: #a8a8a8;
+            }
+        }
+
+        .content-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .content-header h2 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .modal-actions {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .modal-action-btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            min-height: 2.75rem;
+            border-radius: 6px;
+        }
+
+        /* Activity tab layout */
+        .activity-head {
+            padding: 1rem 1.5rem 0.25rem;
+        }
+
+        .activity-head h2 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .activity-head p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .activity-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 1.5rem 0;
+        }
+
+        .activity-preset-btn {
+            padding: 0.4rem 0.9rem;
+            border: 1px solid var(--border-light);
+            border-radius: 999px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .activity-preset-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .activity-preset-btn.active {
+            background: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+
+        .activity-filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 1rem 1.25rem;
+            margin: 1rem 1.5rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .filter-field label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--text-secondary);
+        }
+
+        .filter-field select,
+        .filter-field input[type="date"] {
+            height: 36px;
+            padding: 0 0.6rem;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            min-width: 160px;
+        }
+
+        .filter-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .activity-filters .btn {
+            height: 36px;
+        }
+
+        .activity-section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.25rem 1rem;
+            margin: 1.5rem 1.5rem 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .activity-section-title .range-label {
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .activity-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 0 1.5rem;
+        }
+
+        .activity-summary .stat-card {
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border-color);
+            box-shadow: none;
+        }
+
+        .activity-summary .stat-card h3 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .activity-summary .empty {
+            grid-column: 1 / -1;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        #activity-content {
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .activity-presets { margin: 1rem 1rem 0; }
+            .activity-filters { margin: 1rem; }
+            .activity-head, .activity-section-title { margin-left: 1rem; margin-right: 1rem; padding-left: 0; padding-right: 0; }
+            .activity-summary { margin: 0 1rem; }
+            .filter-field, .filter-field select, .filter-field input[type="date"] { width: 100%; }
+            .filter-actions { margin-left: 0; }
+        }
+
+        /* Analytics tab layout */
+        .analytics-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-summary .stat-card .value {
+            font-size: 1.6rem;
+        }
+
+        .analytics-quadrant {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-quadrant .chart-container {
+            height: 360px;
+        }
+
+        .analytics-wide .chart-container {
+            height: 380px;
+        }
+
+        .analytics-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .analytics-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .analytics-top-table {
+            margin-top: 1rem;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .analytics-top-table table {
+            min-width: 0;
+        }
+
+        /* Two square cards side by side (New vs Returning + Peak Hours) */
+        .analytics-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .analytics-square {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .analytics-square .chart-container {
+            flex: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        /* Hours down the side, weekdays across, so the grid fills the square card */
+        .analytics-heatmap {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 2.75rem repeat(7, minmax(0, 1fr));
+            grid-template-rows: auto repeat(24, minmax(0, 1fr));
+            gap: 2px;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .analytics-heatmap .hm-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .analytics-heatmap .hm-cell {
+            border-radius: 2px;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            overflow: hidden;
+        }
+
+        /* "Show numbers" unchecked: keep the colours, hide the counts (hover still shows them) */
+        .analytics-heatmap.hide-numbers .hm-cell {
+            color: transparent !important;
+        }
+
+        .analytics-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .analytics-heatmap-legend {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .analytics-heatmap-legend .hm-legend-bar {
+            width: 180px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 900px) {
+            .analytics-quadrant { grid-template-columns: 1fr; }
+            .analytics-pair { grid-template-columns: 1fr; }
+            /* A phone-width square is too short for 24 rows, so the cards grow to fit instead */
+            .analytics-square { aspect-ratio: auto; }
+            .analytics-square .chart-container { height: 260px; flex: none; }
+            .analytics-heatmap { grid-template-rows: auto repeat(24, 20px); }
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* Ensure table doesn't get too cramped */
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-card .value {
+                font-size: 1.5rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .btn-small {
+                padding: 0.2rem 0.4rem;
+                font-size: 0.7rem;
+            }
+
+            .content-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .content-header div {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-tab {
+                white-space: nowrap;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            th, td {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .plan-badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.4rem;
+            }
+
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .btn-small {
+                padding: 0.15rem 0.3rem;
+                font-size: 0.65rem;
+            }
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        th.sortable {
+            background: #e9ecef;
+            transition: background-color 0.2s;
+        }
+
+        th.sortable:hover {
+            background: #dee2e6;
+        }
+
+        .sort-icon {
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .plan-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .plan-try { background: #e3f2fd; color: #1565c0; }
+        .plan-light { background: #f3e5f5; color: #7b1fa2; }
+        .plan-medium { background: #fff3e0; color: #ef6c00; }
+        .plan-pro { background: #e8f5e8; color: #2e7d32; }
+        .plan-ultimate { background: #fce4ec; color: #c2185b; }
+        .plan-custom { background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: 1px solid #5a67d8; }
+        .plan-none { background: #f5f5f5; color: #757575; }
+
+        .pagination {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .form-group input:disabled {
+            background: #f5f5f5;
+            color: #6c757d;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .form-group input.error {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+        }
+
+        .form-group input[readonly] {
+            background: #f5f5f5;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .credit-stepper {
+            display: flex;
+            align-items: stretch;
+            gap: 0.5rem;
+        }
+
+        .credit-stepper input {
+            text-align: center;
+            min-height: 2.75rem;
+            flex: 0 0 auto;
+            width: 40%;
+        }
+
+        .stepper-btn {
+            flex: 1;
+            min-height: 2.75rem;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .stepper-btn:hover {
+            filter: brightness(0.92);
+        }
+
+        .stepper-minus {
+            background: #dc3545;
+        }
+
+        .stepper-plus {
+            background: #28a745;
+        }
+
+        .credit-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f8f9fa;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .credit-display .credit-icon {
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .credit-display.final {
+            border-color: #28a745;
+            background: #eaf7ed;
+            color: #1e7e34;
+        }
+
+        .credit-display.final.is-negative {
+            border-color: #dc3545;
+            background: #fbeaea;
+            color: #dc3545;
+        }
+
+        .credit-add-preview {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 0.35rem;
+            text-align: center;
+        }
+
+        .credit-flow {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .credit-flow-box {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .credit-flow-box-label {
+            display: block;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #6c757d;
+            margin-bottom: 0.35rem;
+        }
+
+        .credit-flow .credit-display {
+            font-size: 1.3rem;
+        }
+
+        .credit-flow-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+            padding-top: 1rem;
+            flex-shrink: 0;
+        }
+
+        .credit-flow-arrow-icon {
+            font-size: 1.4rem;
+            color: #adb5bd;
+            line-height: 1;
+        }
+
+        .credit-flow-delta {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #6c757d;
+            white-space: nowrap;
+        }
+
+        .credit-flow-delta.is-positive {
+            color: #28a745;
+        }
+
+        .credit-flow-delta.is-negative {
+            color: #dc3545;
+        }
+
+        @media (max-width: 480px) {
+            .credit-flow {
+                gap: 0.4rem;
+            }
+
+            .credit-flow .credit-display {
+                font-size: 1.05rem;
+                padding: 0.5rem 0.4rem;
+                gap: 0.3rem;
+            }
+
+            .credit-flow-delta {
+                font-size: 0.75rem;
+            }
+        }
+
+        .custom-plan-highlight {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 1rem;
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .form-group {
+                margin-bottom: 0.8rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 0.9rem;
+                padding: 0.4rem;
+            }
+
+            .form-group small {
+                font-size: 0.75rem;
+            }
+
+            .credit-stepper {
+                gap: 0.6rem;
+            }
+
+            .stepper-btn {
+                min-height: 3.25rem;
+                font-size: 1.6rem;
+            }
+
+            .credit-stepper input {
+                min-height: 3.25rem;
+                font-size: 1.1rem;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+
+            .modal-action-btn {
+                width: 100%;
+                min-height: 3.25rem;
+                font-size: 1.05rem;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="theme-icon">◑</span>
+                <span class="theme-text">Dark</span>
+            </button>
+            <button class="theme-toggle" onclick="logout()" style="background: var(--danger); border-color: var(--danger);">
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="nav-tab" onclick="showTab('profiles')">Profiles</button>
+            <button id="nav-tab-jobs" class="nav-tab" onclick="showTab('jobs')">Jobs</button>
+            <button id="nav-tab-admins" class="nav-tab" onclick="showTab('admins')">Admins</button>
+            <button class="nav-tab" onclick="showTab('activity')">Activity</button>
+            <button id="nav-tab-analytics" class="nav-tab" onclick="showTab('analytics')">Analytics</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content">
+            <!-- Timeframe Controls -->
+            <div class="timeframe-controls">
+                <label>Timeframe:</label>
+                <div class="timeframe-selector">
+                    <button class="timeframe-btn active" onclick="setTimeframe('day')">Day</button>
+                    <button class="timeframe-btn" onclick="setTimeframe('month')">Month</button>
+                    <button class="timeframe-btn" onclick="setTimeframe('year')">Year</button>
+                </div>
+                <div class="loading-spinner" id="dashboard-loading" style="display: none;"></div>
+            </div>
+
+            <!-- Enhanced Stats Grid with Charts -->
+            <div class="stats-grid-enhanced">
+                <div class="stat-card">
+                    <h3>Total Profiles</h3>
+                    <div class="value" id="total-profiles">-</div>
+                    <div class="chart-container chart-small">
+                        <canvas id="profiles-chart"></canvas>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Jobs</h3>
+                    <div class="value" id="total-jobs">-</div>
+                    <div class="chart-container chart-small">
+                        <canvas id="jobs-chart"></canvas>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Job Status Distribution</h3>
+                    <div class="value" id="job-status-count">-</div>
+                    <div class="chart-container chart-small">
+                        <canvas id="job-status-chart"></canvas>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>User Activity</h3>
+                    <div class="value" id="user-activity">-</div>
+                    <div class="chart-container chart-small">
+                        <canvas id="activity-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Profiles Tab -->
+        <div id="profiles-tab" class="tab-content hidden">
+            <div class="content">
+                <div class="content-header">
+                    <h2>Profiles</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <input type="email" id="email-search" placeholder="Search by email..." style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; width: 200px;">
+                        <button class="btn" onclick="searchProfiles()">Search</button>
+                        <button class="btn" onclick="clearSearch()" style="background: #6c757d;">Clear</button>
+                        <button class="btn" onclick="refreshProfiles()">Refresh</button>
+                    </div>
+                </div>
+                <div id="profiles-content" class="loading">Loading...</div>
+                <div id="profiles-pagination" class="pagination hidden"></div>
+            </div>
+        </div>
+
+        <!-- Jobs Tab -->
+        <div id="jobs-tab" class="tab-content hidden">
+            <div class="content">
+                <div class="content-header">
+                    <h2>Jobs</h2>
+                    <div>
+                        <select id="job-status-filter" onchange="filterJobs()">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="completed">Completed</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                        <button class="btn" onclick="refreshJobs()">Refresh</button>
+                    </div>
+                </div>
+                <div id="jobs-content" class="loading">Loading...</div>
+                <div id="jobs-pagination" class="pagination hidden"></div>
+            </div>
+        </div>
+
+        <!-- Admins Tab -->
+        <div id="admins-tab" class="tab-content hidden">
+            <div class="content">
+                <div class="content-header">
+                    <h2>Admins</h2>
+                    <button class="btn" onclick="openAddAdminModal()">Add Admin</button>
+                </div>
+                <div id="admins-content" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Activity Tab -->
+        <div id="activity-tab" class="tab-content hidden">
+            <div class="content">
+                <div class="activity-head">
+                    <h2>Credit &amp; Plan Assignment Activity</h2>
+                    <p>Credits and plan changes assigned by admins. Filter by admin or date range.</p>
+                </div>
+
+                <div class="activity-section-title">
+                    <span>Assigned by admin</span>
+                </div>
+                <div id="admin-credits-summary" class="activity-summary"></div>
+
+                <div class="activity-presets">
+                    <button type="button" class="activity-preset-btn" data-preset="day" onclick="applyActivityPreset('day')">1 Day</button>
+                    <button type="button" class="activity-preset-btn" data-preset="week" onclick="applyActivityPreset('week')">1 Week</button>
+                    <button type="button" class="activity-preset-btn" data-preset="month" onclick="applyActivityPreset('month')">1 Month</button>
+                    <button type="button" class="activity-preset-btn" data-preset="3months" onclick="applyActivityPreset('3months')">3 Months</button>
+                    <button type="button" class="activity-preset-btn" data-preset="year" onclick="applyActivityPreset('year')">1 Year</button>
+                </div>
+
+                <div class="activity-filters">
+                    <div class="filter-field">
+                        <label for="activity-admin-filter">Admin</label>
+                        <select id="activity-admin-filter" onchange="loadActivity()">
+                            <option value="">All Admins</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="activity-start-date">From</label>
+                        <input type="date" id="activity-start-date" onchange="onActivityDateInputChange()" />
+                    </div>
+                    <div class="filter-field">
+                        <label for="activity-end-date">To</label>
+                        <input type="date" id="activity-end-date" onchange="onActivityDateInputChange()" />
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn" onclick="clearActivityFilters()" style="background: #6c757d;">Clear</button>
+                        <button class="btn" onclick="loadActivity()">Refresh</button>
+                    </div>
+                </div>
+
+                <div class="activity-section-title">
+                    <span>Activity log</span>
+                    <span class="range-label" id="activity-count-label"></span>
+                </div>
+                <div id="activity-content" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics-tab" class="tab-content hidden">
+            <div class="timeframe-controls">
+                <label>Range:</label>
+                <div class="timeframe-selector">
+                    <button class="timeframe-btn analytics-range-btn" data-days="7" onclick="setAnalyticsRange(7)">7 Days</button>
+                    <button class="timeframe-btn analytics-range-btn active" data-days="30" onclick="setAnalyticsRange(30)">30 Days</button>
+                    <button class="timeframe-btn analytics-range-btn" data-days="90" onclick="setAnalyticsRange(90)">90 Days</button>
+                    <button class="timeframe-btn analytics-range-btn" data-days="365" onclick="setAnalyticsRange(365)">1 Year</button>
+                </div>
+                <label for="analytics-admin-filter" class="analytics-super-only">Admin:</label>
+                <select id="analytics-admin-filter" class="analytics-super-only" onchange="loadAnalytics()" style="height: 36px; padding: 0 0.6rem; border: 1px solid var(--border-light); border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary);">
+                    <option value="">All Admins</option>
+                    <option value="__none__">No Admin (self-serve)</option>
+                </select>
+                <span id="analytics-scope-label" class="analytics-subtitle" style="display: none;"></span>
+                <div class="loading-spinner" id="analytics-loading" style="display: none;"></div>
+                <button class="btn" onclick="loadAnalytics(true)" style="margin-left: auto;">Refresh</button>
+            </div>
+
+            <!-- Per-admin comparison over the whole range (ignores the Admin filter) -->
+            <div class="stat-card analytics-super-only" style="margin-bottom: 1rem;">
+                <h3>By Admin</h3>
+                <div class="analytics-subtitle">Jobs from users each admin has given credits to. Click a row to filter the tab by that admin.</div>
+                <div class="table-container" id="analytics-admin-breakdown" style="margin-top: 0.75rem;"></div>
+            </div>
+
+            <div class="analytics-summary">
+                <div class="stat-card"><h3>Total Jobs</h3><div class="value" id="analytics-total">-</div></div>
+                <div class="stat-card"><h3>Completed</h3><div class="value" id="analytics-completed" style="color: var(--success);">-</div></div>
+                <div class="stat-card"><h3>Failed</h3><div class="value" id="analytics-failed" style="color: var(--danger);">-</div></div>
+                <div class="stat-card"><h3>Success Rate</h3><div class="value" id="analytics-success-rate">-</div></div>
+                <div class="stat-card"><h3>Countries</h3><div class="value" id="analytics-countries">-</div></div>
+            </div>
+
+            <!-- Completed vs failed per country: all documents + top 3 document types -->
+            <div class="analytics-quadrant">
+                <div class="stat-card">
+                    <h3 id="analytics-quad-title-0">All Document Types</h3>
+                    <div class="analytics-subtitle">Completed vs failed by country</div>
+                    <div class="chart-container"><canvas id="analytics-quad-0"></canvas></div>
+                </div>
+                <div class="stat-card">
+                    <h3 id="analytics-quad-title-1">-</h3>
+                    <div class="analytics-subtitle">Completed vs failed by country</div>
+                    <div class="chart-container"><canvas id="analytics-quad-1"></canvas></div>
+                </div>
+                <div class="stat-card">
+                    <h3 id="analytics-quad-title-2">-</h3>
+                    <div class="analytics-subtitle">Completed vs failed by country</div>
+                    <div class="chart-container"><canvas id="analytics-quad-2"></canvas></div>
+                </div>
+                <div class="stat-card">
+                    <h3 id="analytics-quad-title-3">-</h3>
+                    <div class="analytics-subtitle">Completed vs failed by country</div>
+                    <div class="chart-container"><canvas id="analytics-quad-3"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Jobs per date, stacked by country + document type -->
+            <div class="stat-card analytics-wide">
+                <h3>Jobs by Date</h3>
+                <div class="analytics-subtitle">Stacked by country &middot; document type (top 8, rest grouped as Other)</div>
+                <div class="chart-container"><canvas id="analytics-by-date"></canvas></div>
+                <div class="analytics-top-table table-container" id="analytics-top-by-date"></div>
+            </div>
+
+            <div class="analytics-pair">
+                <!-- Active users per date, split into new and returning -->
+                <div class="stat-card analytics-square">
+                    <h3>New vs Returning Users</h3>
+                    <div class="analytics-subtitle" id="analytics-users-split-subtitle">Active users per day. New = account created in this range and this is their first job day.</div>
+                    <div class="chart-container"><canvas id="analytics-users-split"></canvas></div>
+                </div>
+
+                <!-- Jobs by hour x weekday, in the viewer's local time -->
+                <div class="stat-card analytics-square">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <h3 style="margin-bottom: 0;">Peak Hours</h3>
+                        <label class="analytics-toggle">
+                            <input type="checkbox" id="analytics-heatmap-numbers" checked onchange="toggleHeatmapNumbers(this.checked)">
+                            Show numbers
+                        </label>
+                    </div>
+                    <div class="analytics-subtitle" id="analytics-heatmap-subtitle">Jobs by weekday and hour</div>
+                    <div class="analytics-heatmap" id="analytics-heatmap"></div>
+                    <div class="analytics-heatmap-legend" id="analytics-heatmap-legend"></div>
+                </div>
+            </div>
+
+            <!-- Failure rate over time + the country/document type pairs failing most -->
+            <div class="stat-card analytics-wide" style="margin-top: 1rem;">
+                <h3>Failure Rate</h3>
+                <div class="analytics-subtitle">Failed &divide; (completed + failed) per date, with the worst country &middot; document type pairs</div>
+                <div class="chart-container" style="height: 260px;"><canvas id="analytics-failure-rate"></canvas></div>
+                <div class="analytics-top-table table-container" id="analytics-failure-hotspots"></div>
+            </div>
+
+            <!-- Per-user attempts vs watermark removals, to spot users regenerating without paying -->
+            <div class="stat-card analytics-wide" style="margin-top: 1rem;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 0.75rem;">
+                    <div>
+                        <h3>Top Users &amp; Attempt Abuse</h3>
+                        <div class="analytics-subtitle" id="analytics-users-subtitle">Attempts (all jobs) vs no-watermark downloads per user</div>
+                    </div>
+                    <div class="filter-field">
+                        <label for="analytics-users-sort">Sort by</label>
+                        <select id="analytics-users-sort" onchange="renderTopUsers()">
+                            <option value="attempts">Most attempts</option>
+                            <option value="unwatermarked">Most no-watermark</option>
+                            <option value="ratio">Highest attempts per no-watermark</option>
+                            <option value="flagged">Flagged first</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="analytics-summary" style="margin-top: 1rem;">
+                    <div class="stat-card"><h3>Active Users</h3><div class="value" id="analytics-users-active">-</div></div>
+                    <div class="stat-card"><h3>No-Watermark Jobs</h3><div class="value" id="analytics-users-unwatermarked">-</div></div>
+                    <div class="stat-card"><h3>Attempts per No-Watermark</h3><div class="value" id="analytics-users-ratio">-</div></div>
+                    <div class="stat-card"><h3>Flagged Users</h3><div class="value" id="analytics-users-flagged" style="color: var(--danger);">-</div></div>
+                </div>
+                <div class="table-container" id="analytics-top-users" style="max-height: 480px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Admin Modal -->
+    <div id="add-admin-modal" class="modal hidden" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Admin</h3>
+                <button class="close" onclick="closeAddAdminModal()">&times;</button>
+            </div>
+            <div id="add-admin-body">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="new-admin-email" placeholder="admin@example.com" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="new-admin-password" placeholder="At least 8 characters" />
+                </div>
+            </div>
+            <div style="margin-top: 1rem; text-align: right;">
+                <button class="btn" onclick="submitAddAdmin()">Create</button>
+                <button class="btn" onclick="closeAddAdminModal()" style="margin-left: 0.5rem; background: #6c757d;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div id="api-key-modal" class="modal hidden" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>API Keys &mdash; <span id="api-key-admin-email"></span></h3>
+                <button class="close" onclick="closeApiKeyModal()">&times;</button>
+            </div>
+            <div id="api-key-new-key-box" class="hidden" style="margin-bottom: 1rem; padding: 0.75rem; background: #fff8e1; border: 1px solid #ffca28; border-radius: 4px;">
+                <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">New key created &mdash; copy it now, it won't be shown again:</div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="api-key-new-key-value" readonly style="flex: 1; font-family: monospace; padding: 0.4rem;" onclick="this.select()">
+                    <button class="btn btn-small" onclick="copyNewApiKey()">Copy</button>
+                </div>
+            </div>
+            <div id="api-key-list-body">Loading...</div>
+            <div style="margin-top: 1rem; text-align: right;">
+                <button class="btn" onclick="generateApiKey()">Generate New Key</button>
+                <button class="btn" onclick="closeApiKeyModal()" style="margin-left: 0.5rem; background: #6c757d;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal hidden" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Edit Item</h3>
+                <button class="close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modal-body">Loading...</div>
+            <div class="modal-actions">
+                <button class="btn modal-action-btn" onclick="saveEdit()">Save</button>
+                <button class="btn modal-action-btn" onclick="closeModal()" style="background: #6c757d;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a585d9b5991795ed',t:'MTc5NDMyMjAyNQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a585d9b5991795ed',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

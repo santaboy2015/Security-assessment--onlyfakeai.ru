@@ -1,0 +1,407 @@
+########## 0. Forge manifest ##########
+original header : {'alg': 'ES256', 'kid': '<redacted-kid>', 'typ': 'JWT'}
+original payload: sub=23c8fb62-49c5-42d9-b031-906b97cd1cb4 role=authenticated aud=authenticated exp=1794925103
+alg_none                   len=  808 -> /tmp/forged/alg_none.txt
+alg_none_nodot             len=  807 -> /tmp/forged/alg_none_nodot.txt
+alg_none_service_role      len=  807 -> /tmp/forged/alg_none_service_role.txt
+alg_none_expired           len=  807 -> /tmp/forged/alg_none_expired.txt
+hs256_pubkey               len=  852 -> /tmp/forged/hs256_pubkey.txt
+hs256_supabase             len=  852 -> /tmp/forged/hs256_supabase.txt
+hs256_empty                len=  852 -> /tmp/forged/hs256_empty.txt
+hs256_devsecret            len=  852 -> /tmp/forged/hs256_devsecret.txt
+hs256_userid               len=  852 -> /tmp/forged/hs256_userid.txt
+valid_control              len=  955 -> /tmp/forged/valid_control.txt
+tampered_exp               len=  954 -> /tmp/forged/tampered_exp.txt
+
+########## 1. Control: real token ##########
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 200 (66 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=r6mE_WPwcIByc0kNgxiE5qH31NDef79xV1kNF4vMYDI-1794321350.0719001-1.0.1.1-aVZjmTyzDY7p5S2ikP92aBEWOlEJgYmwEe7qkdtEW5mx5x.e5afJ97gPm2g12cFIeqzaLLqlMHwgOGPf0MuBxSyqNz30Pde4NJg0WxQL_TD7U1pboaikh1Oxl8QRJL_W; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:50 GMT
+server: cloudflare
+vary: Accept-Encoding
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e2-fdbe-7ff2-9cff-e560999824cc
+cf-ray: a585c935eba995ed-JNB
+--- body ---
+[{"user_id":"23c8fb62-49c5-42d9-b031-906b97cd1cb4","role":"user"}]
+----------------------------------------
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 500 (31 bytes)
+HTTP/2 500 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c93d2c3695ed-JNB
+--- body ---
+{"error":"Failed to fetch job"}
+----------------------------------------
+########## 2. REST /rest/v1/profiles with forged tokens ##########
+>>>>> variant: alg_none_expired
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (83 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=1DKZmVq4wXLDOjU9fS5SeE4G1D43qenxdv2tLEN.N_Q-1794321352.1485276-1.0.1.1-mGrlnrmNAGEPn0ESW0mw0F86E_YOK6iDnPXrQcyZ9xi2y7Yv_D7kaYD5pGNy2KPoAM3iEXroqEW_.yL.QGSp7CKBWhmFH3QmFDbb4XpjqnhLLb4SDytfloivzaohWbmo; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:52 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSNoSignatures"
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-05db-7f6b-b578-19b86e613406
+cf-ray: a585c942dd1c95fb-JNB
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSNoSignatures"}
+----------------------------------------
+>>>>> variant: alg_none_nodot
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (137 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=.97s8NHpZjA0dEkr8cgWPuy7CBd.Lj4mehke0VKYZ98-1794321354.4014418-1.0.1.1-xi66pDR8vGFhdsDOn1I_YnxcoJuIVrDketCBwiBOWWgBW8HUSd9DfQYmsxCd6cBBfKHMtV3dRiL9Exk0umYaIi6WmuVCH5DmcDwUIQ8kUWbSTpmgkKLyJa2NjIl3hvRg; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:54 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError (CompactDecodeError Invalid number of parts: Expected 3 parts; got 2)"
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-0ea6-76e7-9b62-a639c5ccbdde
+cf-ray: a585c950fc5595f3-JNB
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError (CompactDecodeError Invalid number of parts: Expected 3 parts; got 2)"}
+----------------------------------------
+>>>>> variant: alg_none_service_role
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (83 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=v_lMvh87UG58Yd8N0Akok1Ag_BWAWgmC4ES2xHPnsVw-1794321354.9975815-1.0.1.1-ijJDu4TOIiD5.CaY.tcZuDfscOfmqT0gZSIiep5iZrGFCtQ9IpYzNGkx210uvmpJw8.5Z7lF0JRgNUGf2CJdgJP9Na6Ul07zqA2Jo2sWvywnZnuKq2XGRu25iMlCZjI9; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:55 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSNoSignatures"
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-10f8-7993-8270-c8ce8b5fea71
+cf-ray: a585c954ad017a78-LOS
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSNoSignatures"}
+----------------------------------------
+>>>>> variant: alg_none
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (83 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=FOORFfCpdsmPpyEVU9c5oypUWEvJM1JLEITqhBydBAE-1794321355.682051-1.0.1.1-ZI3VSundsSVqoQpXaMrwmTFXcJrM_F87t8pBaGQ6xGpVu8U76Bkz87gI6U6qbs.2qEQslLnMl9LaQ_9lwOHiVeOkkgJvwQA.MA_BJZfYXwHl3Cnks87T.gxEo7bENhlV; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:55 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSNoSignatures"
+sb-gateway-version: 1
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-13a9-7053-82c3-f86e4136d2bc
+cf-ray: a585c958fe7e95f3-JNB
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSNoSignatures"}
+----------------------------------------
+>>>>> variant: hs256_devsecret
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (87 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=9Z526zPiE85fc4x1DsyHkRxpN9rsphOxM5Pmzit8C1I-1794321356.9031558-1.0.1.1-x1f.ABfY2XNwfEQwZv772KGu7kV0Am5i9G19RR3UIXxpv0fJ8z2hKYhg1Z5p15BY1mvSqeEXGMF33hfoZ_uIqwS5WD5lz3.Gf7fqRFzh3XLlbhWmwkVkPkP1wD6KRh9u; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:57 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSInvalidSignature"
+sb-gateway-version: 1
+sb-jwt-alg: HS256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-1875-7822-80f6-bf123db66496
+cf-ray: a585c9609d9095ff-JNB
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSInvalidSignature"}
+----------------------------------------
+>>>>> variant: hs256_empty
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (87 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=4jBaMdBovxupFthD1QsI18Q734d47IQaz1CKa6eh8sA-1794321357.4937415-1.0.1.1-4scjm5DJscKxTHkZ2bNSmplUi0KUm2Zr.QpDrK2sGOuI0g0v7MJeo4adWgZvdph5eVh6Nr.VhkiMOFbQHKACkSObudK7DKDFDjrq.0.ZTlLXFHLXIVmpe4sLTqJrOZqi; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:57 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSInvalidSignature"
+sb-gateway-version: 1
+sb-jwt-alg: HS256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-1ab8-7206-a551-52a8d2634852
+cf-ray: a585c9643ff86062-LOS
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSInvalidSignature"}
+----------------------------------------
+>>>>> variant: hs256_pubkey
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (87 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=p1.2x7RsCY1CftJHw.lihklIcz2qiV3ni072WCPVBYo-1794321357.9121356-1.0.1.1-3IOCyXiJMB73VlEsg_ZatIehgl1Oi5WXvZ9e9kAA_MC44ppBHLfuAx6GJMHIwfGbQC2yJOxubc.PEZwdkP6XJAfCyW5qRWnSjBe27dXzWIQt712F2Wk1euvHmAqU9WvH; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:58 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSInvalidSignature"
+sb-gateway-version: 1
+sb-jwt-alg: HS256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-1c5b-773e-8d18-c7822bed411b
+cf-ray: a585c966e98596ab-LOS
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSInvalidSignature"}
+----------------------------------------
+>>>>> variant: hs256_supabase
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (87 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=bPGAEu4Vbf_Be4lvB3UpsA0DXT9GcnOvNNE6qF523EY-1794321358.3518085-1.0.1.1-JGt4jOAZqSjfwY..2aOimYM2RABZAaOghiw8e.Z61S6XiVaJz4mHQh2s.7tS5_d.g2FsoogvMr96wmUbB58gUan1_ZG_J1aNWZvQvgpD4moRJfZe4WUwycdis8SFAQhR; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:58 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSInvalidSignature"
+sb-gateway-version: 1
+sb-jwt-alg: HS256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-1e14-7faa-871a-ff0d4d12b27d
+cf-ray: a585c9698f467a78-LOS
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSInvalidSignature"}
+----------------------------------------
+>>>>> variant: hs256_userid
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (87 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=KQdgQ1c7s8WGov1xqyinjJnFPhRu7O1g6B2hutXWsNU-1794321358.7620885-1.0.1.1-NYIOa5GvAhg3s6zIkbpI2vVTBVlJncG5UiStd6ypXRcAOwYd3T87TMigni5OIAByZCqr0XEdHBKKYCQ4LFZS81ckYkBRCWm6OgZbIwW9aqJF.aOIV.wzSRzEzf0OAJS2; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:58 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSInvalidSignature"
+sb-gateway-version: 1
+sb-jwt-alg: HS256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-1fad-7632-93f7-c001503aaaff
+cf-ray: a585c96c3e2e96ab-LOS
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSInvalidSignature"}
+----------------------------------------
+>>>>> variant: tampered_exp
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id,role&limit=1 -> HTTP 401 (87 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=EQCTarei7kE9HUw3dh.HcHE7LE1k_D8u3fIkSdfCOmM-1794321359.4550898-1.0.1.1-4CGyDinMHUhcvIm7PgQo0faBT3c0xkPc1EUfEARpXLuU6Nk2qqNVfRxlflUTomYUy3I_mTKAC.nJ9yUu94ampPMXnpImSm_7McLre_0JgH7q2O.cdDeiowiEFkzTuAhO; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:05:59 GMT
+server: cloudflare
+vary: Accept-Encoding
+www-authenticate: Bearer error="invalid_token", error_description="JWSError JWSInvalidSignature"
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e3-226c-7cc8-9bd8-32d72aa21a9c
+cf-ray: a585c970780195f9-JNB
+--- body ---
+{"code":"PGRST301","details":null,"hint":null,"message":"JWSError JWSInvalidSignature"}
+----------------------------------------
+########## 3. API oracle /api/no-watermark/test1 with forged tokens ##########
+>>>>> variant: alg_none_expired
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9742ee6b1c6-LOS
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: alg_none_nodot
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9774c59b14b-LOS
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: alg_none_service_role
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c97c1e1e95f8-JNB
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: alg_none
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9819bde95ff-JNB
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: hs256_devsecret
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9872ed295f5-JNB
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: hs256_empty
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c98c1b5cb1c6-LOS
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: hs256_pubkey
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9913bf14920-LOS
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: hs256_supabase
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9951abab1c6-LOS
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: hs256_userid
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9998cdc95f3-JNB
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: tampered_exp
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c99f7add95f8-JNB
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+>>>>> variant: valid_control
+### GET https://onlyfakeai.ru/api/no-watermark/test1 -> HTTP 500 (31 bytes)
+HTTP/2 500 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585c9a5abc195ec-JNB
+--- body ---
+{"error":"Failed to fetch job"}
+----------------------------------------
+########## 4. /api/submit-photoshop-job with forged service_role token ##########
+### POST https://onlyfakeai.ru/api/submit-photoshop-job -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+content-length: 40
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+vary: Accept-Encoding
+cf-ray: a585c9abea4595f3-JNB
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/submit-photoshop-job -> HTTP 401 (40 bytes)
+HTTP/2 401 
+content-type: application/json; charset=utf-8
+content-length: 40
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+vary: Accept-Encoding
+cf-ray: a585c9b229a9b14b-LOS
+--- body ---
+{"error":"Invalid authentication token"}
+----------------------------------------
+########## 5. JWT sanity: tokens without apikey header ##########
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id&limit=1 -> HTTP 401 (101 bytes)
+HTTP/2 401 
+content-type: application/json;charset=UTF-8
+content-length: 101
+sb-request-id: 01a1c5e3-4e9c-7e6f-9bb0-f0bfc52d5afd
+set-cookie: __cf_bm=kFbxc6l9pWJ.S1_e5kjekNXvV72aPWxV5F0f4e_HawU-1794321370.7718313-1.0.1.1-2BufYau4Q_YcttyV573uTC0XI7kOUcg96LBQqDXpahX4aiszk_MKya7KICQPM6UZ77WXGhGAV9zkCkBolvH86SMJc4DOGT559ckyYzPyZUcAgZ_86aebmr.tBIvH1iAV; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:06:10 GMT
+access-control-allow-origin: *
+access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,TRACE,CONNECT
+access-control-max-age: 3600
+sb-error-code: UNAUTHORIZED_MISSING_API_KEY
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+server: cloudflare
+cf-ray: a585c9b74f3795f8-JNB
+--- body ---
+{"message":"No API key found in request","hint":"No `apikey` request header or url param was found."}
+----------------------------------------

@@ -1,0 +1,558 @@
+########## A. REST table exposure (anon) ##########
+anon  jobs -> 200 : []
+anon  orders -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.orders\" does not exist"}
+anon  payments -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.payments\" does not exist"}
+anon  users -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.users\" does not exist"}
+anon  profiles -> 200 : []
+anon  generations -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.generations\" does not exist"}
+anon  portraits -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.portraits\" does not exist"}
+anon  templates -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.templates\" does not exist"}
+anon  subscriptions -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.subscriptions\" does not exist"}
+anon  promo_codes -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.promo_codes\" does not exist"}
+anon  settings -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.settings\" does not exist"}
+anon  config -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.config\" does not exist"}
+anon  admins -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.admins\" does not exist"}
+anon  telegram_users -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.telegram_users\" does not exist"}
+anon  sessions -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.sessions\" does not exist"}
+anon  webhook_logs -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.webhook_logs\" does not exist"}
+anon  broadcasts -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.broadcasts\" does not exist"}
+anon  ban_list -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.ban_list\" does not exist"}
+
+########## B. REST table exposure (authed, our own account) ##########
+authed jobs -> 200 : []
+authed orders -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.orders\" does not exist"}
+authed payments -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.payments\" does not exist"}
+authed users -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.users\" does not exist"}
+authed profiles -> 200 : [{"user_id":"23c8fb62-49c5-42d9-b031-906b97cd1cb4","activePlan":"-","generations_left":0,"last_payment_date":null,"payment_status":null,"auto_delete_enabled":false,"auto_delete_day
+authed generations -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.generations\" does not exist"}
+authed portraits -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.portraits\" does not exist"}
+authed templates -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.templates\" does not exist"}
+authed subscriptions -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.subscriptions\" does not exist"}
+authed promo_codes -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.promo_codes\" does not exist"}
+authed settings -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.settings\" does not exist"}
+authed config -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.config\" does not exist"}
+authed admins -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.admins\" does not exist"}
+authed telegram_users -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.telegram_users\" does not exist"}
+authed sessions -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.sessions\" does not exist"}
+authed webhook_logs -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.webhook_logs\" does not exist"}
+authed broadcasts -> 404 : {"code":"42P01","details":null,"hint":null,"message":"relation \"public.broadcasts\" does not exist"}
+
+########## C. Storage buckets ##########
+### GET https://cdn.onlyfakeai.ru/storage/v1/bucket -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-4179-76bf-8b9d-644b075e6268
+set-cookie: __cf_bm=GPybTyco6l5Ybe8a7NnAfXe9FxohYgLTuGO1k9NW9r4-1794321432.9465764-1.0.1.1-kOyHhr8nTVopq0.cNV7wK__0WCnGupHLF.9jIv5WdS8pfoMhCvW.14ZlycavT_6PQJE2oC3.8XPLvyA8Z.RY.6I3H0nUycIqNoH1sWIw8UwCdxdQ7xtSPnt.MMuDhZRi; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:13 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb3bda6395ec-JNB
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/portraits-public -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-4678-7a5c-93b4-c6656b909699
+set-cookie: __cf_bm=Yoyfs49Nqj4_sCCLXr3piu38Y7sTbOP9e0tohKWNcWU-1794321434.2242837-1.0.1.1-E9_NyngT2uLCkUJS4uE1IPPB0uDnnXqe.EWzkdd8VxgGsSh8F51wcXaEXC9C_nLoOT90_9JzxrI2KSdHMFPwnbs00Wyl2mVeEwKZ9FLhDwXMfHgNGXakmmCK_ANZSKnV; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:14 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb43da7d95f5-JNB
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/photos -> HTTP 200 (1603 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 1603
+sb-request-id: 01a1c5e4-49e5-74b2-aede-79c02ebe701b
+set-cookie: __cf_bm=K6sAr2HFjjR7SLNwrRR0KF6OHUZhIk3hPP6cXVderek-1794321435.0822387-1.0.1.1-K8kJ3FZz_lc2zch7jd9m5r9bl_ugJ0WDxEVY30WhTBV8ptpuM.N_Y_ONKc5j3w5CaXV3ItvrKfd5FFxE4XPqP2gXcIFNppf87cs4DnKTJFUKhusxZ1pb42yi5ycn6lRZ; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:22 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb492c9695f2-JNB
+--- body ---
+[{"name":".emptyFolderPlaceholder","version":"fdba3f53-1c7c-48b4-9c3a-36fb752ff495","id":"fb916262-9e2e-4250-980d-86862baa4e7e","updated_at":"2025-08-20T15:42:57.121Z","created_at":"2025-06-17T22:52:49.291Z","last_accessed_at":"2025-06-17T22:52:49.291Z","metadata":{"eTag":"\"d41d8cd98f00b204e9800998ecf8427e\"","size":0,"mimetype":"application/octet-stream","cacheControl":"max-age=3600","lastModified":"2025-06-17T22:52:50.000Z","contentLength":0,"httpStatusCode":200},"archived_at":null,"is_delete_marker":false,"is_versioned":false},{"name":"1778112266686_preview.png","version":"d77208de-14c7-49b5-bd58-2e01ff98f115","id":"4c52957c-fd29-4705-ac24-31dbab9eb093","updated_at":"2026-05-07T00:04:28.
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/backgrounds -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-67bd-79d7-9efd-5090d1b396e4
+set-cookie: __cf_bm=LREpKxQhvL84mlJCzFavyqWhAwCgFcacu8x0Z5ODVgE-1794321442.7408595-1.0.1.1-vK4SkKELHA3ctfuXflweBEVWpiqeFl.YSE4aRFOseZEmTY84gJHWeJfe5PFw.UYDXhX5tSAhoo671Ok67wXa0bao29N4JCkq.uG_X2hY3WmGxQAw4fJIdU7Y_RczX..2; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:23 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb790af3392a-LOS
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/id -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-6d02-72a9-9bb4-be5554b648de
+set-cookie: __cf_bm=od_cQ5YG0hUn8OjdxHhDZIcK6vkP625b7MdFkhsNC3w-1794321444.0926044-1.0.1.1-tgxcVMIXFvaCn0pT_17RjP3GCiRKBGi8AKbPAn09UGCCaUwusy5HcGoGPoGCw4S8elZEU6frLmyVgm5gxZjYxkp8MteQliZiT6.Wws4g0REy81pgJhiQ2o2nrH2OqfKU; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:24 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb818fa095f2-JNB
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/dl -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-6fbd-71a0-8412-fd5661af7583
+set-cookie: __cf_bm=LpFjHedEHl6rf2Rzo1.KLK0mCi_d3V4BflPTAFWnq5s-1794321444.791706-1.0.1.1-z_en3xJWmkwKRQIJHuLGheG3bDih951qARCD12qjrEdYiA.XndUJkBQrV4u8cryRsNoSdSGv.RQ.gZq7ym3L3I_TJzrAnTQWb2.YP5GhbXxKcf8.vz6m4sp6fCSRwdhh; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:24 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb85eb9f7a78-LOS
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/passport -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-7203-7d17-962c-e9cb4c8d6c74
+set-cookie: __cf_bm=E3guLfwZ3THsnXipYuNuteyf57s01mfsExw5.wZp.Uo-1794321445.3740811-1.0.1.1-HmqpGB4whPEHY3YgC2j.VswSHKHC_219wOiEcrQW9bZzase_KzolzW6I7gOAX1rvsqjlGjTbsjwOUkwEm.lwi7h2vVFuCMfydsDw1ydUEgSnAorRvueN3iCUGGLx4pnv; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:25 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb898c7fb14b-LOS
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/residence -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-7482-7075-b9e7-3aa6b93c7aad
+set-cookie: __cf_bm=MzNSbrysZjbycb0iz6U5_Kh7nXTMXv8NZzlzhuaw9RI-1794321446.0135455-1.0.1.1-mmYGXZulB3wLYzk6xZLbFLKzk2w5KvNeqdTH48Tdx98p8q1yWNVUWpUEEj3zyoEkqQSGzBPUXmfajKY70DPuCYiM28WjQ_qye9S9NiQSiUdICQRZkZXyt7eqpOHDL1ZW; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:26 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb8d8e144920-LOS
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/product -> HTTP 200 (543 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 543
+sb-request-id: 01a1c5e4-7757-7816-b62e-60f62c94d6dd
+set-cookie: __cf_bm=uch4rdZpb_kHc.972LjzVENcN8WQwKmGsI.IRbOskSg-1794321446.7350876-1.0.1.1-hIvX8wdorAPmffCX0Jmzv744L8MsbHjgCdQ4Uh9Jc9iwgNa8SnEW_mMy7y1NUlzy4Uwzb2oVRIDrkDsXc789D9OwAKg.ss8CdtgDwkbOgvO15QjvCJSL0sphsCWt2ECr; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:26 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb920ad495f9-JNB
+--- body ---
+[{"name":"dl-usa","version":null,"id":null,"updated_at":null,"created_at":null,"last_accessed_at":null,"metadata":null,"archived_at":null,"is_delete_marker":null,"is_versioned":null},{"name":"dl","version":null,"id":null,"updated_at":null,"created_at":null,"last_accessed_at":null,"metadata":null,"archived_at":null,"is_delete_marker":null,"is_versioned":null},{"name":"id-usa","version":null,"id":null,"updated_at":null,"created_at":null,"last_accessed_at":null,"metadata":null,"archived_at":null,"is_delete_marker":null,"is_versioned":null}]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/templates -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-7b8a-7bc2-91f3-fc3ed78f276b
+set-cookie: __cf_bm=aqi.ClAURywiFumSwUWNGxtiJK_nkJEet3HVzHdxlrw-1794321447.812343-1.0.1.1-G.UgCpxXwX5nh6vUGBGo48rX9g4lwAaUjEmdVacyf4MGbUQ61PlYGloSkaak0b30M_C4sHq7mlzjftQ4WkjEAHY6tJAmKO8OTsDJFP51NkXrUt9I_FBMzRGikO.LcqME; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:28 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb98cb3595f3-JNB
+--- body ---
+[]
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/list/site-assets -> HTTP 200 (2 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 2
+sb-request-id: 01a1c5e4-7fa7-7258-9b26-6378934f6d88
+set-cookie: __cf_bm=oPG5fZu4zhePqpUiDu4gcXgi5_RQq9RryzypKmLETPk-1794321448.8642204-1.0.1.1-EpO71yq0yb6V5OLVCQyp4E3YChpQFAjZ.P0Q6UhzMPYdJAeWIPcWj9Wxv6l3QJk3ZDCJc5fMC3rQwpOLjlKCX36q8H.LBNiKbXeaSmVc6NbHop2fzk0RQ4cmbSYV9Anw; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:29 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cb9f5af595f2-JNB
+--- body ---
+[]
+----------------------------------------
+
+########## D. Storage anon list (no bearer) ##########
+anon list photos -> 200 : [{"name":".emptyFolderPlaceholder","version":"fdba3f53-1c7c-48b4-9c3a-36fb752ff495","id":"fb916262-9e2e-4250-980d-86862baa4e7e","updated_at":"2025-08-20T15:42:57.121Z","created_at":"2025-06-17T22:52:49.291Z","last_access
+anon list backgrounds -> 200 : []
+anon list portraits-public -> 200 : []
+
+########## E. Storage upload test (own files, cleaned up) ##########
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/backgrounds/vulnrat-audit-1794321400.txt -> HTTP 200 (94 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 94
+sb-request-id: 01a1c5e4-9226-73ce-a3d8-3ba73f179a9b
+set-cookie: __cf_bm=dsL5dwk6aObiMRYVEEjcHFFF1_n46HBXK.FLRjHyuws-1794321453.5973065-1.0.1.1-aBSdb.o3kNnVBnVx8zr5cWzEI3BQwCjFWnAklIBzj_b30QzhIedGtP2uCR0pekVY67rr6yPDY68LfNZ1gkSxHSY9nAXY3AERey8x9lUdP04aBUx8WClJEAhkbtgoyuzX; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:33 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cbbced2195ed-JNB
+--- body ---
+{"Key":"backgrounds/vulnrat-audit-1794321400.txt","Id":"d1babecd-0098-4dbe-85a0-4c3879da4e8e"}
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/photos/vulnrat-audit-1794321400.txt -> HTTP 200 (89 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 89
+sb-request-id: 01a1c5e4-9749-76e3-a42a-0abf2e0ccb93
+set-cookie: __cf_bm=2lKbRRVqZWub3q9jEv5o6t8OH5Nlwq5UskvciSFa5MM-1794321454.9150364-1.0.1.1-QwcQA8aQA6r3iwrHjWytaBsp7x00D1TyrLBe1iVqbQmvcMW7DI6ov5vSmRF2yngqZIEZgo45gIrdu5CsXGYF05nlSK6sqPj1BLgY.vSiUgDhkrYUi6GjEhdeH7q683WQ; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:35 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cbc52d3395ff-JNB
+--- body ---
+{"Key":"photos/vulnrat-audit-1794321400.txt","Id":"f4aae5b3-241c-47ad-b10f-dabc9faad76c"}
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/portraits-public/vulnrat-audit-1794321400.txt -> HTTP 400 (123 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+content-length: 123
+sb-request-id: 01a1c5e4-9c15-73c6-9cbc-a9120d304320
+set-cookie: __cf_bm=xzgAyCOFckibxaQi65udIwVIWL5MpKoKNazMF9qGeRc-1794321456.1409068-1.0.1.1-9tDdm9mp5ET7xe6tRk66_EivJ4Iak_OvLkk.Cg3GHRcGbFiyW5RDbdpUJDqQL0SU8Na5JCQV0pap5FdwyfZIjKsOI084hPCpkDm6Wg5RnrgMhj.mZnXdZHTkMSeSouIN; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:36 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cbccdf6d95ed-JNB
+--- body ---
+{"statusCode":"415","error":"invalid_mime_type","message":"mime type text/plain is not supported","code":"InvalidMimeType"}
+----------------------------------------
+--- public fetch of uploaded probe (if any) ---
+public GET backgrounds -> 200 : vulnrat-audit-test-1794321400
+public GET photos -> 200 : vulnrat-audit-test-1794321400
+public GET portraits-public -> 400 : {"statusCode":"404","error":"not_found","message":"Object not found","code":"NoS
+--- cleanup of our own probe files ---
+### DELETE https://cdn.onlyfakeai.ru/storage/v1/object/backgrounds/vulnrat-audit-1794321400.txt -> HTTP 400 (91 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+content-length: 91
+sb-request-id: 01a1c5e4-b316-7fd0-a4c1-b57b575f4243
+set-cookie: __cf_bm=J8w.KJ9mTowq85CPBk75lkaNM0L5cLset3Nb7yeRXqE-1794321462.0317373-1.0.1.1-L5XSSemLYOJaGjJRv_Uzwf8ZG6Xt5d._ZDk9c0lx4ibBTP.0xXn5awT7o3P2gwUdaBQ_eCbgUvv0uvXWEFUTFdXim0b2.eMkni1dyDeYA97LSNoAgJqC9pTgwIDuA01r; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:42 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cbf19e5295f5-JNB
+--- body ---
+{"statusCode":"403","error":"Unauthorized","message":"Access denied","code":"AccessDenied"}
+----------------------------------------
+### DELETE https://cdn.onlyfakeai.ru/storage/v1/object/photos/vulnrat-audit-1794321400.txt -> HTTP 200 (34 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 34
+sb-request-id: 01a1c5e4-b5fe-7ec7-8fdc-af133af2b04f
+set-cookie: __cf_bm=yFBl0qdHwz4TlYQEKnl_ZuJsxIRdCAV27z5ZQ2Sb6_w-1794321462.7771008-1.0.1.1-M1WeLXD0KnUPz4U3jTHjQcWbKb1oHrn8cns1ojdAySVVKpNH9.kyxmEKmFT2w6vybx8.fhZ_4Ep1aYIsivdcpD.abZGo5eXooqRaIk_JWLYdz8YD69latbb34SLiAevD; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:43 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cbf6488f95ed-JNB
+--- body ---
+{"message":"Successfully deleted"}
+----------------------------------------
+### DELETE https://cdn.onlyfakeai.ru/storage/v1/object/portraits-public/vulnrat-audit-1794321400.txt -> HTTP 400 (88 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+content-length: 88
+sb-request-id: 01a1c5e4-b8dc-709f-b2ef-325dcf1034ca
+set-cookie: __cf_bm=UB7bTIYvvypm7OjDFKiu2adXlwfKYuCiTaBANdzS4co-1794321463.5105476-1.0.1.1-7Pdk30neoznFyn7g0CLjEwnwkrwzHYzWTamUBNCEHDCmSMFjqbqUu5Se7qBQ5.WkaaaYgeSZppzS9ahTJ3aAk4to9TwtevgbGUmhmmoxfzKMm0mRWz9XYnn2rbLqqW38; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:43 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cbfad9da95f5-JNB
+--- body ---
+{"statusCode":"404","error":"not_found","message":"Object not found","code":"NoSuchKey"}
+----------------------------------------
+
+########## F. Signed URL creation test ##########
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/sign/photos/vulnrat-audit-1794321400.txt -> HTTP 400 (88 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+content-length: 88
+sb-request-id: 01a1c5e4-bc43-7d21-91b6-f08b3c790294
+set-cookie: __cf_bm=4vgfUmNd5bDdm.MIRAKB3FMCHsbl6TiKSgkTo_6wO5A-1794321464.3818715-1.0.1.1-EIgV0Mqdkm0UrxCmS0RJTaZ25ue3GV39VpNPavQxQKGfjnnuYVVGWg4ESmJujQw57q3.8ypGubX.kkjcdAMlv1pF5CEoEO7zZ_.hLjC3WKXRY5BEsssf2BgisO9g_2hA; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:44 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cc005fb595f8-JNB
+--- body ---
+{"statusCode":"404","error":"not_found","message":"Object not found","code":"NoSuchKey"}
+----------------------------------------
+### POST https://cdn.onlyfakeai.ru/storage/v1/object/sign/photos/1620000000000_probe.png -> HTTP 400 (88 bytes)
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+content-length: 88
+sb-request-id: 01a1c5e4-c079-755a-aaac-f7c3e079b481
+set-cookie: __cf_bm=aYwckA4Ar3TDtLfQlAPhU.TPhDn5iQ2LRRX5v9YXMXs-1794321465.45947-1.0.1.1-UadCb7Bfs9xUeUZZEMtrbqHuR72bZGRCjYdincMJRxOXbcFQh65ZxxSq3kbkG0XtNAd6A.QgsnbCboq3WNBf9jF1.2Xgwpm6PB5s2wYHf7rXeM8QRCHDIQmrUJquemq5; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:07:45 GMT
+access-control-allow-origin: *
+server: cloudflare
+sb-gateway-mode: direct
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+cf-ray: a585cc071e2595fb-JNB
+--- body ---
+{"statusCode":"404","error":"not_found","message":"Object not found","code":"NoSuchKey"}
+----------------------------------------
+
+########## G. RPC enumeration ##########
+rpc exec_sql -> 404 : {"code":"PGRST202","details":"Searched for the function public.exec_sql without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"m
+rpc run_sql -> 404 : {"code":"PGRST202","details":"Searched for the function public.run_sql without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"me
+rpc sql -> 404 : {"code":"PGRST202","details":"Searched for the function public.sql without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"messag
+rpc admin_users -> 404 : {"code":"PGRST202","details":"Searched for the function public.admin_users without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null
+rpc get_users -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_users without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perha
+rpc get_all_profiles -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_all_profiles without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint"
+rpc is_admin -> 200 : false
+rpc promote -> 404 : {"code":"PGRST202","details":"Searched for the function public.promote without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"me
+rpc set_role -> 404 : {"code":"PGRST202","details":"Searched for the function public.set_role without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"m
+rpc get_profiles -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_profiles without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Pe
+rpc list_users -> 404 : {"code":"PGRST202","details":"Searched for the function public.list_users without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,
+rpc get_user -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_user without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perhap
+rpc admin_get_users -> 404 : {"code":"PGRST202","details":"Searched for the function public.admin_get_users without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":
+rpc grant_admin -> 404 : {"code":"PGRST202","details":"Searched for the function public.grant_admin without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Per
+rpc update_role -> 404 : {"code":"PGRST202","details":"Searched for the function public.update_role without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null
+rpc add_generations -> 404 : {"code":"PGRST202","details":"Searched for the function public.add_generations without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":
+rpc credit -> 404 : {"code":"PGRST202","details":"Searched for the function public.credit without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perhaps 
+rpc get_subscription -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_subscription without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint"
+rpc check_payment -> 404 : {"code":"PGRST202","details":"Searched for the function public.check_payment without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"P
+rpc admin_stats -> 404 : {"code":"PGRST202","details":"Searched for the function public.admin_stats without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null
+rpc get_stats -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_stats without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perha
+rpc delete_user -> 404 : {"code":"PGRST202","details":"Searched for the function public.delete_user without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Per
+rpc ban_user -> 404 : {"code":"PGRST202","details":"Searched for the function public.ban_user without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"m
+rpc unban_user -> 404 : {"code":"PGRST202","details":"Searched for the function public.unban_user without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,
+rpc reset_password -> 404 : {"code":"PGRST202","details":"Searched for the function public.reset_password without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":n
+rpc get_secret -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_secret without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perh
+rpc secrets -> 404 : {"code":"PGRST202","details":"Searched for the function public.secrets without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perhaps
+rpc get_job -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_job without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perhaps
+rpc get_jobs -> 404 : {"code":"PGRST202","details":"Searched for the function public.get_jobs without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":"Perhap
+rpc update_job -> 404 : {"code":"PGRST202","details":"Searched for the function public.update_job without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,
+rpc complete_job -> 404 : {"code":"PGRST202","details":"Searched for the function public.complete_job without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":nul
+rpc claim_generation -> 404 : {"code":"PGRST202","details":"Searched for the function public.claim_generation without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint"
+rpc consume_generation -> 404 : {"code":"PGRST202","details":"Searched for the function public.consume_generation without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hin
+
+########## H. verify-recaptcha fail-closed ##########
+### POST https://onlyfakeai.ru/api/verify-recaptcha -> HTTP 400 (55 bytes)
+HTTP/2 400 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585ccc809ed95ef-JNB
+--- body ---
+{"success":false,"error":"reCAPTCHA token is required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/verify-recaptcha -> HTTP 400 (55 bytes)
+HTTP/2 400 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585cccb0c3496ab-LOS
+--- body ---
+{"success":false,"error":"reCAPTCHA token is required"}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/verify-recaptcha -> HTTP 400 (98 bytes)
+HTTP/2 400 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585cccd0e616062-LOS
+--- body ---
+{"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid-input-response"]}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/verify-recaptcha -> HTTP 400 (98 bytes)
+HTTP/2 400 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585ccd0d89e95ec-JNB
+--- body ---
+{"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid-input-response"]}
+----------------------------------------
+### POST https://onlyfakeai.ru/api/verify-recaptcha -> HTTP 400 (98 bytes)
+HTTP/2 400 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585ccd56b8f95f9-JNB
+--- body ---
+{"success":false,"error":"reCAPTCHA verification failed","error-codes":["invalid-input-response"]}
+----------------------------------------
+
+########## I. Correct telegram OIDC path + locale handling ##########
+GET /api/auth/telegram-oidc/start -> 307
+location: https://oauth.telegram.org/auth?client_id=<telegram-client-id>&redirect_uri=https%3A%2F%2Fonlyfakeai.ru%2Fapi%2Fauth%2Ftelegram-oidc%2Fcallback&response_type=code&scope=openid+profile+phone&state=jUn0cecJg7zVb70vwb0KQg&code_challenge=z3Y5z3zmBerSUQoBb3867ykJq6_BJsC1wNsWhsyu5Aw&code_challenge_method=S256
+set-cookie: tg_oidc_flow=%7B%22codeVerifier%22%3A%22gvViF7qBQYrfQmB3IJV6RMuW8uLTFMLpRoJjauwz9x0%22%2C%22csrfState%22%3A%22jUn0cecJg7zVb70vwb0KQg%22%2C%22locale%22%3A%22en%22%7D; Path=/api/auth/telegram-oidc; Expires=Tue, 10 Nov 2026 14:43:19 GMT; Max-Age=300; Secure; HttpOnly; SameSite=lax
+
+GET /api/auth/telegram-oidc/start?locale=en -> 307
+location: https://oauth.telegram.org/auth?client_id=<telegram-client-id>&redirect_uri=https%3A%2F%2Fonlyfakeai.ru%2Fapi%2Fauth%2Ftelegram-oidc%2Fcallback&response_type=code&scope=openid+profile+phone&state=okgVeklsuXHl6H55_5tcyQ&code_challenge=MrKX0U-zZ5iPpK3EbFZ1L1feYE4el_nazxkdpQu9q-s&code_challenge_method=S256
+set-cookie: tg_oidc_flow=%7B%22codeVerifier%22%3A%22fUNWL9PKVQopdt8bwUupyhm4MiE_6kl_z7xnT4EDX5g%22%2C%22csrfState%22%3A%22okgVeklsuXHl6H55_5tcyQ%22%2C%22locale%22%3A%22en%22%7D; Path=/api/auth/telegram-oidc; Expires=Tue, 10 Nov 2026 14:43:19 GMT; Max-Age=300; Secure; HttpOnly; SameSite=lax
+
+GET /api/auth/telegram-oidc/start?locale=../../evil.com -> 307
+location: https://oauth.telegram.org/auth?client_id=<telegram-client-id>&redirect_uri=https%3A%2F%2Fonlyfakeai.ru%2Fapi%2Fauth%2Ftelegram-oidc%2Fcallback&response_type=code&scope=openid+profile+phone&state=T-mNJris3GZSxgFMG2keWg&code_challenge=RAOoJqV-0sypEYAfTn-APyVLqu22lslaSEdJnl46Te8&code_challenge_method=S256
+set-cookie: tg_oidc_flow=%7B%22codeVerifier%22%3A%22GPjbpyCNWzNi-tmvdppmxgU4yFGpUxflssFnK1iRxA8%22%2C%22csrfState%22%3A%22T-mNJris3GZSxgFMG2keWg%22%2C%22locale%22%3A%22en%22%7D; Path=/api/auth/telegram-oidc; Expires=Tue, 10 Nov 2026 14:43:20 GMT; Max-Age=300; Secure; HttpOnly; SameSite=lax
+
+GET /api/auth/telegram-oidc/start?locale=https://evil.example -> 307
+location: https://oauth.telegram.org/auth?client_id=<telegram-client-id>&redirect_uri=https%3A%2F%2Fonlyfakeai.ru%2Fapi%2Fauth%2Ftelegram-oidc%2Fcallback&response_type=code&scope=openid+profile+phone&state=b7_Sj_jwhs-EhFh4Mv8Yhg&code_challenge=-OgseinMw5u6d7f_obSSiPe68SD1X1LbzSqzJ_qVKOg&code_challenge_method=S256
+set-cookie: tg_oidc_flow=%7B%22codeVerifier%22%3A%22U1PrswGTNw8t0gV7EwBqTb-PJWYlneVYAMTGbRpRg1c%22%2C%22csrfState%22%3A%22b7_Sj_jwhs-EhFh4Mv8Yhg%22%2C%22locale%22%3A%22en%22%7D; Path=/api/auth/telegram-oidc; Expires=Tue, 10 Nov 2026 14:43:21 GMT; Max-Age=300; Secure; HttpOnly; SameSite=lax
+
+GET /api/auth/telegram-oidc/start?locale=%2F%2Fevil.example -> 307
+location: https://oauth.telegram.org/auth?client_id=<telegram-client-id>&redirect_uri=https%3A%2F%2Fonlyfakeai.ru%2Fapi%2Fauth%2Ftelegram-oidc%2Fcallback&response_type=code&scope=openid+profile+phone&state=jt3msVMgRli1IFTTWkc-ZQ&code_challenge=A3M9YSy23QDIn8OTMIG7MdRjYEl3yjdjb66NVrFcKwA&code_challenge_method=S256
+set-cookie: tg_oidc_flow=%7B%22codeVerifier%22%3A%22XDZ-rfFwCDeQHjs402uHqjaE3t_ywfl-v6k334NMX-w%22%2C%22csrfState%22%3A%22jt3msVMgRli1IFTTWkc-ZQ%22%2C%22locale%22%3A%22en%22%7D; Path=/api/auth/telegram-oidc; Expires=Tue, 10 Nov 2026 14:43:21 GMT; Max-Age=300; Secure; HttpOnly; SameSite=lax
+
+
+########## J. CORS reflection test ##########
+### OPTIONS https://onlyfakeai.ru/api/no-watermark/x -> HTTP 204 (0 bytes)
+HTTP/2 204 
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585cceddfb295ed-JNB
+--- body ---
+
+----------------------------------------
+### GET https://onlyfakeai.ru/api/maintenance-status -> HTTP 200 (25 bytes)
+HTTP/2 200 
+content-type: application/json
+server: cloudflare
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+access-control-allow-headers: X-Requested-With, Content-Type, Authorization, X-Client-Info, apikey
+access-control-allow-credentials: true
+cf-ray: a585ccf219e895f3-JNB
+--- body ---
+{"maintenanceMode":false}
+----------------------------------------
+### GET https://cdn.onlyfakeai.ru/rest/v1/profiles?select=user_id&limit=1 -> HTTP 200 (52 bytes)
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+set-cookie: __cf_bm=3fTwVPBtZPsLG3CdEqz9fmtzdHYyB03fXAj_TepXvGs-1794321503.785365-1.0.1.1-wQrNcJfOVWp.VeTAQebmdY1pURbV.q6caPtNhwF6bcQ1MixvsyApjDpo.rrxx_6ZfTFQwjPJUbntDenlId3t7LxexrcVjKtioXmutNRM8eMdvtdpwuOIlt6V737F4j4T; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=cdn.onlyfakeai.ru; Expires=Tue, 10 Nov 2026 15:08:24 GMT
+access-control-allow-origin: https://evil.example
+server: cloudflare
+vary: Accept-Encoding
+access-control-expose-headers: Content-Encoding, Content-Location, Content-Range, Content-Type, Date, Location, Server, Transfer-Encoding, Range-Unit
+sb-gateway-version: 1
+sb-jwt-alg: ES256
+sb-jwt-iss: https://<supabase-project-ref>.supabase.co/auth/v1
+sb-jwt-sub: 23c8fb62-49c5-42d9-b031-906b97cd1cb4
+sb-project-ref: <supabase-project-ref>
+sb-request-id: 01a1c5e5-562e-7536-a135-6997c59e8d36
+cf-ray: a585ccf69d7e95ec-JNB
+--- body ---
+[{"user_id":"23c8fb62-49c5-42d9-b031-906b97cd1cb4"}]
+----------------------------------------

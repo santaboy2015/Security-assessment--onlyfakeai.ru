@@ -1,0 +1,212 @@
+=== script.js endpoint paths ===
+'/api/admin-api-keys
+`/api/admin-api-keys/
+`/api/admin-api-keys?adminUserId=
+'/api/admin-users
+`/api/admin-users/
+'/api/analytics/admin-activity
+`/api/analytics?timeframe=
+'/api/auth/verify
+`/api/jobs/
+`/api/jobs?page=
+`/api/jobs/stats?
+`/api/profiles/
+`/api/profiles?page=
+
+=== fetch calls (context, first 40) ===
+
+=== auth / token handling ===
+
+=== file head (first 3000 bytes) ===
+// Global state
+let currentTab = 'dashboard';
+let currentPage = 1;
+let editingItem = null;
+let editingType = null;
+let currentEmailSearch = '';
+let currentSortBy = 'user_id';
+let currentSortOrder = 'asc';
+let jobsSortBy = 'created_at';
+let jobsSortOrder = 'desc';
+let currentTimeframe = 'day';
+let charts = {};
+let currentTheme = 'light';
+
+// Initialize the dashboard
+document.addEventListener('DOMContentLoaded', function() {
+
+    initializeTheme();
+    
+    // Check authentication
+    if (!checkAuth()) {
+        window.location.href = '/login';
+        return;
+    }
+
+    syncAdminPermissions().finally(loadDashboard);
+});
+
+// Re-derives permission flags from the server (self-heals sessions that logged
+// in before permission flags like isSuperAdmin existed in localStorage).
+async function syncAdminPermissions() {
+    try {
+        const response = await makeAuthenticatedRequest('/api/auth/verify');
+        if (!response.ok) return;
+        const { user } = await response.json();
+        localStorage.setItem('adminIsSuperAdmin', user?.isSuperAdmin ? 'true' : 'false');
+    } catch (error) {
+        console.error('Error syncing admin permissions:', error);
+    }
+
+    const adminsTabButton = document.getElementById('nav-tab-admins');
+    if (adminsTabButton) {
+        adminsTabButton.style.display = isSuperAdmin() ? '' : 'none';
+    }
+
+    const jobsTabButton = document.getElementById('nav-tab-jobs');
+    if (jobsTabButton) {
+        jobsTabButton.style.display = isSuperAdmin() ? '' : 'none';
+    }
+
+}
+
+function isSuperAdmin() {
+    return localStorage.getItem('adminIsSuperAdmin') === 'true';
+}
+
+// Authentication functions
+function checkAuth() {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+        return false;
+    }
+    
+    // Verify token is valid (basic check)
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const now = Date.now() / 1000;
+        
+        if (payload.exp < now) {
+            // Token expired
+            localStorage.removeItem('adminToken');
+            return false;
+        }
+        
+        return true;
+    } catch (error) {
+        // Invalid token
+        localStorage.removeItem('adminToken');
+        return false;
+    }
+}
+
+function logout() {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminIsSuperAdmin');
+    window.location.href = '/login';
+}
+
+// Add authorization header to all API requests
+function makeAuthenticatedRequest(url, options = {}) {
+    const token = localStorage.getItem('adminToken');
+    
+    const defaultOptions = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    };
+    
+    return fetch(url, { ...options, ...defaultOptions });
+}
+
+// Theme management functions
+function initializeTheme() {
+    // Load saved theme 
+=== login.html inline <script> ===
+let currentTheme = 'light';
+
+        // Initialize theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('adminTheme') || 'light';
+            currentTheme = savedTheme;
+            applyTheme(savedTheme);
+        });
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
+            localStorage.setItem('adminTheme', currentTheme);
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            const themeIcon = document.querySelector('.theme-icon');
+            const themeText = document.querySelector('.theme-text');
+            
+            if (theme === 'dark') {
+                themeIcon.textContent = '◐';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '◑';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            const loginBtn = document.getElementById('login-btn');
+            const btnText = loginBtn.querySelector('.btn-text');
+            const spinner = loginBtn.querySelector('.loading-spinner');
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            btnText.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            errorDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store Supabase session token
+                    localStorage.setItem('adminToken', data.access_token);
+                    if (data.refresh_token) {
+                        localStorage.setItem('adminRefreshToken', data.refresh_token);
+                    }
+                    localStorage.setItem('adminIsSuperAdmin', data.user?.isSuperAdmin ? 'true' : 'false');
+                    // Redirect to dashboard
+                    window.location.href = '/';
+                } else {
+                    // Show error
+                    errorDiv.textContent = data.error || 'Login failed';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorDiv.textContent = 'Network error. Please try again.';
+                errorDiv.style.display = 'block';
+            } finally {
+                // Reset loading state
+                loginBtn.disabled = false;
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            }
+        }
+---
+(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a585d9ba6f5795ed',t:'MTc5NDMyMjAyNg=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a585d9ba6f5795ed',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+---

@@ -1,0 +1,130 @@
+########## 1. DNS for discovered hosts ##########
+--- ops.onlyfakeai.ru
+2606:4700:3036::ac43:be6a ops.onlyfakeai.ru
+2606:4700:3030::6815:13de ops.onlyfakeai.ru
+--- www.onlyfakeai.ru
+2606:4700:3030::6815:13de www.onlyfakeai.ru
+2606:4700:3036::ac43:be6a www.onlyfakeai.ru
+--- cdn.onlyfakeai.ru
+2606:4700:3030::6815:13de cdn.onlyfakeai.ru
+2606:4700:3036::ac43:be6a cdn.onlyfakeai.ru
+--- api.onlyfakeai.ru
+  (no A/AAAA)
+--- admin.onlyfakeai.ru
+  (no A/AAAA)
+
+########## 2. ops.onlyfakeai.ru TLS certificate ##########
+subject=CN=onlyfakeai.ru
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Oct 25 07:46:34 2026 GMT
+notAfter=Jan 23 07:46:33 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:*.onlyfakeai.ru, DNS:onlyfakeai.ru
+
+########## 3. ops.onlyfakeai.ru HTTP surface (read-only GET/HEAD) ##########
+--- GET https://ops.onlyfakeai.ru/
+HTTP/2 200 
+content-type: text/html; charset=UTF-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d8e2ce3b95fb-JNB
+  bytes=51555 body-head=<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Admin Dashboard</title>    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <style>        :root {            /* Light
+--- GET https://ops.onlyfakeai.ru/login
+HTTP/2 200 
+content-type: text/html; charset=UTF-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d8ea2cea0c01-LOS
+  bytes=10607 body-head=<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Admin Login</title>    <style>        :root {            --bg-primary: #f5f5f5;            --bg-secondary: #fff;            --text-p
+--- GET https://ops.onlyfakeai.ru/admin
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d8eeb960b1c6-LOS
+  bytes=1258 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /admin</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$para
+--- GET https://ops.onlyfakeai.ru/dashboard
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d8f268d095f3-JNB
+  bytes=1262 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /dashboard</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$
+--- GET https://ops.onlyfakeai.ru/health
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+cf-ray: a585d8f69e6f95ef-JNB
+  bytes=103 body-head={"status":"healthy","timestamp":"2026-11-10T14:46:35.402Z","uptime":287871.811359177,"version":"1.0.0"}
+--- GET https://ops.onlyfakeai.ru/api/health
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d8fb5b9095ef-JNB
+  bytes=1263 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/health</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv
+--- GET https://ops.onlyfakeai.ru/api/status
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d8fe8e7cb1c6-LOS
+  bytes=1263 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/status</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv
+--- GET https://ops.onlyfakeai.ru/api/broadcast
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d9020ca995f8-JNB
+  bytes=1266 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /api/broadcast</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF
+--- GET https://ops.onlyfakeai.ru/metrics
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: DYNAMIC
+vary: accept-encoding
+cf-ray: a585d90669e295ff-JNB
+  bytes=1260 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /metrics</pre><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$pa
+--- GET https://ops.onlyfakeai.ru/robots.txt
+HTTP/2 200 
+content-type: text/plain; charset=utf-8
+server: cloudflare
+cf-cache-status: MISS
+vary: accept-encoding
+cf-ray: a585d90afa8495fb-JNB
+  bytes=2676 body-head=# As a condition of accessing this website, you agree to abide by the following# content signals:# (a)  If a Content-Signal = yes, you may collect content for the corresponding#      use.# (b)  If a Content-Signal = no, you may not collect content for the#      corresponding use.# (c)  If the
+--- GET https://ops.onlyfakeai.ru/favicon.ico
+HTTP/2 404 
+content-type: text/html; charset=utf-8
+server: cloudflare
+cf-cache-status: MISS
+vary: accept-encoding
+cf-ray: a585d9105fb57a78-LOS
+  bytes=150 body-head=<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Error</title></head><body><pre>Cannot GET /favicon.ico</pre></body></html>
+
+########## 4. follows redirects for ops root ##########
+final HTTP 200 url=https://ops.onlyfakeai.ru/ bytes=51555
+HTTP/2 200 
+title: <title>Admin Dashboard</title>
+
+########## 5. Repeat crt.sh for other subdomain wildcard patterns ##########
+crt.sh %25.ops.onlyfakeai.ru HTTP 502 bytes=552
+crt.sh %25.api.onlyfakeai.ru HTTP 200 bytes=2
+  names: 
+crt.sh onlyfakeai.ru HTTP 502 bytes=552
+
+########## 6. /en/login redirect chain check ##########
+HTTP/2 307 
+location: /login
+HTTP/2 307 
+location: /generator
+--- without /en prefix
+HTTP/2 200 

@@ -1,0 +1,16 @@
+{
+  "bucket": "photos (Supabase Storage, public)",
+  "object_count": 24169,
+  "total_bytes": 21670553814,
+  "total_gib": 20.18,
+  "naming_scheme": "<unix-ms>_preview.png",
+  "first_object_unix_ms": 1778112266686,
+  "last_object_unix_ms": 1794335769597,
+  "first_object_utc": "2026-05-07T00:04:26.686000+00:00",
+  "last_object_utc": "2026-11-10T18:36:09.597000+00:00",
+  "manifest": "photos-bucket-manifest.sha256 (sha256 + size + filename per object)",
+  "provenance": "Enumerated via the bucket anonymous list API using only the publishable key; objects served from the public CDN route with no credentials. No credentials were used for object reads.",
+  "objects_listed": 24170,
+  "objects_retrieved": 24169,
+  "note": "Listing reported 24,170 objects; one object was deleted upstream between listing and retrieval (NoSuchKey), so 24,169 images were retrieved. Bucket remained live and growing during collection."
+}

@@ -1,0 +1,502 @@
+unescaped-suspect interpolations: 33
+
+line 434: ${response.status}
+  ctx: throw new Error(`HTTP error! status: ${response.status}`);
+
+line 485: ${getPlanBadge(profile.activePlan)}
+  ctx: <td>${getPlanBadge(profile.activePlan)}</td>
+
+line 524: ${status}
+  ctx: if (status) url += `&status=${status}`;
+
+line 584: ${status}
+  ctx: ${data.pagination.page > 1 ? `<button class="btn" onclick="loadJobs(${data.pagination.page - 1}, '${status}', '${sortBy}', '${sortOrder}')">Previous</button>` : ''}
+
+line 585: ${status}
+  ctx: ${data.pagination.page < data.pagination.totalPages ? `<button class="btn" onclick="loadJobs(${data.pagination.page + 1}, '${status}', '${sortBy}', '${sortOrder}')">Next</button>` : ''}
+
+line 674: ${planName}
+  ctx: return `<span class="plan-badge ${planClass}" title="${generations} generations">${planName}</span>`;
+
+line 771: ${planDisplayName(resultPlan)}
+  ctx: ? `Plan changes to ${planDisplayName(resultPlan)} (+${addAmount} counts as ${planDisplayName(matchedPlan)}).`
+
+line 771: ${planDisplayName(matchedPlan)}
+  ctx: ? `Plan changes to ${planDisplayName(resultPlan)} (+${addAmount} counts as ${planDisplayName(matchedPlan)}).`
+
+line 772: ${planDisplayName(currentPlanForCustom)}
+  ctx: : `Plan stays ${planDisplayName(currentPlanForCustom)} (+${addAmount} counts as ${planDisplayName(matchedPlan)}, which isn't higher).`;
+
+line 772: ${planDisplayName(matchedPlan)}
+  ctx: : `Plan stays ${planDisplayName(currentPlanForCustom)} (+${addAmount} counts as ${planDisplayName(matchedPlan)}, which isn't higher).`;
+
+line 778: ${planDisplayName(currentPlan)}
+  ctx: ? `Plan upgrades from ${planDisplayName(currentPlan)} to ${planDisplayName(assignedPlan)}.`
+
+line 778: ${planDisplayName(assignedPlan)}
+  ctx: ? `Plan upgrades from ${planDisplayName(currentPlan)} to ${planDisplayName(assignedPlan)}.`
+
+line 779: ${planDisplayName(assignedPlan)}
+  ctx: : `Plan changes to ${planDisplayName(assignedPlan)}.`;
+
+line 781: ${planDisplayName(currentPlan)}
+  ctx: noteEl.textContent = `Plan stays ${planDisplayName(currentPlan)}.`;
+
+line 783: ${planDisplayName(currentPlan)}
+  ctx: noteEl.textContent = `Plan stays ${planDisplayName(currentPlan)} (${planDisplayName(assignedPlan)} is a lower plan - plans only move up).`;
+
+line 783: ${planDisplayName(assignedPlan)}
+  ctx: noteEl.textContent = `Plan stays ${planDisplayName(currentPlan)} (${planDisplayName(assignedPlan)} is a lower plan - plans only move up).`;
+
+line 843: ${response.status}
+  ctx: throw new Error(`HTTP error! status: ${response.status}`);
+
+line 953: ${response.status}
+  ctx: throw new Error(`HTTP error! status: ${response.status}`);
+
+line 969: ${job.status === 'pending' ? 'selected' : ''}
+  ctx: <option value="pending" ${job.status === 'pending' ? 'selected' : ''}>Pending</option>
+
+line 970: ${job.status === 'processing' ? 'selected' : ''}
+  ctx: <option value="processing" ${job.status === 'processing' ? 'selected' : ''}>Processing</option>
+
+line 971: ${job.status === 'completed' ? 'selected' : ''}
+  ctx: <option value="completed" ${job.status === 'completed' ? 'selected' : ''}>Completed</option>
+
+line 972: ${job.status === 'failed' ? 'selected' : ''}
+  ctx: <option value="failed" ${job.status === 'failed' ? 'selected' : ''}>Failed</option>
+
+line 1055: ${response.status}
+  ctx: throw new Error(errorBody.error || `Failed to save changes (HTTP ${response.status})`);
+
+line 1079: ${response.status}
+  ctx: throw new Error(`HTTP error! status: ${response.status}`);
+
+line 1211: ${response.status}
+  ctx: if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+line 1331: ${response.status}
+  ctx: throw new Error(`HTTP error! status: ${response.status}`);
+
+line 1347: ${planDisplayName(plan)}
+  ctx: <div style="color: #6c757d; font-size: 0.85rem; margin-top: 0.25rem;">${PLAN_ORDER.map(plan => `${planDisplayName(plan)}: ${(row.plans_added && row.plans_added[plan]) || 0}`).join(' &middot; ')}</div>
+
+line 1360: ${email === selectedAdmin ? 'selected' : ''}
+  ctx: [...knownActivityAdmins].sort().map(email => `<option value="${escapeHtml(email)}" ${email === selectedAdmin ? 'selected' : ''}>${escapeHtml(email)}</option>`).join('');
+
+line 1613: ${response.status}
+  ctx: throw new Error(errorData.error || `Request failed (${response.status})`);
+
+line 1831: ${row.country}
+  ctx: const comboOf = row => `${row.country} · ${formatDocumentType(row.document_type)}`;
+
+line 1831: ${formatDocumentType(row.document_type)}
+  ctx: const comboOf = row => `${row.country} · ${formatDocumentType(row.document_type)}`;
+
+line 2140: ${row.country}
+  ctx: const key = `${row.country}|${row.document_type}`;
+
+line 2140: ${row.document_type}
+  ctx: const key = `${row.country}|${row.document_type}`;
+
+
+===== getPlanBadge / getSortIcon / modal builders =====
+
+----- function getPlanBadge -----
+function getPlanBadge(plan) {
+    // No Plan is stored as '-'
+    if (!plan || plan === '-') {
+        return '<span class="plan-badge plan-none">None</span>';
+    }
+    
+    if (isCustomPlan(plan)) {
+        return `<span class="plan-badge plan-custom" title="Custom plan">${escapeHtml(plan)}</span>`;
+    }
+    
+    const planClass = `plan-${plan.toLowerCase()}`;
+    const planName = plan.charAt(0).toUpperCase() + plan.slice(1);
+    const generations = getPlanGenerations(plan);
+    
+    return `<span class="plan-badge ${planClass}" title="${generations} generations">${planName}</span>`;
+}
+
+function getPlanGenerations(plan) {
+    const planGenerations = {
+        'try': 1,
+        'light': 10,
+        'medium': 50,
+        'pro': 150,
+        'ultimate': 1000
+    };
+    return planGenerations[plan] || 0;
+}
+
+function isCustomPlan(plan) {
+    const standardPlans = ['', '-', 'try', 'light', 'medium', 'pro', 'ultimate'];
+    return plan && !standardPlans.includes(plan);
+}
+
+// Called when the plan dropdown changes: toggles the custom-plan name field
+// and switches "Credits to Add" between a fixed plan readout and a free entry.
+function updatePlanCreditPreview() {
+    const planSelect = document.getElementById('edit-activePlan');
+    const addInput = document.getElementById('edit-credits-add');
+    const addHelp = document.getElementById('credits-add-help');
+    const minusBtn = document.getElementById('credit-stepper-minus');
+    const plusBtn = document.getElementById('credit-stepper-plus');
+    if (!planSelect || !addInput) return;
+
+    const selectedPlan = planSelect.value;
+    const isCustom = selectedPlan === 'custom';
+
+    if (minusBtn) minusBtn.style.display = isCustom ? '' : 'none';
+    if (plusBtn) plusBtn.style.display = isCustom ? '' : 'none';
+
+    if (isCustom) {
+        addInput.removeAttribute('readonly');
+        addInput.value = 0; // always start custom entry from 0, not whatever the last plan left behind
+        addHelp.textContent = 'Enter a positive number to add credits, or a negative number to remove some - or use the − / + buttons.';
+        setTimeout(() => addInput.focus(), 100);
+    } else {
+        addHelp.textContent = selectedPlan ? 'Set automatically by the selected plan above.' : 'Select a plan above to add credits.';
+        addInput.setAttribute('readonly', 'readonly');
+        addInput.value = getPlanGenerations(selectedPlan); // '' (no selection) -> 0
+    }
+
+    updateFinalCreditsPreview();
+}
+
+// The − / + stepper buttons show
+
+----- function getSortIcon -----
+function getSortIcon(column, currentSortBy, currentSortOrder) {
+    if (column === currentSortBy) {
+        return currentSortOrder === 'asc' ? '↑' : '↓';
+    }
+    return '↕';
+}
+
+function getPlanBadge(plan) {
+    // No Plan is stored as '-'
+    if (!plan || plan === '-') {
+        return '<span class="plan-badge plan-none">None</span>';
+    }
+    
+    if (isCustomPlan(plan)) {
+        return `<span class="plan-badge plan-custom" title="Custom plan">${escapeHtml(plan)}</span>`;
+    }
+    
+    const planClass = `plan-${plan.toLowerCase()}`;
+    const planName = plan.charAt(0).toUpperCase() + plan.slice(1);
+    const generations = getPlanGenerations(plan);
+    
+    return `<span class="plan-badge ${planClass}" title="${generations} generations">${planName}</span>`;
+}
+
+function getPlanGenerations(plan) {
+    const planGenerations = {
+        'try': 1,
+        'light': 10,
+        'medium': 50,
+        'pro': 150,
+        'ultimate': 1000
+    };
+    return planGenerations[plan] || 0;
+}
+
+function isCustomPlan(plan) {
+    const standardPlans = ['', '-', 'try', 'light', 'medium', 'pro', 'ultimate'];
+    return plan && !standardPlans.includes(plan);
+}
+
+// Called when the plan dropdown changes: toggles the custom-plan name field
+// and switches "Credits to Add" between a fixed plan readout and a free entry.
+function updatePlanCreditPreview() {
+    const planSelect = document.getElementById('edit-activePlan');
+    const addInput = document.getElementById('edit-credits-add');
+    const addHelp = document.getElementById('credits-add-help');
+    const minusBtn = document.getElementById('credit-stepper-minus');
+    const plusBtn = document.getElementById('credit-stepper-plus');
+    if (!planSelect || !addInput) return;
+
+    const selectedPlan = planSelect.value;
+    const isCustom = selectedPlan === 'custom';
+
+    if (minusBtn) minusBtn.style.display = isCustom ? '' : 'none';
+    if (plusBtn) plusBtn.style.display = isCustom ? '' : 'none';
+
+    if (isCustom) {
+        addInput.removeAttribute('readonly');
+        addInput.value = 0; // always start custom entry from 0, not whatever the last plan left behind
+        addHelp.textContent = 'Enter a positive number to add credits, or a negative number to remove some - or use the − / + buttons.';
+        setTimeout(() => addInput.focus(), 100);
+    } else {
+        addHelp.textContent = selectedPlan ? 'Set automatically by the selected plan above.' : 'Select a plan above to add credits.';
+        addInput.setAttribute('reado
+
+----- function editProfile -----
+function editProfile(userId) {
+    try {
+        const response = await makeAuthenticatedRequest(`/api/profiles/${userId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const profile = await response.json();
+        
+        editingItem = profile;
+        editingType = 'profile';
+
+        // The dropdown always opens on "No Plan" rather than the profile's actual
+        // plan, so Credits to Add starts at 0 and opening+saving is a no-op -
+        // the admin has to deliberately pick a plan to change anything.
+        const initialCreditsToAdd = 0;
+        const initialFinalCredits = profile.generations_left || 0;
+
+        document.getElementById('modal-title').textContent = 'Edit Profile';
+        document.getElementById('modal-body').innerHTML = `
+            <div class="form-group">
+                <label>User ID</label>
+                <input type="text" value="${profile.user_id || ''}" disabled style="background: #f5f5f5;" />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" value="${escapeHtml(profile.email) || 'No email'}" disabled style="background: #f5f5f5;" />
+            </div>
+            <div class="form-group">
+                <label>Assign Plan</label>
+                <select id="edit-activePlan" onchange="updatePlanCreditPreview()">
+                    <option value="" selected>Select a plan to assign...</option>
+                    <option value="try">Try (+1)</option>
+                    <option value="light">Light (+10)</option>
+                    <option value="medium">Medium (+50)</option>
+                    <option value="pro">Pro (+150)</option>
+                    <option value="ultimate">Ultimate (+1000)</option>
+                    <option disabled>──────────</option>
+                    <option value="custom">Custom Plan</option>
+                </select>
+                <small style="color: #6c757d; font-size: 0.8rem;">
+                    Currently on: ${profile.activePlan && profile.activePlan !== '-' ? escapeHtml(profile.activePlan) : 'No Plan'}. "No Plan" isn't something you assign - it's the state of a new signup who hasn't bought anything yet. Plans only move up, and a user keeps their plan even at 0 credits.
+                </small>
+            </div>
+            <div class="form-group">
+                <label id="credits-add-label">Credits to Add</label>
+              
+
+----- function editJob -----
+function editJob(jobId) {
+    try {
+        const response = await fetch(`/api/jobs/${jobId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const job = await response.json();
+        
+        editingItem = job;
+        editingType = 'job';
+        
+        document.getElementById('modal-title').textContent = 'Edit Job';
+        document.getElementById('modal-body').innerHTML = `
+            <div class="form-group">
+                <label>Job ID</label>
+                <input type="text" value="${escapeHtml(job.id) || ''}" disabled style="background: #f5f5f5;" />
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="edit-status">
+                    <option value="pending" ${job.status === 'pending' ? 'selected' : ''}>Pending</option>
+                    <option value="processing" ${job.status === 'processing' ? 'selected' : ''}>Processing</option>
+                    <option value="completed" ${job.status === 'completed' ? 'selected' : ''}>Completed</option>
+                    <option value="failed" ${job.status === 'failed' ? 'selected' : ''}>Failed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Document Type</label>
+                <input type="text" id="edit-document_type" value="${escapeHtml(job.document_type) || ''}" />
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <input type="text" id="edit-country" value="${escapeHtml(job.country) || ''}" />
+            </div>
+        `;
+        
+        const modal = document.getElementById('edit-modal');
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+    } catch (error) {
+        console.error('Error loading job:', error);
+        showError('Failed to load job data: ' + error.message);
+    }
+}
+
+async function saveEdit() {
+    try {
+        let updateData = {};
+        let url = '';
+        
+        if (editingType === 'profile') {
+            const planSelect = document.getElementById('edit-activePlan');
+
+            let activePlan = planSelect.value;
+
+            // The dropdown opens on the placeholder ("" - no selection made) and
+            // "Custom Plan" only adjusts credits, not the plan name - in both
+            // cases keep whatever plan the profile already had (may itself be a
+            // legacy 
+
+----- function renderTopUsers -----
+function renderTopUsers() {
+    const users = analyticsUsers;
+    const flagged = users.filter(isAbuseFlagged);
+
+    // Totals cover every user in range, not just the top ones sent with their profiles
+    document.getElementById('analytics-users-active').textContent = analyticsTotalUsers.toLocaleString();
+    document.getElementById('analytics-users-unwatermarked').textContent = analyticsTotalUnwatermarked.toLocaleString();
+    document.getElementById('analytics-users-ratio').textContent =
+        analyticsTotalUnwatermarked > 0 ? `${(analyticsTotalJobs / analyticsTotalUnwatermarked).toFixed(1)} : 1` : '-';
+    document.getElementById('analytics-users-flagged').textContent = flagged.length.toLocaleString();
+    document.getElementById('analytics-users-subtitle').textContent =
+        `Top ${users.length} of ${analyticsTotalUsers} users by attempts. Flagged: ${ABUSE_MIN_ATTEMPTS}+ attempts and ${ABUSE_MAX_RATIO}+ attempts per no-watermark job.`;
+
+    const sortBy = document.getElementById('analytics-users-sort').value;
+    const sorters = {
+        attempts: (a, b) => b.attempts - a.attempts,
+        unwatermarked: (a, b) => b.unwatermarked - a.unwatermarked || b.attempts - a.attempts,
+        ratio: (a, b) => attemptsPerUnlock(b) - attemptsPerUnlock(a) || b.attempts - a.attempts,
+        flagged: (a, b) => isAbuseFlagged(b) - isAbuseFlagged(a) || b.attempts - a.attempts
+    };
+    const shown = users.slice().sort(sorters[sortBy] || sorters.attempts).slice(0, TOP_USERS_SHOWN);
+
+    const container = document.getElementById('analytics-top-users');
+    if (shown.length === 0) {
+        container.innerHTML = '<div class="loading">No jobs in this range</div>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th><th>Admin</th><th>Plan</th><th>Attempts</th><th>Completed</th><th>Failed</th>
+                    <th>No-Watermark</th><th>Attempts / No-WM</th><th>Credits Left</th><th>Last Job</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${shown.map(user => {
+                    const ratio = attemptsPerUnlock(user);
+                    const flaggedUser = isAbuseFlagged(user);
+                    return `
+                    <tr${flaggedUser ? ' style="background: rgba(220, 53, 69, 0.08);"' : ''}>
+                        <td>
+                            ${escapeHtml(user.email || user.user_id)}
+                            ${fl
+
+----- function renderAdminBreakdown -----
+function renderAdminBreakdown(breakdown, selected) {
+    const container = document.getElementById('analytics-admin-breakdown');
+    if (!breakdown.length) {
+        container.innerHTML = '<div class="loading">No admin credit logs</div>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table>
+            <thead>
+                <tr><th>Admin</th><th>Active Users</th><th>Jobs</th><th>Completed</th><th>Failed</th><th>Success Rate</th><th>No-Watermark</th><th>Attempts / No-WM</th></tr>
+            </thead>
+            <tbody>
+                ${breakdown.map(entry => {
+                    const finished = entry.completed + entry.failed;
+                    const ratio = entry.unwatermarked > 0 ? `${(entry.jobs / entry.unwatermarked).toFixed(1)} : 1` : (entry.jobs ? '∞ (none)' : '-');
+                    const active = entry.admin === selected;
+                    return `
+                    <tr data-admin="${escapeHtml(entry.admin)}" onclick="filterAnalyticsByAdmin(this.dataset.admin)" style="cursor: pointer;${active ? ' background: var(--bg-tertiary); font-weight: 600;' : ''}">
+                        <td>${escapeHtml(adminFilterLabel(entry.admin))}${active ? ' ✓' : ''}</td>
+                        <td>${entry.users.toLocaleString()}</td>
+                        <td>${entry.jobs.toLocaleString()}</td>
+                        <td>${entry.completed.toLocaleString()}</td>
+                        <td>${entry.failed.toLocaleString()}</td>
+                        <td>${finished ? `${((entry.completed / finished) * 100).toFixed(1)}%` : '-'}</td>
+                        <td>${entry.unwatermarked.toLocaleString()}</td>
+                        <td>${ratio}</td>
+                    </tr>`;
+                }).join('')}
+            </tbody>
+        </table>`;
+}
+
+function renderAnalytics(data) {
+    const rows = data.rows || [];
+
+    // Regular admins get only their own users: no admin picker or cross-admin comparison
+    document.querySelectorAll('.analytics-super-only').forEach(el => {
+        el.style.display = data.restricted ? 'none' : '';
+    });
+    const scopeLabel = document.getElementById('analytics-scope-label');
+    scopeLabel.style.display = data.restricted ? '' : 'none';
+    scopeLabel.textContent = data.restricted ? `Showing users you gave credits to (${data.admin})` : '';
+    populateAnalyticsAdminFilter(data.admins || [], data.admin);
+    renderAdminBreakdown(data.adminBreakdown || [], data.admin);
+    const statusTotals = sumBy(rows, row => r
+
+----- function loadApiKeys -----
+function loadApiKeys() {
+    const body = document.getElementById('api-key-list-body');
+    body.innerHTML = 'Loading...';
+    try {
+        const response = await makeAuthenticatedRequest(`/api/admin-api-keys?adminUserId=${encodeURIComponent(currentApiKeyAdminId)}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const { data } = await response.json();
+
+        if (!data || data.length === 0) {
+            body.innerHTML = '<div style="color: #666;">No API keys yet</div>';
+            return;
+        }
+
+        body.innerHTML = `
+            <table>
+                <thead>
+                    <tr><th>Key</th><th>Created</th><th>Last Used</th><th>Status</th><th></th></tr>
+                </thead>
+                <tbody>
+                    ${data.map(key => `
+                        <tr>
+                            <td><code>${escapeHtml(key.key_prefix)}&hellip;</code></td>
+                            <td>${new Date(key.created_at).toLocaleDateString()}</td>
+                            <td>${key.last_used_at ? new Date(key.last_used_at).toLocaleDateString() : 'Never'}</td>
+                            <td>${key.revoked_at ? 'Revoked' : 'Active'}</td>
+                            <td>${key.revoked_at ? '' : `<button class="btn btn-small btn-danger" onclick="revokeApiKey('${key.id}')">Revoke</button>`}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (error) {
+        console.error('Error loading API keys:', error);
+        body.innerHTML = '<div style="color: #666;">Failed to load API keys</div>';
+    }
+}
+
+async function generateApiKey() {
+    if (!currentApiKeyAdminId) return;
+    try {
+        const response = await makeAuthenticatedRequest('/api/admin-api-keys', {
+            method: 'POST',
+            body: JSON.stringify({ adminUserId: currentApiKeyAdminId })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to generate API key');
+        }
+
+        const { key } = await response.json();
+        document.getElementById('api-key-new-key-value').value = key;
+        document.getElementById('api-key-new-key-box').classList.remove('hidden');
+        loadApiKeys();
+    } catch (error) {
+        console.error('Error generating API key:', error);
+        showError(error.message || 'Failed to generate API key');
+    }
+}
+
+function copyNewApi

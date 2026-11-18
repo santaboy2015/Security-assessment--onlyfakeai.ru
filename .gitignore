@@ -1,0 +1,33 @@
+# never commit engagement secrets / artefacts
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.exe
+*.restore
+*.log
+!evidence/raw/*.log
+!toolkit/storage-and-photos/pull.log
+# credentials and captured sessions
+*_token*.txt
+token*.txt
+keys*.txt
+cookie*.txt
+creds*.jsonl
+*.sqlite
+*.kdbx
+# raw user data (never)
+photos_archive/
+data/users/
+**/*_preview.png
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+# local workspace
+.github-token
