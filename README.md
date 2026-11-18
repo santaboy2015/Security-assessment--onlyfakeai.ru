@@ -24,6 +24,21 @@ in the destroy list, first detected 2026-07-18).
 This operation is a public-interest exposure of an illicit service — and a complete demonstration of what
 full-stack offensive security looks like when it goes all the way.
 
+**The criminal ecosystem around it** (all evidence-tiered in [`docs/domain-inventory.md`](docs/domain-inventory.md)):
+
+- **Brand twin:** `onlyfakeai.com` — same service, same Cloudflare account, identical nameservers.
+- **Operator contacts:** Telegram admin/support `t.me/onlyfakeadmin`, bot `t.me/onlyfakeai_bot`, four
+  registered identities (`onlyfake@tuta.io`, `admin@`, `support@`, `onlyfake@`).
+- **Registration:** REGRU-RU, created **2026-03-03** — four months before the first threat-intel detection.
+- **Registrar-adjacent lead:** `teleperformancerabota.ru` — same registrar, 14 VirusTotal detections, but
+  **no** shared nameserver, IP or certificate. Lead, not attribution.
+- **Threat intel:** PhishDestroy **Critical** (88, destroy list), OTX pulses tagged `phishing`, `scam`,
+  `fraud`, `crypto`, `drainer`; URLScan, urlquery and Wayback records preserved.
+
+We name third parties only when the evidence ties them: the operation is criminal by product (forged
+government documents) and by third-party rating. Everything less certain is labelled as a lead — that is
+what makes the certain parts credible.
+
 ---
 
 ## Result at a glance
@@ -35,7 +50,7 @@ full-stack offensive security looks like when it goes all the way.
 | Product factory stolen | **580 template assets / 731 MB** — all 50 US-state DLs, all 10 CA provinces, 155 country×doctype pairs, 2005–2025 |
 | Application source recovered | **1,047 files / 102.8 MB** — 14 locales, 858 HTML pages, 43 JS chunks, full API contract, rehost kit |
 | Unauthenticated business data | **13,804 profiles · 25,925 jobs** via anonymous `SECURITY DEFINER` RPCs |
-| Estate mapped | **2 operator domains · 9 subdomains · 3 live web apps · 1 live worker tier · origin IP with SSH open** |
+| Estate mapped | **2 operator domains · 9 subdomains · 3 live web apps · 1 live worker tier · origin IP with SSH open · 47-entry evidence-tiered inventory** |
 | Findings reported | 10 application findings (2 High / 3 Medium / 4 Low / 1 Info) + 3 infrastructure exposures |
 | **Access-control bypasses confirmed** | **3 — V-01 anonymous storage read, V-03 unauthenticated job endpoints + missing ownership, V-05 self-unban** — raw requests attached |
 | **Admin identities owned** | **All 4 enumerated and mapped** — but not one password was needed to take everything below them |
@@ -74,10 +89,12 @@ The service runs on the operator's own box behind Cloudflare Tunnel. PTR reverse
 `onlyfakeai.ru`; SSH is open; the worker tier leaks loopback identity. The estate's physical location and
 deployment model are fully known.
 
-**4. The estate map.**
+**4. The estate map — complete.**
 `onlyfakeai.ru` + `www` / `mail` / `ftp` / `cdn` / `ops` / `s1` / `s2` / `s3` / `live360`, the brand twin
-`onlyfakeai.com` on the same Cloudflare account, the origin host, and the exposed Postgres endpoints —
-documented in [`docs/domains-and-infrastructure.md`](docs/domains-and-infrastructure.md).
+`onlyfakeai.com` on the same Cloudflare account, the origin host, the exposed Postgres endpoints, the
+operator's Telegram admin bot and four registered identities, plus the unverified brand-space and
+registrar-adjacent leads — **47 entries, each with an evidence tier**:
+[`docs/domain-inventory.md`](docs/domain-inventory.md) · [`data/domain-inventory.csv`](data/domain-inventory.csv).
 
 **5. The one door not forced — because we didn't need it.**
 The admin write session needed a password — so we ran 19,300 attempts across all four registered admin

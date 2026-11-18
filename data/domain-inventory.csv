@@ -1,0 +1,48 @@
+tier,type,identifier,role,status,source
+T1-verified-operator,domain,onlyfakeai.ru,"apex storefront (Next.js, 14 locales, 232 SKUs)",live,crt.sh / DNS / HTTP
+T1-verified-operator,domain,www.onlyfakeai.ru,storefront alias,live,"DNS brute (5,063 names)"
+T1-verified-operator,domain,mail.onlyfakeai.ru,storefront on mail hostname,live,DNS brute
+T1-verified-operator,domain,ftp.onlyfakeai.ru,storefront on ftp hostname,live,DNS brute
+T1-verified-operator,domain,cdn.onlyfakeai.ru,Supabase gateway (GoTrue/PostgREST/Storage/Realtime),live,DNS / HTTP fingerprint
+T1-verified-operator,domain,ops.onlyfakeai.ru,Express admin dashboard,live (unauth shell),crt.sh / HTTP
+T1-verified-operator,domain,s1.onlyfakeai.ru,Express render worker,live (/health unauth),crt.sh / worker probe
+T1-verified-operator,domain,s2.onlyfakeai.ru,worker/minio tunnel,dead (CF 1033),tunnel watcher
+T1-verified-operator,domain,s3.onlyfakeai.ru,minio/S3 tunnel (likely),dead (CF 1033),tunnel watcher
+T1-verified-operator,domain,live360.onlyfakeai.ru,Next.js live360 app,live,subdomain probe
+T1-verified-operator,domain,onlyfakeai.com,"brand twin, same Cloudflare account (live)",live,certspotter / DNS NS compare
+T2-linked-infrastructure,endpoint,2.59.219.71,"origin host, PTR onlyfakeai.ru, SSH:22 open, AlexHost AS200019",reachable,origin probe / PTR
+T2-linked-infrastructure,endpoint,db.<project-ref>.supabase.co,direct Postgres :5432 SCRAM,open,supabase-db-probe
+T2-linked-infrastructure,endpoint,aws-0-eu-central-2.pooler.supabase.com,Supabase pooler :5432/:6543,open,supabase-db-probe
+T2-linked-infrastructure,endpoint,104.21.19.222,Cloudflare edge IP fronting estate,live,DNS
+T2-linked-infrastructure,endpoint,172.67.190.106,Cloudflare edge IP fronting estate,live,DNS
+T2-linked-infrastructure,endpoint,t.me/onlyfakeadmin,admin/support Telegram published by site,live,phishdestroy observed_indicators
+T2-linked-infrastructure,endpoint,t.me/onlyfakeai_bot,bot account published by site,live,phishdestroy observed_indicators
+T2-linked-infrastructure,endpoint,onlyfake@tuta.io,owner contact / admin identity,registered,signup oracle + site
+T2-linked-infrastructure,endpoint,admin@onlyfakeai.ru,admin identity,registered,signup oracle
+T2-linked-infrastructure,endpoint,support@onlyfakeai.ru,support identity,registered,signup oracle
+T2-linked-infrastructure,endpoint,onlyfake@onlyfakeai.ru,owner identity,registered,signup oracle
+T3-unverified-brand-space,domain,onlyfake.ai,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.com,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.org,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.net,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.io,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.ru,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.shop,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.store,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfake.cc,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.net,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.org,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.io,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.app,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.co,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.site,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.xyz,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.top,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakeai.store,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,onlyfakedocs.com,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T3-unverified-brand-space,domain,fakeai.ru,brand/typo name — NOT attributed to operator,dns-resolved-or-nxdomain,brand_variants / siblings / RDAP
+T4-registrar-adjacent-lead,domain,teleperformancerabota.ru,same registrar REGRU-RU; 14 VT detections; no shared NS/IP/cert,malicious per VT,phishdestroy related_reports
+T5-threat-intel,record,phishdestroy.io/domain/onlyfakeai.ru,"threat-intel report: Critical 88, destroy list",listed,phishdestroy export
+T5-threat-intel,record,urlscan.io/result/019f7736-f499-755e-b844-a92a233839ca,"urlscan capture, 41 requests",captured,phishdestroy sources
+T5-threat-intel,record,urlquery.net/report/203da0b8-75a8-47ee-b41f-1714314d8df6,urlquery report,recorded,phishdestroy sources
+T5-threat-intel,record,web.archive.org/web/20260718215341/https://onlyfakeai.ru/,wayback capture,archived,phishdestroy archive_record

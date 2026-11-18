@@ -14,6 +14,7 @@ The full engagement record, in reading order.
 | 8 | [`negative-results.md`](negative-results.md) | The walls that held — every failed bypass and every exposure that *did* land |
 | 9 | [`architecture.md`](architecture.md) | Recovered stack, routes, auth model, DB schema, storage scheme |
 | 10 | [`evidence-index.md`](evidence-index.md) | Map from every claim to the raw log that proves it |
+| 11 | [`domain-inventory.md`](domain-inventory.md) | Full evidence-tiered inventory: 47 entries — domains, endpoints, contacts, brand space, leads, threat-intel |
 
 ## The three-paragraph version
 

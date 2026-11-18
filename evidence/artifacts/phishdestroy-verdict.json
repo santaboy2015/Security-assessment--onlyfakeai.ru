@@ -16,5 +16,153 @@
     "Stored PhishDestroy threat listing",
     "Last known active"
   ],
-  "note": "Third-party threat-intelligence verdict for the target domain (exported during the engagement)."
+  "registration": {
+    "domain": "onlyfakeai.ru",
+    "registrar": "REGRU-RU",
+    "registrar_country": "RU",
+    "created": "2026-03-03 02:08:04",
+    "expires": "2027-03-03 02:08:04",
+    "whois_updated": null,
+    "nameservers": [
+      "hera.ns.cloudflare.com",
+      "marek.ns.cloudflare.com"
+    ],
+    "mx_records": [
+      {
+        "priority": 0,
+        "host": "_dc-mx.4d533d2b53ff.onlyfakeai.ru"
+      }
+    ],
+    "whois_updated_source": "scan_results.updated_date"
+  },
+  "observed_indicators": {
+    "wallets": [],
+    "telegram": [
+      "https://t.me/onlyfakeadmin",
+      "https://t.me/onlyfakeai_bot"
+    ]
+  },
+  "dom_analysis": {
+    "analyzed_at": "2026-07-18T22:20:04Z",
+    "heuristic_score": 88,
+    "automated_classifications": [
+      "Generic Phishing"
+    ],
+    "kit_label": null
+  },
+  "otx_tags": [
+    "2026-07",
+    "active",
+    "all-domains",
+    "blocklist",
+    "content",
+    "crypto",
+    "domains",
+    "drainer",
+    "fraud",
+    "live",
+    "monthly",
+    "phishdestroy",
+    "phishing",
+    "scam"
+  ],
+  "urlscan": "019f7736-f499-755e-b844-a92a233839ca",
+  "related_reports": {
+    "shared_ip": {
+      "attribute": "104.21.19.222",
+      "domains": []
+    },
+    "same_registrar": {
+      "attribute": "REGRU-RU",
+      "domains": [
+        {
+          "domain": "teleperformancerabota.ru",
+          "vt_detections": 14,
+          "detected_at": "2026-11-04 20:46:32",
+          "favicon_url": "https://og.phishdestroy.io/favicons/2bf51606b81b37077680ff03c7c8b9d1.png",
+          "favicon_hash": "2bf51606b81b37077680ff03c7c8b9d1",
+          "drainer_type": "",
+          "target_brand": ""
+        },
+        {
+          "domain": "nienta.ru",
+          "vt_detections": 3,
+          "detected_at": "2026-11-01 16:49:43",
+          "favicon_url": "https://og.phishdestroy.io/favicons/9c0162238d8af30c083f99dca08383d0.png",
+          "favicon_hash": "9c0162238d8af30c083f99dca08383d0",
+          "drainer_type": "",
+          "target_brand": ""
+        },
+        {
+          "domain": "neoimport.ru",
+          "vt_detections": 9,
+          "detected_at": "2026-11-01 04:10:02",
+          "favicon_url": "https://og.phishdestroy.io/favicons/cb1fa036352825ce311061ff2d82fc0f.png",
+          "favicon_hash": "cb1fa036352825ce311061ff2d82fc0f",
+          "drainer_type": "",
+          "target_brand": ""
+        },
+        {
+          "domain": "migural.ru",
+          "vt_detections": 7,
+          "detected_at": "2026-10-31 20:09:41",
+          "favicon_url": "https://og.phishdestroy.io/favicons/b8723d347d2bde3f1f124280e51017d4.jpg",
+          "favicon_hash": "b8723d347d2bde3f1f124280e51017d4",
+          "drainer_type": "",
+          "target_brand": ""
+        },
+        {
+          "domain": "seller-ledger.ru",
+          "vt_detections": 11,
+          "detected_at": "2026-10-29 15:01:34",
+          "favicon_url": "https://og.phishdestroy.io/favicons/c286c117fe42b93c5a875b2b0f70f1ef.svg",
+          "favicon_hash": "c286c117fe42b93c5a875b2b0f70f1ef",
+          "drainer_type": "",
+          "target_brand": ""
+        },
+        {
+          "domain": "my-ledger.ru",
+          "vt_detections": 10,
+          "detected_at": "2026-10-25 17:41:33",
+          "favicon_url": "https://og.phishdestroy.io/favicons/c79cecb75624b00f9e69b603e79bb4bd.ico",
+          "favicon_hash": "c79cecb75624b00f9e69b603e79bb4bd",
+          "drainer_type": "",
+          "target_brand": ""
+        }
+      ]
+    },
+    "common_operator_verified": false,
+    "kit_label_records": {
+      "attribute": null,
+      "relationship": "unclassified_label_only",
+      "strength": "discovery",
+      "common_campaign_verified": false,
+      "scope": "Unknown labels do not establish a common kit, operator or campaign.",
+      "domains": []
+    },
+    "content_matches": [
+      {
+        "domain": "onlyfakeai.com",
+        "vt_detections": 5,
+        "detected_at": "2026-07-18 23:31:54",
+        "status": "enriched",
+        "favicon_url": "https://og.phishdestroy.io/favicons/7e8e91fe49ded070593b270699bd5e35.svg",
+        "favicon_hash": "7e8e91fe49ded070593b270699bd5e35",
+        "match_type": "favicon"
+      }
+    ],
+    "brand_label_records": {
+      "attribute": null,
+      "strength": "supporting",
+      "domains": [],
+      "common_operator_verified": false
+    },
+    "parent_domain": null
+  },
+  "related_lookalikes": {
+    "total": 0,
+    "common_operator_verified": false,
+    "impersonation_verified": false
+  },
+  "note": "Third-party threat-intelligence verdict and public record for the target domain (exported during the engagement). Same-registrar entries are leads, not attribution."
 }

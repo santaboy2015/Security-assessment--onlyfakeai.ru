@@ -68,6 +68,7 @@ Sanitised but otherwise verbatim request/response transcripts captured at engage
 | `photos-bucket-manifest.sha256` | SHA-256 + size + filename for **every** object (24,170 lines) |
 | `photos-bucket-stats.json` | Count, total bytes, timestamp range, naming scheme, provenance |
 | `proof/photos-bucket-sample-blurred.jpg` | 12 samples with faces destroyed — proof of content type and scale, zero PII |
+| `domain-inventory.csv` | Machine-readable estate inventory (47 rows: tier, type, identifier, role, status, source) |
 
 ## Reproducible harnesses
 

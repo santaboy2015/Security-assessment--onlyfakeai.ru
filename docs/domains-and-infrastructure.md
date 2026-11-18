@@ -4,6 +4,10 @@ Every domain and subdomain associated with the target, recovered by certificate 
 DNS brute force (5,063 names), passive DNS, RDAP and threat-intel. Certificate and DNS evidence lives in
 [`../evidence/artifacts/`](../evidence/artifacts/).
 
+> **Full evidence-tiered inventory** (47 entries: domains, endpoints, contacts, threat-intel records, plus
+> unverified brand space and a registrar-adjacent lead): [`domain-inventory.md`](domain-inventory.md) ·
+> machine-readable: [`../data/domain-inventory.csv`](../data/domain-inventory.csv).
+
 ---
 
 ## 1. Operator-owned — primary brand
@@ -73,6 +77,17 @@ Evidence: `supabase-db-probe.json` (project ref redacted in this repository).
   deliverable (documented, not exploited).
 
 Evidence: `email-posture.jsonl`.
+
+## 4b. Operator contacts & registration (public record)
+
+| Identifier | What it is | Source |
+|---|---|---|
+| `t.me/onlyfakeadmin` | Admin/support Telegram published by the site | PhishDestroy observed indicators |
+| `t.me/onlyfakeai_bot` | Bot account published by the site | PhishDestroy observed indicators |
+| `onlyfake@tuta.io` | Owner contact / registered admin identity | site + signup oracle |
+| `admin@onlyfakeai.ru` · `support@onlyfakeai.ru` · `onlyfake@onlyfakeai.ru` | Registered identities | signup oracle |
+| Registrar **REGRU-RU**, created **2026-03-03**, expires **2027-03-03** | Domain registration — purpose-built 4 months before first detection | threat-intel registration record |
+| `teleperformancerabota.ru` | **Lead only** — same registrar as target, 14 VT detections; **no** shared NS/IP/cert | PhishDestroy related-reports |
 
 ## 5. Brand / typo-squat family (NOT verified as operator-owned)
 
