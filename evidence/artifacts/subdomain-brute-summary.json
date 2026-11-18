@@ -1,0 +1,79 @@
+{
+ "zone": "onlyfakeai.ru",
+ "count": 5063,
+ "wildcard": false,
+ "hits": [
+  {
+   "name": "www.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "104.21.19.222",
+    "172.67.190.106"
+   ]
+  },
+  {
+   "name": "mail.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  },
+  {
+   "name": "ftp.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  },
+  {
+   "name": "cdn.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "104.21.19.222",
+    "172.67.190.106"
+   ]
+  },
+  {
+   "name": "s3.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  },
+  {
+   "name": "s1.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  },
+  {
+   "name": "s2.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  },
+  {
+   "name": "ops.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  },
+  {
+   "name": "live360.onlyfakeai.ru",
+   "status": 0,
+   "a": [
+    "172.67.190.106",
+    "104.21.19.222"
+   ]
+  }
+ ]
+}

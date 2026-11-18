@@ -55,9 +55,7 @@ Every row was tested live against the production estate. Evidence logs are under
 | Stored XSS in admin panel (28 `innerHTML` sinks audited) | `escapeHtml()` at 38 sites; no unescaped attacker-controlled field found |
 | CORS preflight | `Access-Control-Allow-Origin: *` **is** present — but admin token lives in `localStorage`, not a cookie, so no credentialed browser path |
 
-## 4. Next.js / edge layer
-
-| Attempt | Result |
+## 4. Next.js / edge layer| Attempt | Result |
 |---|---|
 | CVE-2025-29927 middleware-bypass (`x-middleware-subrequest`) | No behaviour change (no middleware-based auth to bypass) |
 | React2Shell / RSC RCE chain (CVE-2025-55182) | Cloudflare semantic WAF returned `403` for 16 evasions; also not proven patched server-side, but unreachable from public edge |
@@ -94,10 +92,25 @@ not a code door.
 | Wayback / Common Crawl for `ops.*` | 0 captures |
 | GitHub / grep.app for the project | Nothing |
 | urlscan public scans | None of `ops` |
-| 141-name subdomain brute | Only the known hosts + one dead CF tunnel (`s3.*`, Error 1033) |
-| Origin IP discovery | None — Cloudflare Tunnel architecture, no inbound web ports, no DNS leak |
+| 141-name subdomain brute | Only the known hosts + dead tunnels (`s2`/`s3`, Error 1033) |
+| 5,063-name subdomain brute | 9 live `onlyfakeai.ru` subdomains — full map in `domains-and-infrastructure.md` |
+| Origin IP discovery | **LANDED** via reverse DNS: PTR `2.59.219.71 → onlyfakeai.ru`, SSH:22 open — see §8 |
+
+## 8. Infrastructure exposures that DID land
+
+| Target | Finding | Evidence |
+|---|---|---|
+| `s1.*` worker tier | `/health` unauthenticated, echoes all request headers, reports internal `127.0.0.1`; `/status` + `/process` gated by static worker secret (401) | `evidence/artifacts/worker-s1-probe.json` |
+| Origin host | PTR names the target; SSH:22 reachable on Ubuntu/OpenSSH 8.9p1; web ingress tunnel-only | `evidence/artifacts/origin-probe.json` |
+| `onlyfakeai.com` | Same operator: identical Cloudflare nameservers (`hera`/`marek`), live brand-twin Next.js app | `evidence/artifacts/brand-variants.json` |
+| Postgres surface | Direct DB `:5432` + pooler `:5432/:6543` reachable (SCRAM) | `evidence/artifacts/supabase-db-probe.json` |
+| Threat intel | Domain listed **Critical** (score 88) by PhishDestroy, destroy list since 2026-07-18 | `evidence/artifacts/phishdestroy-verdict.json` |
+
+The only wall in this section that held: worker `/status` and `/process` auth (static-secret gate — no
+bypass found), and Postgres auth (SCRAM, no password).
 
 ---
 
 *Negative results are re-testable: run the matching numbered script in
-[`../toolkit/report-harnesses/`](../toolkit/report-harnesses/).*
+[`../toolkit/report-harnesses/`](../toolkit/report-harnesses/) or the infra harnesses in
+[`../toolkit/infra/`](../toolkit/infra/).*

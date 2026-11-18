@@ -1,0 +1,41 @@
+[
+	{
+		"id": "17159490932",
+		"tbs_sha256": "d46e4e4cafe9378652ab2dfbfca5ed5da97863cffa37834b43373a528ca543e9",
+		"cert_sha256": "42a5adffc200ca7de81a3830dcb1b4b32ccfb0bececff71fd8330c99883c0471",
+		"dns_names": [
+			"*.onlyfakeai.com",
+			"onlyfakeai.com"
+		],
+		"pubkey_sha256": "df3785037454cdfc86c10af0ea92cf6f04dcf0a8639ef348108b244f143695e3",
+		"not_before": "2026-09-13T19:09:39Z",
+		"not_after": "2026-12-12T19:09:38Z",
+		"revoked": false
+	},
+	{
+		"id": "17160279757",
+		"tbs_sha256": "d208df23e8cfd39dbdb11bd14083406a4f6b514e1997fdd92f85f835b33b8a39",
+		"cert_sha256": "3965ecd9362db91abab70a2c5934e6c6a3e2560f5143e77e8afaa2268c699c84",
+		"dns_names": [
+			"*.onlyfakeai.com",
+			"onlyfakeai.com"
+		],
+		"pubkey_sha256": "1cc8b162020f1f71723b12c6da69a7b505f56985c15e62bae4711e1297b38988",
+		"not_before": "2026-09-13T20:12:38Z",
+		"not_after": "2026-12-12T20:12:37Z",
+		"revoked": false
+	},
+	{
+		"id": "17575435807",
+		"tbs_sha256": "25d777a17a34d2c98c68379f3379b3d04101682ced1bfc5c23c19ec3831278b5",
+		"cert_sha256": "9810364935e41a1f28b908671b6f0a5a8d5be199105d3409fbf975e87e7ccf1e",
+		"dns_names": [
+			"*.onlyfakeai.com",
+			"onlyfakeai.com"
+		],
+		"pubkey_sha256": "80b4b261e469ce386f1c18cee83d400ecb3689b52fafc9583a519bbca662e634",
+		"not_before": "2026-10-04T07:45:51Z",
+		"not_after": "2027-01-02T06:16:08Z",
+		"revoked": false
+	}
+]

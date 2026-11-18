@@ -1,0 +1,20 @@
+{
+  "schema": "phishdestroy/domain-report-export/v1",
+  "domain": "onlyfakeai.ru",
+  "report_url": "https://phishdestroy.io/domain/onlyfakeai.ru/",
+  "exported_at": "2026-11-11T10:45:26+00:00",
+  "verdict": {
+    "level": "Critical",
+    "evidence_score": 88,
+    "availability": "Last known active",
+    "availability_state": "alive",
+    "in_destroylist": true,
+    "detected_at": "2026-07-18 21:52:48 UTC",
+    "case_id": null
+  },
+  "risk_signals": [
+    "Stored PhishDestroy threat listing",
+    "Last known active"
+  ],
+  "note": "Third-party threat-intelligence verdict for the target domain (exported during the engagement)."
+}

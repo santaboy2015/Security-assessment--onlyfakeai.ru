@@ -1,0 +1,75 @@
+{
+ "onlyfake.org": {
+  "status": null,
+  "title": "",
+  "headers": {},
+  "head": "<urlopen error [Errno 11004] getaddrinfo failed>"
+ },
+ "onlyfake.ai": {
+  "status": 200,
+  "title": "OnlyFake AI | Document Props &amp; Mockups for Film",
+  "headers": {
+   "Content-Type": "text/html",
+   "Server": "cloudflare",
+   "CF-RAY": "a58cd81e0ab6b14b-LOS"
+  },
+  "head": "<!DOCTYPE html>\r\n<html dir=\"ltr\" lang=\"en-US\"><head><meta charset=\"utf-8\"/><meta content=\"width=device-width,initial-scale=1,viewport-fit=cover\" name=\"viewport\"/><title>OnlyFake AI | Document Props &amp; Mockups for Film</title><meta content=\"Create fictional ID card, passport, driver's licence, residence permit and proof-of-address prop templates for film, education and authorized design work.\" name=\"description\"/><meta content=\"#07100b\" name=\"theme-color\"/><meta content=\"dark\" name=\"color-scheme\"/><meta content=\"Only Fake AI\" name=\"application-name\"/><meta content=\"Only Fake AI\" name=\"author\"/><meta content=\"index,follow,max-image-preview:large\" name=\"robots\"/><link href=\"https://onlyfake.ai/\" rel=\"canonical\"/><link href=\"https://onlyfake.ai/\" hreflang=\"en-US\" rel=\"alternate\"/><link href",
+  "tls": {
+   "issuer": [
+    [
+     [
+      "countryName",
+      "US"
+     ]
+    ],
+    [
+     [
+      "organizationName",
+      "Google Trust Services"
+     ]
+    ],
+    [
+     [
+      "commonName",
+      "WE1"
+     ]
+    ]
+   ],
+   "san": [
+    [
+     "DNS",
+     "onlyfake.ai"
+    ],
+    [
+     "DNS",
+     "*.onlyfake.ai"
+    ]
+   ],
+   "notAfter": "Jan 16 02:22:13 2027 GMT"
+  }
+ },
+ "onlyfake.ru": {
+  "status": null,
+  "title": "",
+  "headers": {},
+  "head": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'onlyfake.ru'. (_ssl.c:1010)>"
+ },
+ "onlyfake.shop": {
+  "status": null,
+  "title": "",
+  "headers": {},
+  "head": "<urlopen error timed out>"
+ },
+ "onlyfake.store": {
+  "status": null,
+  "title": "",
+  "headers": {},
+  "head": "<urlopen error timed out>"
+ },
+ "onlyfake.net": {
+  "status": null,
+  "title": "",
+  "headers": {},
+  "head": "<urlopen error [Errno 11001] getaddrinfo failed>"
+ }
+}

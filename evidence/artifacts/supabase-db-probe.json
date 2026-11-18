@@ -1,0 +1,123 @@
+{
+ "aws-0-eu-central-2.pooler.supabase.com:5432": {
+  "host": "aws-0-eu-central-2.pooler.supabase.com",
+  "port": 5432,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "R",
+  "raw_head": "R\u0000\u0000\u0000\u0017\u0000\u0000\u0000\nSCRAM-SHA-256\u0000\u0000"
+ },
+ "aws-0-eu-central-2.pooler.supabase.com:6543": {
+  "host": "aws-0-eu-central-2.pooler.supabase.com",
+  "port": 6543,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "R",
+  "raw_head": "R\u0000\u0000\u0000\u0017\u0000\u0000\u0000\nSCRAM-SHA-256\u0000\u0000"
+ },
+ "aws-1-eu-central-2.pooler.supabase.com:5432": {
+  "host": "aws-1-eu-central-2.pooler.supabase.com",
+  "port": 5432,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "E",
+  "error_fields": {
+   "C": "XX000",
+   "M": "(ENOTFOUND) tenant/user postgres.<supabase-project-ref> not found",
+   "S": "FATAL"
+  }
+ },
+ "aws-1-eu-central-2.pooler.supabase.com:6543": {
+  "host": "aws-1-eu-central-2.pooler.supabase.com",
+  "port": 6543,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "E",
+  "error_fields": {
+   "C": "XX000",
+   "M": "(ENOTFOUND) tenant/user postgres.<supabase-project-ref> not found",
+   "S": "FATAL"
+  }
+ },
+ "aws-0-us-east-1.pooler.supabase.com:5432": {
+  "host": "aws-0-us-east-1.pooler.supabase.com",
+  "port": 5432,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "E",
+  "error_fields": {
+   "C": "XX000",
+   "M": "(ENOTFOUND) tenant/user postgres.<supabase-project-ref> not found",
+   "S": "FATAL"
+  }
+ },
+ "db.<supabase-project-ref>.supabase.co:5432": {
+  "host": "db.<supabase-project-ref>.supabase.co",
+  "port": 5432,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "R",
+  "raw_head": "R\u0000\u0000\u0000*\u0000\u0000\u0000\nSCRAM-SHA-256-PLUS\u0000SCRAM-SHA-256\u0000\u0000"
+ },
+ "db.<supabase-project-ref>.supabase.co:6543": {
+  "host": "db.<supabase-project-ref>.supabase.co",
+  "port": 6543,
+  "user": "postgres.<supabase-project-ref>",
+  "tcp": "open",
+  "ssl_request_reply": "S",
+  "tls": {
+   "issuer": [],
+   "subject": [],
+   "san": null,
+   "notAfter": null
+  },
+  "server_msg_type": "E",
+  "error_fields": {
+   "S": "FATAL",
+   "C": "08P01",
+   "M": "no such user"
+  }
+ }
+}

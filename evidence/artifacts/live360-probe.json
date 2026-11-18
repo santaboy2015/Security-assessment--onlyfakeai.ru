@@ -1,0 +1,82 @@
+{
+ "https://live360.onlyfakeai.ru/": {
+  "status": 200,
+  "headers": {
+   "Content-Type": "text/html; charset=utf-8",
+   "Server": "cloudflare",
+   "X-Powered-By": "Next.js",
+   "CF-RAY": "a58ccefb4b6d96ab-LOS"
+  },
+  "body": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/c9bad53f122c2ae9.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-55227b9688a0c633.js\"/><script src=\"/_next/static/chunks/4bd1b696-c023c6e3521b1417.js\" async=\"\"></script><script src=\"/_next/static/chunks/255-cf2e1d3491ac955b.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-2ecc3bf42ae2d122.js\" async=\"\"></script><script src=\"/_next/static/chunks/598-4130c9c4fe69404b.js\" async=\"\"></script><script src=\"/_next/static/chunks/app/login/page-1e45e4991306c660.js\" async=\"\"></script><meta name=\"next-size-adjust\" content=\"\"/><title>Live360 - Video Generator</title><meta name=\"description\" content=\"Transform your images into realistic videos with AI\"/><link rel=\"icon\" href=\"/favicon.ico\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body class=\"__className_d8ebd1\"><div hidden=\"\"><!--$--><!--/$--></div><!--$--><div class=\"min-h-screen bg-[#0A0A0A] flex items-center justify-center px-4\"><div class=\"max-w-md w-full\"><div class=\"text-center mb-8\"><div class=\"inline-flex items-center gap-3 mb-4\"><img src=\"/favicon.ico\" alt=\"Live360\" class=\"w-12 h-12\"/><h1 class=\"text-3xl font-bold text-white\">Live360</h1></div><p class=\"text-gray-400\">Sign in to continue</p></div><div class=\"bg-[#1A1A1A] ro"
+ },
+ "https://live360.onlyfakeai.ru/health": {
+  "status": 404,
+  "headers": {
+   "Content-Type": "text/html; charset=utf-8",
+   "Server": "cloudflare",
+   "X-Powered-By": "Next.js",
+   "CF-RAY": "a58ccf0ae89973b4-JNB"
+  },
+  "body": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/c9bad53f122c2ae9.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-55227b9688a0c633.js\"/><script src=\"/_next/static/chunks/4bd1b696-c023c6e3521b1417.js\" async=\"\"></script><script src=\"/_next/static/chunks/255-cf2e1d3491ac955b.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-2ecc3bf42ae2d122.js\" async=\"\"></script><meta name=\"robots\" content=\"noindex\"/><meta name=\"next-size-adjust\" content=\"\"/><title>404: This page could not be found.</title><title>Live360 - Video Generator</title><meta name=\"description\" content=\"Transform your images into realistic videos with AI\"/><link rel=\"icon\" href=\"/favicon.ico\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body class=\"__className_d8ebd1\"><div hidden=\"\"><!--$--><!--/$--></div><div style=\"font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center\"><div><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rg"
+ },
+ "https://live360.onlyfakeai.ru/status": {
+  "status": 404,
+  "headers": {
+   "Content-Type": "text/html; charset=utf-8",
+   "Server": "cloudflare",
+   "X-Powered-By": "Next.js",
+   "CF-RAY": "a58ccf1bb836b1c6-LOS"
+  },
+  "body": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/c9bad53f122c2ae9.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-55227b9688a0c633.js\"/><script src=\"/_next/static/chunks/4bd1b696-c023c6e3521b1417.js\" async=\"\"></script><script src=\"/_next/static/chunks/255-cf2e1d3491ac955b.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-2ecc3bf42ae2d122.js\" async=\"\"></script><meta name=\"robots\" content=\"noindex\"/><meta name=\"next-size-adjust\" content=\"\"/><title>404: This page could not be found.</title><title>Live360 - Video Generator</title><meta name=\"description\" content=\"Transform your images into realistic videos with AI\"/><link rel=\"icon\" href=\"/favicon.ico\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body class=\"__className_d8ebd1\"><div hidden=\"\"><!--$--><!--/$--></div><div style=\"font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center\"><div><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rg"
+ },
+ "https://live360.onlyfakeai.ru/api": {
+  "status": 404,
+  "headers": {
+   "Content-Type": "text/html; charset=utf-8",
+   "Server": "cloudflare",
+   "X-Powered-By": "Next.js",
+   "CF-RAY": "a58ccf2a88eb0feb-JNB"
+  },
+  "body": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/c9bad53f122c2ae9.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-55227b9688a0c633.js\"/><script src=\"/_next/static/chunks/4bd1b696-c023c6e3521b1417.js\" async=\"\"></script><script src=\"/_next/static/chunks/255-cf2e1d3491ac955b.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-2ecc3bf42ae2d122.js\" async=\"\"></script><meta name=\"robots\" content=\"noindex\"/><meta name=\"next-size-adjust\" content=\"\"/><title>404: This page could not be found.</title><title>Live360 - Video Generator</title><meta name=\"description\" content=\"Transform your images into realistic videos with AI\"/><link rel=\"icon\" href=\"/favicon.ico\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body class=\"__className_d8ebd1\"><div hidden=\"\"><!--$--><!--/$--></div><div style=\"font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center\"><div><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rg"
+ },
+ "https://live360.onlyfakeai.ru/api/health": {
+  "status": 404,
+  "headers": {
+   "Content-Type": "text/html; charset=utf-8",
+   "Server": "cloudflare",
+   "X-Powered-By": "Next.js",
+   "CF-RAY": "a58ccf376e89b14b-LOS"
+  },
+  "body": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/c9bad53f122c2ae9.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-55227b9688a0c633.js\"/><script src=\"/_next/static/chunks/4bd1b696-c023c6e3521b1417.js\" async=\"\"></script><script src=\"/_next/static/chunks/255-cf2e1d3491ac955b.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-2ecc3bf42ae2d122.js\" async=\"\"></script><meta name=\"robots\" content=\"noindex\"/><meta name=\"next-size-adjust\" content=\"\"/><title>404: This page could not be found.</title><title>Live360 - Video Generator</title><meta name=\"description\" content=\"Transform your images into realistic videos with AI\"/><link rel=\"icon\" href=\"/favicon.ico\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body class=\"__className_d8ebd1\"><div hidden=\"\"><!--$--><!--/$--></div><div style=\"font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center\"><div><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rg"
+ },
+ "https://s2.onlyfakeai.ru/": {
+  "status": 530,
+  "headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "Server": "cloudflare",
+   "CF-RAY": "a58ccf463ab9df1a-JNB"
+  },
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1033/\",\"title\":\"Error 1033: Cloudflare Tunnel error\",\"status\":530,\"detail\":\"The host is configured as a Cloudflare Tunnel, but Cloudflare is currently unable to reach it.\",\"instance\":\"a58ccf463ab9df1a\",\"error_code\":1033,\"error_name\":\"tunnel_error\",\"error_category\":\"config\",\"ray_id\":\"a58ccf463ab9df1a\",\"timestamp\":\"2026-11-11T11:03:18Z\",\"zone\":\"s2.onlyfakeai.ru\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":120,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** The tunnel may be temporarily disconnected. Try again in a few minutes.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n"
+ },
+ "https://s3.onlyfakeai.ru/": {
+  "status": 530,
+  "headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "Server": "cloudflare",
+   "CF-RAY": "a58ccf547bd273ea-JNB"
+  },
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1033/\",\"title\":\"Error 1033: Cloudflare Tunnel error\",\"status\":530,\"detail\":\"The host is configured as a Cloudflare Tunnel, but Cloudflare is currently unable to reach it.\",\"instance\":\"a58ccf547bd273ea\",\"error_code\":1033,\"error_name\":\"tunnel_error\",\"error_category\":\"config\",\"ray_id\":\"a58ccf547bd273ea\",\"timestamp\":\"2026-11-11T11:03:21Z\",\"zone\":\"s3.onlyfakeai.ru\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":120,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** The tunnel may be temporarily disconnected. Try again in a few minutes.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n"
+ },
+ "https://s1.onlyfakeai.ru/health": {
+  "status": 200,
+  "headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "access-control-allow-origin": "*",
+   "x-powered-by": "Express",
+   "Server": "cloudflare",
+   "CF-RAY": "a58ccf634bd5dd69-JNB"
+  },
+  "body": "{\"status\":\"healthy\",\"message\":\"Server is running\",\"timestamp\":\"2026-11-11T11:03:23.896Z\",\"ip\":\"127.0.0.1\",\"headers\":{\"host\":\"s1.onlyfakeai.ru\",\"user-agent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36\",\"accept\":\"application/json,text/html,*/*\",\"accept-encoding\":\"gzip, br\",\"cdn-loop\":\"cloudflare; loops=1\",\"cf-connecting-ip\":\"2605:59c1:1a98:108:1de3:e87:d632:4999\",\"cf-ipcountry\":\"NG\",\"cf-ray\":\"a58ccf634bd5dd69-JNB\",\"cf-visitor\":\"{\\\"scheme\\\":\\\"https\\\"}\",\"cf-warp-tag-id\":\"7467d893-7726-4754-92d5-d87c23c927ed\",\"connection\":\"keep-alive\",\"x-forwarded-for\":\"2605:59c1:1a98:108:1de3:e87:d632:4999\",\"x-forwarded-proto\":\"https\"}}"
+ },
+ "sdc_onlyfakeai.com": "[]"
+}

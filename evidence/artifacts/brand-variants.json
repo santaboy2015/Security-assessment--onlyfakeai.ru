@@ -1,0 +1,112 @@
+{
+ "onlyfakeai.ru": {
+  "ns": [
+   "hera.ns.cloudflare.com",
+   "marek.ns.cloudflare.com"
+  ],
+  "a": [
+   "104.21.19.222",
+   "172.67.190.106"
+  ],
+  "same_account": true
+ },
+ "onlyfakeai.com": {
+  "ns": [
+   "hera.ns.cloudflare.com",
+   "marek.ns.cloudflare.com"
+  ],
+  "a": [
+   "172.67.153.54",
+   "104.21.34.20"
+  ],
+  "same_account": true
+ },
+ "onlyfakeai.net": {
+  "ns": [
+   "ishaan.ns.cloudflare.com",
+   "lila.ns.cloudflare.com"
+  ],
+  "a": [],
+  "same_account": false
+ },
+ "onlyfake.org": {
+  "ns": [
+   "colin.ns.cloudflare.com",
+   "rosemary.ns.cloudflare.com"
+  ],
+  "a": [
+   "172.67.147.171",
+   "104.21.33.176"
+  ],
+  "same_account": false
+ },
+ "onlyfake.com": {
+  "ns": [
+   "ns-1235.awsdns-26.org",
+   "ns-1852.awsdns-39.co.uk",
+   "ns-325.awsdns-40.com",
+   "ns-845.awsdns-41.net"
+  ],
+  "a": [],
+  "same_account": false
+ },
+ "onlyfake.io": {
+  "ns": [
+   "2-nest.pipe.ma",
+   "1-ceci.njalla.do",
+   "3-pas.njalla.in"
+  ],
+  "a": [],
+  "same_account": false
+ },
+ "onlyfake.ai": {
+  "ns": [
+   "indie.ns.cloudflare.com",
+   "jonah.ns.cloudflare.com"
+  ],
+  "a": [
+   "104.21.77.18",
+   "172.67.203.136"
+  ],
+  "same_account": false
+ },
+ "onlyfake.ru": {
+  "ns": [
+   "ns2.webdomain.ru",
+   "ns1.webdomain.ru"
+  ],
+  "a": [
+   "78.24.218.52"
+  ],
+  "same_account": false
+ },
+ "onlyfake.shop": {
+  "ns": [
+   "ns1.reg.ru",
+   "ns2.reg.ru"
+  ],
+  "a": [
+   "31.222.238.12"
+  ],
+  "same_account": false
+ },
+ "onlyfake.store": {
+  "ns": [
+   "dns1.registrar-servers.com",
+   "dns2.registrar-servers.com"
+  ],
+  "a": [
+   "192.64.119.81"
+  ],
+  "same_account": false
+ },
+ "onlyfake.cc": {
+  "ns": [
+   "3-pas.njalla.in",
+   "1-ceci.njalla.do",
+   "2-nest.pipe.ma"
+  ],
+  "a": [],
+  "same_account": false
+ }
+}

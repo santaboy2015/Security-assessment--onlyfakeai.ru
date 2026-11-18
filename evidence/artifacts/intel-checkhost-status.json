@@ -1,0 +1,238 @@
+{
+ "checkhost": {
+  "request_id": "570aa838k8af",
+  "nodes": [
+   "ir3.node.check-host.net",
+   "ro1.node.check-host.net",
+   "si1.node.check-host.net"
+  ]
+ },
+ "tls": {
+  "onlyfakeai.ru": {
+   "issuer": [
+    [
+     [
+      "countryName",
+      "US"
+     ]
+    ],
+    [
+     [
+      "organizationName",
+      "Let's Encrypt"
+     ]
+    ],
+    [
+     [
+      "commonName",
+      "YE2"
+     ]
+    ]
+   ],
+   "subject": [
+    [
+     [
+      "commonName",
+      "onlyfakeai.ru"
+     ]
+    ]
+   ],
+   "san": [
+    [
+     "DNS",
+     "*.onlyfakeai.ru"
+    ],
+    [
+     "DNS",
+     "onlyfakeai.ru"
+    ]
+   ],
+   "notAfter": "Jan 23 07:46:33 2027 GMT",
+   "proto": "TLSv1.3"
+  },
+  "ops.onlyfakeai.ru": {
+   "issuer": [
+    [
+     [
+      "countryName",
+      "US"
+     ]
+    ],
+    [
+     [
+      "organizationName",
+      "Let's Encrypt"
+     ]
+    ],
+    [
+     [
+      "commonName",
+      "YE2"
+     ]
+    ]
+   ],
+   "subject": [
+    [
+     [
+      "commonName",
+      "onlyfakeai.ru"
+     ]
+    ]
+   ],
+   "san": [
+    [
+     "DNS",
+     "*.onlyfakeai.ru"
+    ],
+    [
+     "DNS",
+     "onlyfakeai.ru"
+    ]
+   ],
+   "notAfter": "Jan 23 07:46:33 2027 GMT",
+   "proto": "TLSv1.3"
+  },
+  "cdn.onlyfakeai.ru": {
+   "issuer": [
+    [
+     [
+      "countryName",
+      "US"
+     ]
+    ],
+    [
+     [
+      "organizationName",
+      "Google Trust Services"
+     ]
+    ],
+    [
+     [
+      "commonName",
+      "WE1"
+     ]
+    ]
+   ],
+   "subject": [
+    [
+     [
+      "commonName",
+      "cdn.onlyfakeai.ru"
+     ]
+    ]
+   ],
+   "san": [
+    [
+     "DNS",
+     "cdn.onlyfakeai.ru"
+    ]
+   ],
+   "notAfter": "Jan 16 23:34:12 2027 GMT",
+   "proto": "TLSv1.3"
+  },
+  "www.onlyfakeai.ru": {
+   "issuer": [
+    [
+     [
+      "countryName",
+      "US"
+     ]
+    ],
+    [
+     [
+      "organizationName",
+      "Let's Encrypt"
+     ]
+    ],
+    [
+     [
+      "commonName",
+      "YE2"
+     ]
+    ]
+   ],
+   "subject": [
+    [
+     [
+      "commonName",
+      "onlyfakeai.ru"
+     ]
+    ]
+   ],
+   "san": [
+    [
+     "DNS",
+     "*.onlyfakeai.ru"
+    ],
+    [
+     "DNS",
+     "onlyfakeai.ru"
+    ]
+   ],
+   "notAfter": "Jan 23 07:46:33 2027 GMT",
+   "proto": "TLSv1.3"
+  }
+ },
+ "grepapp_onlyfakeai": {
+  "code": 200,
+  "len": 74
+ },
+ "grepapp_<supabase-project-ref>": {
+  "code": 200,
+  "len": 73
+ },
+ "gh_gh_repositories_onlyfakeai.json": {
+  "code": 200,
+  "total": 0
+ },
+ "gh_gh_users_onlyfakeai.json": {
+  "code": 200,
+  "total": 0
+ },
+ "gh_gh_repositories_<supabase-project-ref>.json": {
+  "code": 200,
+  "total": 0
+ },
+ "registry_registry_npmjs_org": {
+  "code": 200,
+  "len": 58
+ },
+ "registry_pypi_org": {
+  "code": 404
+ },
+ "aws_ipv6_region": [
+  {
+   "ipv6_prefix": "2a05:d019::/36",
+   "region": "eu-central-2",
+   "service": "AMAZON",
+   "network_border_group": "eu-central-2"
+  },
+  {
+   "ipv6_prefix": "2a05:d019::/36",
+   "region": "eu-central-2",
+   "service": "EC2",
+   "network_border_group": "eu-central-2"
+  }
+ ],
+ "ipwho": {
+  "2.59.219.71": {
+   "ip": "2.59.219.71",
+   "success": true,
+   "type": "IPv4",
+   "continent": "Europe",
+   "continent_code": "EU",
+   "country": "Switzerland",
+   "country_code": "CH",
+   "region": "Kanton Zurich",
+   "region_code": "ZH",
+   "city": "Zurich",
+   "latitude": 47.3666715,
+   "longitude": 8.5540819,
+   "is_eu": false,
+   "postal": "8098",
+   "calling_code": "41",
+   "capital": "Bern",
+   "borders": "AT,DE,FR,IT,LI",
+   "flag": {
+    "img": "https://cdn.ipwhois.io/flags/ch.svg",
+    "emoji": 

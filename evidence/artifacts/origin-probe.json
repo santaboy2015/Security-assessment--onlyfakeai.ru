@@ -1,0 +1,66 @@
+{
+ "ptr": {
+  "name": "71.219.59.2.in-addr.arpa",
+  "type": "PTR",
+  "resolver": "cloudflare",
+  "status": 0,
+  "answers": [
+   {
+    "name": "71.219.59.2.in-addr.arpa",
+    "type": 12,
+    "ttl": 7200,
+    "data": "onlyfakeai.ru."
+   }
+  ],
+  "authority": [],
+  "raw": null,
+  "ts": "2026-11-11T10:37:29Z"
+ },
+ "open_ports": [
+  22
+ ],
+ "tls": {
+  "onlyfakeai.ru": {
+   "error": "timed out"
+  },
+  "ops.onlyfakeai.ru": {
+   "error": "timed out"
+  },
+  "cdn.onlyfakeai.ru": {
+   "error": "timed out"
+  },
+  "mail.onlyfakeai.ru": {
+   "error": "timed out"
+  },
+  "<none>": {
+   "error": "timed out"
+  }
+ },
+ "http": {
+  "https://2.59.219.71/|None": {
+   "url": "https://2.59.219.71/",
+   "host_header": null,
+   "error": "<urlopen error timed out>"
+  },
+  "https://2.59.219.71/|onlyfakeai.ru": {
+   "url": "https://2.59.219.71/",
+   "host_header": "onlyfakeai.ru",
+   "error": "<urlopen error timed out>"
+  },
+  "https://2.59.219.71/|ops.onlyfakeai.ru": {
+   "url": "https://2.59.219.71/",
+   "host_header": "ops.onlyfakeai.ru",
+   "error": "<urlopen error timed out>"
+  },
+  "https://2.59.219.71/|cdn.onlyfakeai.ru": {
+   "url": "https://2.59.219.71/",
+   "host_header": "cdn.onlyfakeai.ru",
+   "error": "<urlopen error timed out>"
+  },
+  "https://2.59.219.71/|www.onlyfakeai.ru": {
+   "url": "https://2.59.219.71/",
+   "host_header": "www.onlyfakeai.ru",
+   "error": "<urlopen error timed out>"
+  }
+ }
+}

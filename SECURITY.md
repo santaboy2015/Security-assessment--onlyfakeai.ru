@@ -26,9 +26,14 @@ That is enough for a technical reader to trust the finding and impossible to use
 
 ## 2. Engagement framing
 
-The engagement was conducted as a **scoped security assessment of the target estate** for the
-source-acquisition / rehost workstream (the vendor authorised template harvesting; the broader estate audit
-was performed within the same read-only rules of engagement). Rules applied throughout:
+The target is an **illicit service**: it manufactures forged government identity documents (fake IDs,
+passports, driver's licences, residence permits) sold to anonymous customers, who upload live facial photos
+to the platform. The domain is listed **Critical** by third-party threat intelligence (PhishDestroy, score
+88, destroy list) — see [`evidence/artifacts/phishdestroy-verdict.json`](evidence/artifacts/phishdestroy-verdict.json).
+
+The operation is a **public-interest exposure**: it documents that the service's own customers' biometric
+data was sitting in an anonymously readable bucket, and that the operator's infrastructure was fully
+mapped. Rules applied throughout:
 
 - no destructive writes; no DoS; no user content downloaded during the audit phase,
 - disposable test accounts only; all documented for owner cleanup,

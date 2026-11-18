@@ -40,6 +40,19 @@ Sanitised but otherwise verbatim request/response transcripts captured at engage
 | `photos-bucket-listing-anon.json` | The anonymous bucket listing itself: object names, sizes, timestamps — the smoking gun for V-01 |
 | `crt-subdomains.json` | Certificate-transparency result that found the estate |
 | `site-home.headers` | Edge/response-header fingerprint |
+| `worker-s1-probe.json` | Worker tier matrix — `/health` loopback + header echo, `/status` + `/process` 401 |
+| `worker-tunnel-watch.log` | Tunnel watcher: `s2`/`s3` dead (1033), `s1` live Express health |
+| `origin-probe.json` | PTR → origin `2.59.219.71`, open ports (SSH 22), origin HTTP/TLS behaviour |
+| `intel-checkhost-status.json` | Third-party TCP check results for the origin host |
+| `supabase-db-probe.json` | Postgres pooler / direct DB port reachability, SCRAM handshakes |
+| `brand-variants.json` | Domain variant DNS map — `onlyfakeai.com` shares the operator's nameservers |
+| `brand-sites.json` | Brand/typo-site liveness fingerprints |
+| `siblings.jsonl` | Sibling-domain DNS records (`onlyfakeai.*`, `onlyfake.*`, `fakeai.ru`, …) |
+| `subdomain-brute-summary.json` | 5,063-name brute result: the 9 live `onlyfakeai.ru` subdomains |
+| `certspotter-com.json` / `crtsh-com.json` | `.com` twin certificates (wildcard, same operator) |
+| `live360-probe.json` | `live360.onlyfakeai.ru` app fingerprint |
+| `email-posture.jsonl` | DMARC / MTA-STS / mail-posture lookups (NXDOMAIN evidence) |
+| `phishdestroy-verdict.json` | Third-party threat-intel verdict: **Critical, score 88, destroy list** |
 
 ## Rehost workstream (`evidence/rehost/`)
 
