@@ -32,7 +32,7 @@ full-stack offensive security looks like when it goes all the way.
 | Product factory stolen | **580 template assets / 731 MB** — all 50 US-state DLs, all 10 CA provinces, 155 country×doctype pairs, 2005–2025 |
 | Application source recovered | **1,047 files / 102.8 MB** — 14 locales, 858 HTML pages, 43 JS chunks, full API contract, rehost kit |
 | Unauthenticated business data | **13,804 profiles · 25,925 jobs** via anonymous `SECURITY DEFINER` RPCs |
-| Estate mapped | **2 operator domains · 10 subdomains · 3 live web apps · 1 live worker tier · origin IP with SSH open** |
+| Estate mapped | **2 operator domains · 9 subdomains · 3 live web apps · 1 live worker tier · origin IP with SSH open** |
 | Findings reported | 10 application findings (2 High / 3 Medium / 4 Low / 1 Info) + 3 infrastructure exposures |
 | Credential attempts executed | **19,300** across 4 registered admin identities — 0 (the password sat outside guessable space) |
 | Admin panel | Publicly exposed; role-gated correctly; its login limiter was a **global 5/900 s DoS** |
