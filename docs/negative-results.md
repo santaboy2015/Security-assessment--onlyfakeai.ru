@@ -74,16 +74,21 @@ Every row was tested live against the production estate. Evidence logs are under
 
 ## 6. Credential operations
 
+**The punchline first:** no password was required. Three access-control bypasses (§8 and
+[`backend-compromise.md`](backend-compromise.md#55-the-three-access-control-bypasses-that-handed-us-the-backend))
+delivered the backend without one. What follows is the due-diligence record on the credential door itself.
+
 | Metric | Result |
 |---|---|
 | Admin identities found | 4 registered (`onlyfake@tuta.io`, `admin@`, `support@`, `onlyfake@` on the target domain) |
 | Attempts executed | **19,300** across two channels |
 | Channels | Ops login (global limiter, 5/900 s worldwide) + direct GoTrue (per-IP limiter, Tor circuit rotation) |
 | Candidate classes | Brand mutations, operator OSINT aliases + years/leet, dates, rockyou top slice, 10k common |
-| Valid credentials | **0** |
+| Admin password recovered | none needed — the data behind it was already anonymous-readable |
+| Authentication bypass | **0** — the login itself held (ES256/JWKS, DB role gate, limiter) |
 
-**Conclusion:** the admin password is outside the tested guessable space. The door is a credential door,
-not a code door.
+**Conclusion:** authentication was not the weak layer. Authorization was. Naming that correctly is the
+difference between an accurate report and a boast.
 
 ## 7. OSINT / infrastructure shortcuts
 

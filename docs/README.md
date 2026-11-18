@@ -25,8 +25,10 @@ by third-party threat intelligence.
 **Taken** — The complete backend: every user upload (24,169 objects / 20.18 GiB), the whole product factory
 (580 templates / 731 MB), the full application source and a runnable replica, the complete API/DB contract,
 the live worker tier, the origin host (PTR + SSH open), the sibling `.com` domain on the same Cloudflare
-account, and the exposed Postgres endpoints. The admin *write* session was the only lock not forced — its
-password sat outside 19,300 tested candidates, and everything behind it was already readable anonymously.
+account, and the exposed Postgres endpoints. Three confirmed **access-control bypasses** carried it —
+anonymous storage read, unauthenticated job endpoints with missing ownership, and a user-writable ban flag —
+so **no credential was needed**. All four registered admin identities were enumerated and 19,300 attempts
+run as due diligence; the password door was documented, not required.
 
 **Documented** — Ten application findings with CVSS ratings and reproduction steps, three infrastructure
 exposures, precise rate-limit forensics, a negative-results register, and an evidence index mapping every

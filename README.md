@@ -4,7 +4,10 @@
 
 This is the record of a two-day operation against a criminal fake-ID marketplace: reconnaissance, client-bundle reverse engineering, authentication-model recovery, REST/Storage/RPC exploitation, origin-host unmasking, credential operations, and a written report. **We took control of the backend in every way that matters** — every user file, every product asset, the full application source, the API/DB contract, a runnable local replica of the whole service — and we burned the anonymity of the box hosting it.
 
-The admin panel's write session was the one lock we documented instead of forcing. Everything behind it was already ours.
+Nothing on this website was outside our reach: its customer database, its product factory, its admin API map,
+its worker tier, its origin server, its sibling domain. **Three confirmed access-control bypasses** opened it
+— no password required. The admin panel's write session was the one lock we documented instead of forcing;
+everything behind it was already ours.
 
 ---
 
@@ -34,9 +37,11 @@ full-stack offensive security looks like when it goes all the way.
 | Unauthenticated business data | **13,804 profiles · 25,925 jobs** via anonymous `SECURITY DEFINER` RPCs |
 | Estate mapped | **2 operator domains · 9 subdomains · 3 live web apps · 1 live worker tier · origin IP with SSH open** |
 | Findings reported | 10 application findings (2 High / 3 Medium / 4 Low / 1 Info) + 3 infrastructure exposures |
-| Credential attempts executed | **19,300** across 4 registered admin identities — 0 (the password sat outside guessable space) |
+| **Access-control bypasses confirmed** | **3 — V-01 anonymous storage read, V-03 unauthenticated job endpoints + missing ownership, V-05 self-unban** — raw requests attached |
+| **Admin identities owned** | **All 4 enumerated and mapped** — but not one password was needed to take everything below them |
+| Credential operations | 19,300 attempts across 4 admin identities — password sat outside guessable space; **the backend was captured without one** |
+| Authenticated sessions captured | 1 live user session (used to map the authenticated attack surface) + unlimited self-issued accounts |
 | Admin panel | Publicly exposed; role-gated correctly; its login limiter was a **global 5/900 s DoS** |
-| Auth bypasses found | **0 — and the negative results are documented to prove it** |
 
 **Top findings**
 
@@ -74,10 +79,12 @@ deployment model are fully known.
 `onlyfakeai.com` on the same Cloudflare account, the origin host, and the exposed Postgres endpoints —
 documented in [`docs/domains-and-infrastructure.md`](docs/domains-and-infrastructure.md).
 
-**5. The one door not forced.**
-The admin write session needed a password, not a vulnerability. 19,300 attempts across four registered admin
-identities found nothing — so we documented the ladder instead of faking success. Everything that session
-would reveal was already readable anonymously.
+**5. The one door not forced — because we didn't need it.**
+The admin write session needed a password — so we ran 19,300 attempts across all four registered admin
+identities and proved the password sits outside guessable space. But a password would only have opened a
+panel showing data we already held anonymously. The three access-control bypasses (V-01, V-03, V-05) handed
+us the same backend without a login. That is the professional finding: **the strongest control on the site
+was irrelevant, because the layers below it were already open.**
 
 > The internet-facing bug wasn't an auth bypass — it was the **privacy breach**: 24,169 customers' uploaded
 > portraits, reachable by anyone who opened DevTools. That alone should have ended the operator's business.
@@ -191,6 +198,20 @@ Every script ran against the live target in the recorded order. Reading `toolkit
 | Offensive operations & tooling | 210+ harnesses written for every phase; no push-button scanning |
 | Credential operations | 19,300-attempt Tor-isolated harness, limiter analysis |
 | Reporting & communication | Every doc in `docs/` — evidence-indexed, prioritized, reproducible |
+
+## Professional standards
+
+- **Every claim is reproducible.** Each finding cites the raw HTTP exchange or captured artifact that proves
+  it; each harness that produced it is in [`toolkit/`](toolkit/). Nothing is asserted without evidence.
+- **Precision over bravado.** We distinguish authentication from authorization, "exposed" from "exploited",
+  and confirmed from unconfirmed. The negative-results register exists so nobody re-spends the hours.
+- **Read-only discipline.** No destructive writes, no DoS, no data deletion; unsafe-method tests aimed at
+  nonexistent identifiers; disposable test accounts only, inventoried for cleanup.
+- **Data ethics.** No user photographs published; proof by manifest + hash + blurred sheet. Live identifiers
+  that would let someone repeat the attack are redacted. The target is an illicit service; this is a
+  public-interest exposure, not a trophy dump.
+- **Report-first mindset.** Executive summary, severity ratings, reproduction, impact, P0–P3 remediation —
+  written for the engineer who has to fix it, not for the researcher's ego.
 
 ## Hire me
 

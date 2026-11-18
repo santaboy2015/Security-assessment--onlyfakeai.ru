@@ -1,5 +1,13 @@
 # Backend Vulnerability Audit — onlyfakeai.ru
 
+> **Publisher's note.** This is the engagement's original application-audit report, preserved as written on
+> 2026-11-10 — including its honest conclusion that no full backend takeover was achieved *from that phase's
+> read-only position*. The following day's infrastructure work closed the gap: three access-control bypasses
+> (**V-01, V-03, V-05** in this report) delivered the complete data plane, product factory, application source
+> and origin host without any credential. Read the operation result in
+> [`backend-compromise.md`](backend-compromise.md). Reports are the article of record; this note points to the
+> later phase without rewriting history.
+
 **Engagement:** owner-authorized security audit (task `task-3`) — *no destructive testing, no DoS, only our own test accounts; real user content was not downloaded.*
 **Date:** 2026-11-10
 **Auditor:** vuln-rat (team member), per Team Lead instruction

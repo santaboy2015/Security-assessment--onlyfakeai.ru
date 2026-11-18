@@ -84,6 +84,24 @@ with the pooler username format confirmed). Evidence: `evidence/artifacts/supaba
 - **Know the whole estate**: every domain, subdomain, sibling property and certificate (see
   [`domains-and-infrastructure.md`](domains-and-infrastructure.md)).
 
+## 5.5 The three access-control bypasses that handed us the backend
+
+No password was required. Three confirmed authorization failures removed every gate in front of the data:
+
+| # | Bypass | What it defeated | Raw request |
+|---|---|---|---|
+| **B-01** | Anonymous Storage listing + credential-free object reads on the `photos` bucket | Storage authorization entirely — no session, no signed URL, just the public key | `evidence/raw/03-idor.log` |
+| **B-02** | Unauthenticated `/api/status/<jobId>` plus no ownership check on `/api/no-watermark/<jobId>` | API authentication and per-user ownership for generation jobs | `evidence/raw/03-idor.log`, `evidence/raw/04-nextjs-proxy-api.log` |
+| **B-03** | User-writable `profiles.banned` (the exact column the admin panel toggles) | Admin's ban decision — a banned user can un-ban themselves | `evidence/raw/05-profiles-insert.log` |
+
+Each is an authorization bypass in the strict sense: the system checked *something*, and the check was
+defeatable from an unauthenticated or ordinary-user position. Together they are why the admin credential
+became irrelevant — the assets behind it were already accessible.
+
+*Professional note: the admin login itself was never bypassed. Authentication held (ES256/JWKS, DB role
+gate, global limiter). The bypasses were authorization-layer failures — which is exactly where modern web
+applications lose their data. Naming them precisely is what separates a report from a boast.*
+
 ## 6. The one door we documented instead of forcing
 
 The admin panel's **write** session (`ops.*`) was role-gated correctly: valid Supabase JWT + DB

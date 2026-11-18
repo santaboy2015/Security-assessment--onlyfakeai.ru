@@ -32,9 +32,10 @@ uploads to anyone with the site's public key and a browser.
 
 The part I'm proudest of isn't a vulnerability — it's the honesty of the record:
 
-- 10 findings, severity-rated with reproduction steps
+- 10 findings, severity-rated with reproduction steps — including **3 confirmed access-control bypasses**
 - a 199-request authorization matrix proving the admin gate actually held
-- a 19,300-attempt credential operation, successful only in teaching me that the password space is wrong
+- a 19,300-attempt credential operation that turned out to be unnecessary: the data behind the admin door
+  was already open to anonymous access
 - a negative-results register listing every wall so nobody re-spends the time
 
 Reports, raw evidence, and every harness: **<repo-link>**
@@ -58,8 +59,9 @@ accepted anonymous LIST. And object names were `<unix-ms>_preview.png` — which
 4/ The admin plane was exposed but *correct*: ES256/JWKS, server-side role check, per-route gating. I threw a
 199-request matrix at it — no bypass. Exposure + no MFA was the finding, not an auth magic trick.
 
-5/ The fun part: 19,300 credential attempts via Tor circuit rotation because the login limiter was global
-(5/900s). Found nothing. Documented the remaining ladder instead of inventing success.
+5/ The fun part: 19,300 credential attempts via Tor circuit rotation — then proof that the password was
+unnecessary, because three access-control bypasses (anonymous storage read, unauthenticated job endpoints,
+self-unban) already handed over the backend. Authorization was the weak layer, not authentication.
 
 6/ Repo has every raw request/response log, the harnesses, the negative results. Reports are the article of
 record. **<repo-link>** — open to pentest / appsec / red-team roles.

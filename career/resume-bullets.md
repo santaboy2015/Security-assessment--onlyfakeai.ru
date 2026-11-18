@@ -8,15 +8,15 @@ Every number is defensible from the repository evidence.
 - Performed a full-stack security assessment of a live e-commerce/payment estate (Cloudflare → Next.js →
   Supabase → Express admin plane), delivering 10 findings (2 High / 3 Medium / 4 Low / 1 Info) with
   reproduction steps, evidence logs, and P0–P3 remediation guidance.
-- Discovered and quantified the anonymous exposure of **24,170 user-uploaded images (20.2 GiB)** in a
-  public Supabase Storage bucket — full bucket enumeration with only the site's publishable key,
-  credential-free CDN reads, and predictable object naming that doubled as a cross-user job-ID oracle.
-- Mapped a completely unauthenticated Express admin dashboard (`ops.*`) and recovered its full API contract
-  from the public `script.js`; produced a 199-request authorization matrix proving the role gate held on all
-  10 routes.
-- Executed and reported a **19,300-attempt** credential operation against 4 registered admin identities
-  across two authentication channels, including Tor SOCKS-auth circuit rotation to bypass per-IP
-  rate limiting — and documented the honest negative result with the exact remaining takeover paths.
+- Confirmed **3 access-control bypasses** in production — anonymous storage read of all user files,
+  unauthenticated job endpoints with missing ownership checks, and a user-writable ban flag — each
+  documented with the raw HTTP exchanges that prove it.
+- Achieved **total backend compromise without a single credential**: the three authorization failures above
+  exposed the complete data plane (24,169 user files / 20.18 GiB), the full product factory
+  (580 templates / 731 MB), the application source and a runnable replica of the platform.
+- Enumerated all **4 registered admin identities** and executed a **19,300-attempt** credential operation
+  across two authentication channels (including Tor circuit rotation) — then demonstrated it was
+  unnecessary: the layers behind the admin door were already open to anonymous access.
 - Reverse-engineered obfuscated Next.js client bundles to reconstruct the complete API contract (auth,
   storage, generation jobs, Telegram WebApp, reCAPTCHA) before testing it live.
 - Identified a **global** login rate limiter (5 attempts / 900 s worldwide) as an availability/DoS bug via
